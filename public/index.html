@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Cella</title>
+    <link rel="stylesheet" type="text/css" href="styles/reset.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/chosen.css" />
+</head>
+<body>
+    <header></header>
+    <div id="filter">
+        
+    </div>
+    <div>
+        <table id="results">
+            <thead>
+                <tr>
+                    <th>&#9733;</th>
+                    <th>Occupancy</th>
+                    <th>Building</th>
+                    <th>Room</th>
+                    <th>Probability</th>
+                    <th>Available</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>
+                        <select
+                            id="occupancy"
+                            data-placeholder="Choose the occupancy"
+                            class="chzn-select"
+                            size="1"
+                            multiple="multiple"
+                         >
+                             <option value=""></option>
+                             <option value="1">1</option>
+                             <option value="2">2</option>
+                             <option value="3">3</option>
+                             <option value="4">4</option>
+                             <option value="5">5</option>
+                         </select>
+                    </th>
+                    <th>
+                        <select
+                            id="building-mode"
+                            class="chzn-select"
+                            size="1"
+                         >
+                             <option value="include">Include</option>
+                             <option value="exclude">Exclude</option>
+                         </select>
+                         <select
+                            id="select-buildings"
+                            data-placeholder="Buildings"
+                            class="chzn-select"
+                            size="1"
+                            multiple="multiple"
+                         >
+                             <option value=""></option>
+
+                         </select>
+                     </th>
+                     <th>
+                         <input
+                            name="rooms"
+                            type="text"
+                            placeholder="Rooms"
+                            class="chzn-container chzn-container-single chzn-single chzn-search"
+                         />
+                     </th>
+                     <th>
+                        <input
+                            name="rooms"
+                            type="text"
+                            placeholder="Probability"
+                            class="chzn-container chzn-container-single chzn-single chzn-search"
+                         />
+
+                     </th>
+                     <th></th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <!-- an example row -->
+                <tr>
+                    <td>&#9734;</td>
+                    <td>5</td>
+                    <td>Grad Center C</td>
+                    <td>330</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>&#9733;</th>
+                    <th>Occupancy</th>
+                    <th>Building</th>
+                    <th>Room</th>
+                    <th>Probability</th>
+                    <th>Available</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <footer></footer>
+
+    <pre id="log"></pre>
+
+    <!-- scripts -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.js"></script>
+    <script type="text/javascript" src="scripts/chosen.js"></script>
+    <script type="text/javascript" src="scripts/index.js"></script>
+</body>
+</html>
+
