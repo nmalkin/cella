@@ -1,5 +1,8 @@
-rooms = require './rooms.js'
 url = require 'url'
+
+rooms = require './rooms.js'
+buildings = require('./buildings').buildings
+
 
 # Given a result, writes it stringified to the response
 # with normal HTTP status code and a JSON content-type
@@ -46,3 +49,7 @@ exports.room_info = (req, res, next) ->
 
         rooms.info ids, (result) ->
             resultToResponse result, res
+
+# Responds with an array of building names
+exports.buildings = (req, res, next) ->
+    resultToResponse (building for own building, data of buildings), res

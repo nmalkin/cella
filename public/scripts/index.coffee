@@ -5,12 +5,12 @@ buildings_field_id = 'select-buildings'
 
 # Populates the building select field
 populateBuildingSelect = ->
-    buildings = ["Grad Center A", "Grad Center B", "Grad Center C", "Grad Center D"]
-    #TODO: query server to get buildings
-    addBuildingToSelect building for building in buildings
-    
-    # Tell the Chosen plugin that the select has been updated
-    $("##{ buildings_field_id }").trigger "liszt:updated"
+    $.getJSON 'buildings', (data) ->
+        data = data.sort() # sort buildings to be in alphabetical order
+        addBuildingToSelect building for building in data
+        
+        # Tell the Chosen plugin that the select has been updated
+        $("##{ buildings_field_id }").trigger "liszt:updated"
 
 # Add an option with the given building to the building select box
 addBuildingToSelect = (building) ->
