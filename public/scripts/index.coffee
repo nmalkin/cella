@@ -1,3 +1,7 @@
+# DEBUG
+log = (message) ->
+    $("#log").append message
+
 # Form field ids
 occupancy_field_id = 'occupancy'
 building_mode_field_id = 'building-mode'
@@ -5,13 +9,22 @@ buildings_field_id = 'select-buildings'
 
 # Populates the building select field
 populateBuildingSelect = ->
-    $.getJSON 'buildings', (data) ->
-        data = data.sort() # sort buildings to be in alphabetical order
-        addBuildingToSelect building for building in data
+    $.getJSON 'campus_areas', (campusAreas) ->
+        addCampusAreaToSelect campusArea.name, campusArea.buildings.sort() for campusArea in campusAreas
         
         # Tell the Chosen plugin that the select has been updated
         $("##{ buildings_field_id }").trigger "liszt:updated"
 
+# Adds an option group to the building select box
+# with its value being the campus area
+# and its options - the buildings
+addCampusAreaToSelect = (campusArea, buildings) ->
+    str = "<optgroup label=\"#{ campusArea }\">"
+    str += "<option value=\"#{ building }\">#{ building }</option>" for building in buildings
+    str += "</optgroup>"
+    $("##{ buildings_field_id }").append str
+
+# DEPRECATED
 # Add an option with the given building to the building select box
 addBuildingToSelect = (building) ->
     option_string = "<option value=\"#{ building }\">#{ building }</option>"
@@ -50,3 +63,5 @@ $(document).ready ->
 
     # populate building select with buildings
     populateBuildingSelect()
+
+

@@ -53,3 +53,25 @@ exports.room_info = (req, res, next) ->
 # Responds with an array of building names
 exports.buildings = (req, res, next) ->
     resultToResponse (building for own building, data of buildings), res
+
+# Responds with an array of objects,
+# each of which has a name (the campus area) and an array of the buildings in that area
+exports.campus_areas = (req, res, next) ->
+    # build object with campus areas
+    campusAreas = {}
+    for own building, data of buildings
+        campusArea = data.campus_area
+        if not campusAreas[campusArea]?
+            campusAreas[campusArea] = []
+        campusAreas[campusArea].push building
+    
+    # translate object properties to an array of areas and values
+    # Note: we do this so that we can sort the campus areas.
+    campusAreasList = []
+    for own campusArea, data of campusAreas
+        campusAreasList.push
+            name: campusArea
+            buildings: data
+
+    # return this array
+    resultToResponse campusAreasList, res

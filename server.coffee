@@ -10,6 +10,7 @@ server.use connect.router (app) ->
     app.get '/get_rooms', api.get_rooms
     app.get '/room_info', api.room_info
     app.get '/buildings', api.buildings
+    app.get '/campus_areas', api.campus_areas
 
 
 server.listen(8888)
