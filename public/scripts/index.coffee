@@ -3,9 +3,9 @@ log = (message) ->
     $("#log").append message
 
 # Form field ids
-occupancy_field_id = 'occupancy'
-building_mode_field_id = 'building-mode'
-buildings_field_id = 'select-buildings'
+OCCUPANCY_FIELD = 'occupancy'
+BUILDING_MODE_FIELD = 'building-mode'
+BUILDINGS_FIELD = 'select-buildings'
 
 # Populates the building select field
 populateBuildingSelect = ->
@@ -13,7 +13,7 @@ populateBuildingSelect = ->
         addCampusAreaToSelect campusArea.name, campusArea.buildings.sort() for campusArea in campusAreas
         
         # Tell the Chosen plugin that the select has been updated
-        $("##{ buildings_field_id }").trigger "liszt:updated"
+        $("##{ BUILDINGS_FIELD }").trigger "liszt:updated"
 
 # Adds an option group to the building select box
 # with its value being the campus area
@@ -22,22 +22,22 @@ addCampusAreaToSelect = (campusArea, buildings) ->
     str = "<optgroup label=\"#{ campusArea }\">"
     str += "<option value=\"#{ building }\">#{ building }</option>" for building in buildings
     str += "</optgroup>"
-    $("##{ buildings_field_id }").append str
+    $("##{ BUILDINGS_FIELD }").append str
 
 # DEPRECATED
 # Add an option with the given building to the building select box
 addBuildingToSelect = (building) ->
     option_string = "<option value=\"#{ building }\">#{ building }</option>"
-    $("##{ buildings_field_id }").append option_string
+    $("##{ BUILDINGS_FIELD }").append option_string
 
 # Returns an array with integer values for occupancy selected by the user
 getChosenOccupancy = ->
-    value = $("##{ occupancy_field_id }").val() ? []
+    value = $("##{ OCCUPANCY_FIELD }").val() ? []
     parseInt occupancy for occupancy in value
 
 # Returns true if the chosen buildings should be included, false if they should be excluded.
 includeChosenBuildings = ->
-    building_mode = $("##{ building_mode_field_id }").val()
+    building_mode = $("##{ BUILDING_MODE_FIELD }").val()
     if building_mode == 'include'
         true
     else if building_mode == 'exclude'
@@ -47,15 +47,15 @@ includeChosenBuildings = ->
 
 # Returns an array with the currently selected buildings
 getChosenBuildings = ->
-    $("##{ buildings_field_id }").val() ? []
+    $("##{ BUILDINGS_FIELD }").val() ? []
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
     #TODO: get rooms from server
 
-$("##{ occupancy_field_id }").change filterChanged
-$("##{ building_mode_field_id }").change filterChanged
-$("##{ buildings_field_id }").change filterChanged
+$("##{ OCCUPANCY_FIELD }").change filterChanged
+$("##{ BUILDING_MODE_FIELD }").change filterChanged
+$("##{ BUILDINGS_FIELD }").change filterChanged
 
 $(document).ready ->
     # activate Chosen plugin
