@@ -12,6 +12,8 @@ RESULTS_DIV = '#results'
 allRooms = {}
 # List of rooms currently displayed
 activeRooms = []
+# List of rooms that we need to look up
+roomsToLookUp = []
 
 # Populates the building select field
 populateBuildingSelect = ->
@@ -55,35 +57,46 @@ includeChosenBuildings = ->
 getChosenBuildings = ->
     $(BUILDINGS_FIELD).val() ? []
 
-# Goes through the list of room ids and downloads information about any unknown ones
-# Then calls next
-processNewRooms = (rooms, next) ->
-    newRooms = [] # those rooms that we need info about
-    for roomID in rooms
-        if not (roomID of allRooms) # new room, need information about it
-            newRooms.push roomID
-
-    # request info
-    $.getJSON 'room_info', 
-        {ids: newRooms.join ','},
-        (resultRooms) ->
-            for room in resultRooms
-                allRooms[room.id] = room
-            
-            next()
+# Returns a string with the HTML for a row in the table with the given room information
+roomHTML = (room) ->
+    "<tr id=\"room#{ room.id }\">
+        <td>&#9734;</td>
+        <td>#{ room.occupancy }</td>
+        <td>#{ room.building}</td>
+        <td>#{ room.room }</td>
+        <td></td>
+        <td></td>
+    </tr>"
 
 # Adds room with given room id to the table
 addRoom = (roomID) ->
     if roomID of allRooms
-        room = allRooms[roomID]
-        $(RESULTS_DIV).append "<tr>
-                        <td>&#9734;</td>
-                        <td>#{ room.occupancy }</td>
-                        <td>#{ room.building}</td>
-                        <td>#{ room.room }</td>
-                        <td></td>
-                        <td></td>
-                    </tr>"
+        html = roomHTML allRooms[roomID]
+    else
+        roomsToLookUp.push roomID
+        html = "<tr id=\"room#{ roomID }\"><td colspan=\"6\"></td></tr>"
+    $(RESULTS_DIV).append html
+
+# Looks up any rooms in the roomsToLookUp list
+# and replaces their row in the results table with a fully populated one
+lookUpRooms = ->
+    if roomsToLookUp.length > 0
+        $.getJSON 'room_info', 
+            {ids: roomsToLookUp.join ','},
+            (resultRooms) ->
+                for room in resultRooms
+                    allRooms[room.id] = room
+                    $("#room#{ room.id }").replaceWith roomHTML room
+                roomsToLookUp = []
+
+# Updates the result table to show the given rooms
+activateRooms = (rooms) ->
+    activeRooms = rooms
+
+    # add activated rooms to table
+    $(RESULTS_DIV).html ''
+    addRoom room for room in activeRooms
+    lookUpRooms()
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
@@ -93,10 +106,8 @@ filterChanged = (event) ->
             buildings: getChosenBuildings().join ','
         },
         (resultRooms) ->
-            processNewRooms resultRooms, ->
-                activeRooms = resultRooms
-                $(RESULTS_DIV).html ''
-                addRoom room for room in activeRooms
+            activateRooms resultRooms
+
 
 $(OCCUPANCY_FIELD).change filterChanged
 $(BUILDING_MODE_FIELD).change filterChanged
