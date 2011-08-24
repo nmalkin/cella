@@ -6,6 +6,7 @@ log = (message) ->
 OCCUPANCY_FIELD = '#occupancy'
 BUILDING_MODE_FIELD = '#building-mode'
 BUILDINGS_FIELD = '#select-buildings'
+ROOM_TABLE = '#room_table'
 RESULTS_DIV = '#results'
 
 # All rooms whose information we have, referenced by id
@@ -79,7 +80,8 @@ addRoom = (roomID) ->
 
 # Looks up any rooms in the roomsToLookUp list
 # and replaces their row in the results table with a fully populated one
-lookUpRooms = ->
+# Calls next after it's done.
+lookUpRooms = (next = ->)->
     if roomsToLookUp.length > 0
         $.getJSON 'room_info', 
             {ids: roomsToLookUp.join ','},
@@ -88,15 +90,20 @@ lookUpRooms = ->
                     allRooms[room.id] = room
                     $("#room#{ room.id }").replaceWith roomHTML room
                 roomsToLookUp = []
+                
+                next()
 
 # Updates the result table to show the given rooms
-activateRooms = (rooms) ->
+# Calls next after it's done.
+activateRooms = (rooms, next = ->) ->
     activeRooms = rooms
 
     # add activated rooms to table
     $(RESULTS_DIV).html ''
     addRoom room for room in activeRooms
-    lookUpRooms()
+    lookUpRooms ->
+        $(ROOM_TABLE).trigger 'update'
+        next()
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
@@ -116,8 +123,12 @@ $(BUILDINGS_FIELD).change filterChanged
 $(document).ready ->
     # activate Chosen plugin
     $(".chzn-select").chosen()
-
+    
+    # activate TableSorter plugin
+    $(ROOM_TABLE).tablesorter
+        debug: false
+        textExtraction: 'simple'
+    
     # populate building select with buildings
     populateBuildingSelect()
-
 
