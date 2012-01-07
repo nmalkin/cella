@@ -72,6 +72,7 @@ roomHTML = (room) ->
         <td>#{ room.room }</td>
         <td></td>
         <td></td>
+        <td></td>
     </tr>"
 
 # Adds room with given room id to the table
@@ -80,7 +81,7 @@ addRoom = (roomID) ->
         html = roomHTML allRooms[roomID]
     else
         roomsToLookUp.push roomID
-        html = "<tr id=\"room#{ roomID }\"><td colspan=\"6\"></td></tr>"
+        html = "<tr id=\"room#{ roomID }\"><td colspan=\"7\"></td></tr>"
     $(RESULTS_DIV).append html
 
 # Looks up any rooms in the roomsToLookUp list
