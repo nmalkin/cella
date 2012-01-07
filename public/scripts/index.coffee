@@ -1,6 +1,6 @@
 # DEBUG
 log = (message) ->
-    $("#log").append message
+    console.log message
 
 # constants
 OCCUPANCY_FIELD = '#occupancy'
