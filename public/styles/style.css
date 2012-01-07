@@ -2,6 +2,15 @@ body {
     padding-top: 50px;
 }
 
+.search_option_well {
+    /*height: 40px;*/
+    padding-top: 0;
+}
+
+#lottery {
+    max-width: 500px;
+}
+
 #room_table {
     table-layout: fixed;
 }

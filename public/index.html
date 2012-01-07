@@ -5,6 +5,7 @@
     <title>Cella</title>
     <link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="chosen/chosen/chosen.css" />
+    <link rel="stylesheet" type="text/css" href="styles/jquery-ui/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
 </head>
 <body>
@@ -27,6 +28,24 @@
             <li class="active"><a>Search</a></li>
             <li><a>&#10010;</a></li>
         </ul>
+
+        <div class="well search_option_well span8">
+            <h5>About you</h5>
+                <div class="span5" style="float:right;margin-top: -15px">
+                    <div style="text-align: center; margin-bottom: 5px">
+                        Lottery number:
+                        <span id="lottery_number">1</span>
+                    </div>
+                    <div id="lottery"></div>
+                </div>
+                <div class="input">
+                        <ul class="inputs-list"><li>
+                        <label for="sophomore">
+                        <input type="checkbox" id="sophomore" name="sophomore" value="sophomore" />
+                        I am a sophomore</label>
+                        </li></ul>
+                </div>
+        </div>
 
         <table id="room_table" class="room_table bordered-table zebra-striped">
             <thead>
@@ -61,10 +80,12 @@
                             id="building-mode"
                             class="chzn-select"
                             size="1"
+                            style="width: 100px;"
                          >
                              <option value="include">Include</option>
                              <option value="exclude">Exclude</option>
                          </select>
+                         <br />
                          <select
                             id="select-buildings"
                             data-placeholder="Buildings"
@@ -126,6 +147,7 @@
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="chosen/chosen/chosen.jquery.js"></script>
     <script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 </html>

@@ -8,6 +8,11 @@ BUILDING_MODE_FIELD = '#building-mode'
 BUILDINGS_FIELD = '#select-buildings'
 ROOM_TABLE = '#room_table'
 RESULTS_DIV = '#results'
+LOTTERY_SLIDER = '#lottery'
+LOTTERY_NUMBER_DISPLAY = '#lottery_number'
+
+MIN_LOTTERY_NUMBER = 1
+MAX_LOTTERY_NUMBER = 800
 
 # All rooms whose information we have, referenced by id
 allRooms = {}
@@ -121,6 +126,14 @@ $(BUILDING_MODE_FIELD).change filterChanged
 $(BUILDINGS_FIELD).change filterChanged
 
 $(document).ready ->
+    # activate lottery number slider
+    $(LOTTERY_SLIDER).slider {
+        min: MIN_LOTTERY_NUMBER,
+        max: MAX_LOTTERY_NUMBER,
+        slide: (event, ui) ->
+            $(LOTTERY_NUMBER_DISPLAY).text ui.value
+    }
+
     # activate Chosen plugin
     $(".chzn-select").chosen()
     
