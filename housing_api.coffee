@@ -27,20 +27,20 @@ exports.get_rooms = (req, res, next) ->
     else
         # multiple values in the query strings will be delimited by commas.
         # explode them into arrays
-        occupancy = params.occupancy.split ','
-        buildings = params.buildings.split ','
+        req_occupancy = params.occupancy.split ','
+        req_buildings = params.buildings.split ','
 
         # the occupancy values are strings, should be converted to ints
-        occupancy = (parseInt value for value in occupancy \
+        req_occupancy = (parseInt value for value in req_occupancy \
                      when not isNaN parseInt value) # exclude non-integer values
 
-        if occupancy.length == 0
+        if req_occupancy.length == 0
             # There are no valid values for occupancy.
             # Because this happens when the user hasn't inputted all the criteria,
             # we just return no results.
             resultToResponse [], res
         else
-            rooms.select occupancy, buildings, (result) ->
+            rooms.select req_occupancy, req_buildings, (result) ->
                 resultToResponse result, res
             
 # Sets the response to a JSON array of objects with room info
