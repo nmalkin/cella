@@ -7,6 +7,7 @@ buildings = require('./buildings')
 # Given a result, writes it stringified to the response
 # with normal HTTP status code and a JSON content-type
 resultToResponse = (result, response) ->
+    result ?= '' # If nothing else, we'll return an empty string
     response.writeHead 200, {'Content-Type': 'application/json'}
     response.write JSON.stringify result
     response.end '\n'
