@@ -1,6 +1,5 @@
 table, tr, th, td {
     border: 1px solid #000;
-    margin: 10px;
     padding: 5px;
 }
 
@@ -10,4 +9,9 @@ thead, tfoot {
 
 select {
     width: 100%;
+}
+
+#main {
+    width: 90%;
+    margin: 10px auto;
 }
