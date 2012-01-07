@@ -1,17 +1,7 @@
-table, tr, th, td {
-    border: 1px solid #000;
-    padding: 5px;
+#room_table {
+    table-layout: fixed;
 }
 
-thead, tfoot {
-    font-weight: bold;
-}
-
-select {
-    width: 100%;
-}
-
-#main {
-    width: 90%;
-    margin: 10px auto;
+#room_table input, .chzn-container {
+    max-width: 90%;
 }

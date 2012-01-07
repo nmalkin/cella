@@ -8,27 +8,27 @@
     <link rel="stylesheet" type="text/css" href="chosen/chosen/chosen.css" />
 </head>
 <body>
-    <div id="main">
+    <div class="container">
         <header>
             <h1>Cella</h1>
         </header>
 
-        <table id="room_table">
+        <table id="room_table" class="bordered-table zebra-striped">
             <thead>
                 <tr>
-                    <th>&#9733;</th>
-                    <th>Occupancy</th>
-                    <th>Building</th>
-                    <th>Room</th>
-                    <th>Probability</th>
-                    <th>Available</th>
+                    <th style="width: 5%">&#9733;</th>
+                    <th style="width: 15%">Occupancy</th>
+                    <th style="width: 40%">Building</th>
+                    <th style="width: 20%">Room</th>
+                    <th style="width: 10%">Probability</th>
+                    <th style="width: 10%">Available</th>
                 </tr>
                 <tr>
                     <th></th>
                     <th>
                         <select
                             id="occupancy"
-                            data-placeholder="Choose the occupancy"
+                            data-placeholder="Occupancy"
                             class="chzn-select"
                             size="1"
                             multiple="multiple"
