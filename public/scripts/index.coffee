@@ -63,6 +63,34 @@ includeChosenBuildings = ->
 getChosenBuildings = ->
     $(BUILDINGS_FIELD).val() ? []
 
+# Returns the number currently selected on the lottery number slider
+getLotteryNumber = ->
+    $(LOTTERY_SLIDER).slider('value')
+
+# Computes the value at x of the logistic function with regression coefficients b0, b1
+# That is 1/(1+e^-(b0 + b1*x)).
+logit = (b0, b1, x) ->
+    1 / (1 + Math.exp(-1 * (b0 + b1 * x)))
+
+# Returns the probability that the given room is obtained under the currently selected lottery number
+# 'room' is a room object
+# The probability returned is a value between 0 and 1.
+getRoomProbability = (room, lotteryNumber) ->
+    logit room.b0, room.b1, lotteryNumber
+
+updateRoomProbability = (roomID, lotteryNumber) ->
+    probability = getRoomProbability allRooms[roomID], lotteryNumber
+    percentage = "#{ Math.round probability * 100 }%"
+    $("#room#{ roomID }probability").text percentage
+        
+
+# Goes through all active rooms and updates their probabilities
+# to match the currently selected lottery number
+updateProbabilities = ->
+    lotteryNumber = getLotteryNumber()
+    for roomID in activeRooms
+        updateRoomProbability roomID, lotteryNumber
+
 # Returns a string with the HTML for a row in the table with the given room information
 roomHTML = (room) ->
     "<tr id=\"room#{ room.id }\">
@@ -71,7 +99,7 @@ roomHTML = (room) ->
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
         <td></td>
-        <td></td>
+        <td id=\"room#{ room.id }probability\"></td>
         <td></td>
     </tr>"
 
@@ -96,8 +124,10 @@ lookUpRooms = (next = ->)->
                     allRooms[room.id] = room
                     $("#room#{ room.id }").replaceWith roomHTML room
                 roomsToLookUp = []
-                
+
                 next()
+    else
+        next()
 
 # Updates the result table to show the given rooms
 # Calls next after it's done.
@@ -108,6 +138,7 @@ activateRooms = (rooms, next = ->) ->
     $(RESULTS_DIV).html ''
     addRoom room for room in activeRooms
     lookUpRooms ->
+        updateProbabilities()
         $(ROOM_TABLE).trigger 'update'
         next()
 
@@ -133,6 +164,8 @@ $(document).ready ->
         max: MAX_LOTTERY_NUMBER,
         slide: (event, ui) ->
             $(LOTTERY_NUMBER_DISPLAY).text ui.value
+            updateProbabilities()
+            $(ROOM_TABLE).trigger 'update'
     }
 
     # activate Chosen plugin

@@ -17,7 +17,7 @@ nonEmptyArray = (arr) ->
 exports.select = (occupancy, buildings, callback) ->
     console.log "Selecting rooms of size #{ occupancy } in #{ buildings }"
 
-    query = 'SELECT rowid FROM rooms WHERE ('
+    query = 'SELECT rowid FROM rooms_with_regressions WHERE ('
     params = []
     
     buildQuery = (database_field, values) ->
@@ -62,7 +62,7 @@ exports.select = (occupancy, buildings, callback) ->
 exports.info = (ids, callback) ->
     console.log "Information requested about rooms #{ ids }"
     
-    query = 'SELECT rowid, * FROM rooms WHERE '
+    query = 'SELECT rowid, * FROM rooms_with_regressions WHERE '
     params = []
 
     if nonEmptyArray ids
@@ -97,6 +97,8 @@ exports.info = (ids, callback) ->
                     apartment: row.apartmentRate?
                     sophomore: buildings[row.building].sophomore
                     gender_neutral: buildings[row.building].gender_neutral
+                    b0: row.b0
+                    b1: row.b1
                 
                 results.push result
             callback results
