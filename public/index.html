@@ -10,15 +10,38 @@
 </head>
 <body>
     <div class="container">
-        <header class="topbar">
+        <header class="topbar" data-dropdown="dropdown">
             <div class="fill">
                 <div class="container">
-                  <a class="brand" href="/">Cella</a>
-                  <ul class="nav" style="float: right">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                  </ul>
+                    <a class="brand" href="/">Cella</a>
+                    <ul class="nav" style="float: right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#"
+                                title="Helpful links about the housing lottery"
+                                >Lottery Links</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/index.php">
+                                    Lottery Results Live
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://brown.edu/Student_Services/Residential_Council/lottery/">
+                                        Housing Lottery Website
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://reslife.brown.edu/current_students/lottery/floorplans/floorplans.html">
+                                        Floorplans
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://reslife.brown.edu/current_students/lottery/index.html">ResLife</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
                 </div>
             </div>
         </header>
@@ -152,6 +175,7 @@
     <script type="text/javascript" src="chosen/chosen/chosen.jquery.js"></script>
     <script type="text/javascript" src="scripts/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap-dropdown.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 </html>
