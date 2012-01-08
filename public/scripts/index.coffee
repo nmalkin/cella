@@ -24,7 +24,8 @@ roomsToLookUp = []
 # Populates the building select field
 populateBuildingSelect = ->
     $.getJSON 'campus_areas', (campusAreas) ->
-        addCampusAreaToSelect campusArea.name, campusArea.buildings.sort() for campusArea in campusAreas
+        addCampusAreaToSelect campusArea.name, campusArea.buildings.sort() \
+            for campusArea in campusAreas
         
         # Tell the Chosen plugin that the select has been updated
         $(BUILDINGS_FIELD).trigger "liszt:updated"
@@ -34,7 +35,8 @@ populateBuildingSelect = ->
 # and its options - the buildings
 addCampusAreaToSelect = (campusArea, buildings) ->
     str = "<optgroup label=\"#{ campusArea }\">"
-    str += "<option value=\"#{ building }\">#{ building }</option>" for building in buildings
+    str += "<option value=\"#{ building }\">#{ building }</option>" \
+        for building in buildings
     str += "</optgroup>"
     $(BUILDINGS_FIELD).append str
 
