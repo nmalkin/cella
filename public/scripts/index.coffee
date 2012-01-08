@@ -74,17 +74,18 @@ getLotteryNumber = ->
 logit = (b0, b1, x) ->
     1 / (1 + Math.exp(-1 * (b0 + b1 * x)))
 
-# Returns the probability that the given room is obtained under the currently selected lottery number
+# Returns probability that given room is obtained under currently selected lottery number
 # 'room' is a room object
 # The probability returned is a value between 0 and 1.
 getRoomProbability = (room, lotteryNumber) ->
     logit room.b0, room.b1, lotteryNumber
 
+# Update probability of room with given ID based on given lottery number
 updateRoomProbability = (roomID, lotteryNumber) ->
-    probability = getRoomProbability allRooms[roomID], lotteryNumber
-    percentage = "#{ Math.round probability * 100 }%"
-    $("#room#{ roomID }probability").text percentage
-        
+    if allRooms[roomID]?
+        probability = getRoomProbability allRooms[roomID], lotteryNumber
+        percentage = "#{ Math.round probability * 100 }%"
+        $("#room#{ roomID }probability").text percentage
 
 # Goes through all active rooms and updates their probabilities
 # to match the currently selected lottery number
