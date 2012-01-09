@@ -1,19 +1,38 @@
-# DEBUG
-log = (message) ->
+## DEBUG
+
+log = (message...) ->
     console.log message
 
-# constants
-OCCUPANCY_FIELD = '#occupancy'
-BUILDING_MODE_FIELD = '#building-mode'
-BUILDINGS_FIELD = '#select-buildings'
-ROOM_TABLE = '#room_table'
-RESULTS_DIV = '#results'
-LOTTERY_SLIDER = '#lottery'
-LOTTERY_NUMBER_DISPLAY = '#lottery_number'
+## CONSTANTS
 
 MIN_LOTTERY_NUMBER = 1
 MAX_LOTTERY_NUMBER = 800
 
+LOTTERY_SLIDER = '#lottery'
+LOTTERY_NUMBER_DISPLAY = '#lottery_number'
+NEW_TAB_BUTTON = '#new_tab'
+RESULT_TABS = '#result_tabs'
+RESULT_TABLES = '#result_tables'
+ROOM_TABLE = '.room_table'
+RESULTS_DIV = '.results'
+OCCUPANCY_FIELD = '.occupancy'
+BUILDING_MODE_FIELD = '.building-mode'
+BUILDINGS_FIELD = '.select-buildings'
+
+# PARAMETERIZED CONSTANTS
+
+TAB = (tabNumber) -> "#tab#{ tabNumber }"
+    # NOTE: this scheme is also used in loadNewTable and getActivatedTab
+
+
+## GLOBALS
+# The number of tables/tabs currently open
+tableCount = 0
+# The number of the currently activated tab
+activeTab = -1;
+# An array of all campus areas
+# Campus areas are objects with a name and an array of buildings
+campusAreas = []
 # All rooms whose information we have, referenced by id
 allRooms = {}
 # List of rooms currently displayed
@@ -21,39 +40,43 @@ activeRooms = []
 # List of rooms that we need to look up
 roomsToLookUp = []
 
-# Populates the building select field
-populateBuildingSelect = ->
-    $.getJSON 'campus_areas', (campusAreas) ->
-        addCampusAreaToSelect campusArea.name, campusArea.buildings.sort() \
-            for campusArea in campusAreas
-        
-        # Tell the Chosen plugin that the select has been updated
-        $(BUILDINGS_FIELD).trigger "liszt:updated"
 
-# Adds an option group to the building select box
+## FUNCTIONS
+
+# Downloads and saves campus areas and buildings from the server
+downloadBuildings = ->
+    $.getJSON 'campus_areas', (result) ->
+        campusAreas = result
+
+# Adds an option group to the building select box (given)
 # with its value being the campus area
 # and its options - the buildings
-addCampusAreaToSelect = (campusArea, buildings) ->
+addCampusAreaToSelect = (select, campusArea, buildings) ->
     str = "<optgroup label=\"#{ campusArea }\">"
     str += "<option value=\"#{ building }\">#{ building }</option>" \
         for building in buildings
     str += "</optgroup>"
-    $(BUILDINGS_FIELD).append str
+    
+    select.append str
 
-# DEPRECATED
-# Add an option with the given building to the building select box
-addBuildingToSelect = (building) ->
-    option_string = "<option value=\"#{ building }\">#{ building }</option>"
-    $(BUILDINGS_FIELD).append option_string
+# Populates the building select field for the given tab
+populateBuildingSelect = (tabNumber) ->
+    buildingSelect = $(TAB tabNumber).find(BUILDINGS_FIELD)
+
+    addCampusAreaToSelect buildingSelect, campusArea.name, \
+        campusArea.buildings.sort() for campusArea in campusAreas
+    
+    # Tell the Chosen plugin that the select has been updated
+    buildingSelect.trigger "liszt:updated"
 
 # Returns an array with integer values for occupancy selected by the user
-getChosenOccupancy = ->
-    value = $(OCCUPANCY_FIELD).val() ? []
+getChosenOccupancy = (tabNumber) ->
+    value = $(TAB tabNumber).find(OCCUPANCY_FIELD).val() ? []
     parseInt occupancy for occupancy in value
 
 # Returns true if the chosen buildings should be included, false if they should be excluded.
-includeChosenBuildings = ->
-    building_mode = $(BUILDING_MODE_FIELD).val()
+includeChosenBuildings = (tabNumber) ->
+    building_mode = $(TAB tabNumber).find(BUILDING_MODE_FIELD).val()
     if building_mode == 'include'
         true
     else if building_mode == 'exclude'
@@ -62,8 +85,8 @@ includeChosenBuildings = ->
         throw 'Illegal value in building mode field'
 
 # Returns an array with the currently selected buildings
-getChosenBuildings = ->
-    $(BUILDINGS_FIELD).val() ? []
+getChosenBuildings = (tabNumber) ->
+    $(TAB tabNumber).find(BUILDINGS_FIELD).val() ? []
 
 # Returns the number currently selected on the lottery number slider
 getLotteryNumber = ->
@@ -85,35 +108,36 @@ updateRoomProbability = (roomID, lotteryNumber) ->
     if allRooms[roomID]?
         probability = getRoomProbability allRooms[roomID], lotteryNumber
         percentage = "#{ Math.round probability * 100 }%"
-        $("#room#{ roomID }probability").text percentage
+        $(".room#{ roomID }probability").text percentage
 
 # Goes through all active rooms and updates their probabilities
 # to match the currently selected lottery number
 updateProbabilities = ->
-    lotteryNumber = getLotteryNumber()
-    for roomID in activeRooms
-        updateRoomProbability roomID, lotteryNumber
+    if activeTab != -1 and activeRooms[activeTab]?
+        lotteryNumber = getLotteryNumber()
+        for roomID in activeRooms[activeTab] # only update rooms in active tab
+            updateRoomProbability roomID, lotteryNumber
 
 # Returns a string with the HTML for a row in the table with the given room information
 roomHTML = (room) ->
-    "<tr id=\"room#{ room.id }\">
+    "<tr class=\"room#{ room.id }\">
         <td>&#9734;</td>
         <td>#{ room.occupancy }</td>
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
         <td></td>
-        <td id=\"room#{ room.id }probability\"></td>
+        <td class=\"room#{ room.id }probability\"></td>
         <td></td>
     </tr>"
 
 # Adds room with given room id to the table
-addRoom = (roomID) ->
+addRoom = (tabNumber, roomID) ->
     if roomID of allRooms
         html = roomHTML allRooms[roomID]
     else
         roomsToLookUp.push roomID
-        html = "<tr id=\"room#{ roomID }\"><td colspan=\"7\"></td></tr>"
-    $(RESULTS_DIV).append html
+        html = "<tr class=\"room#{ roomID }\"><td colspan=\"7\"></td></tr>"
+    $(TAB tabNumber).find(RESULTS_DIV).append html
 
 # Looks up any rooms in the roomsToLookUp list
 # and replaces their row in the results table with a fully populated one
@@ -125,7 +149,7 @@ lookUpRooms = (next = ->)->
             (resultRooms) ->
                 for room in resultRooms
                     allRooms[room.id] = room
-                    $("#room#{ room.id }").replaceWith roomHTML room
+                    $(".room#{ room.id }").replaceWith roomHTML room
                 roomsToLookUp = []
 
                 next()
@@ -134,12 +158,12 @@ lookUpRooms = (next = ->)->
 
 # Updates the result table to show the given rooms
 # Calls next after it's done.
-activateRooms = (rooms, next = ->) ->
-    activeRooms = rooms
+activateRooms = (tabNumber, rooms, next = ->) ->
+    activeRooms[tabNumber] = rooms
 
     # add activated rooms to table
-    $(RESULTS_DIV).html ''
-    addRoom room for room in activeRooms
+    $(TAB tabNumber).find(RESULTS_DIV).html ''
+    addRoom tabNumber, room for room in activeRooms[tabNumber]
     lookUpRooms ->
         updateProbabilities()
         $(ROOM_TABLE).trigger 'update'
@@ -147,18 +171,57 @@ activateRooms = (rooms, next = ->) ->
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
-    $.getJSON 'get_rooms',
-        {
-            occupancy: getChosenOccupancy().join ','
-            buildings: getChosenBuildings().join ','
-        },
-        (resultRooms) ->
-            activateRooms resultRooms
+    if activeTab != -1
+        $.getJSON 'get_rooms',
+            {
+                occupancy: getChosenOccupancy(activeTab).join ','
+                buildings: getChosenBuildings(activeTab).join ','
+            },
+            (resultRooms) ->
+                activateRooms activeTab, resultRooms
 
 
-$(OCCUPANCY_FIELD).change filterChanged
-$(BUILDING_MODE_FIELD).change filterChanged
-$(BUILDINGS_FIELD).change filterChanged
+# Creates a new tab and loads a new table into it
+loadNewTable = () ->
+    tableNumber = tableCount # This is table #...
+
+    # Create a div to hold the table
+    $(RESULT_TABLES).append "<div id=\"tab#{ tableNumber }\"></div>"
+
+    # Load empty table into tab
+    $(TAB tableNumber).load 'table.html', ->
+        populateBuildingSelect tableNumber
+
+        # Activate Chosen plugin for the new table
+        $(".chzn-select").chosen()
+ 
+        # activate TableSorter plugin
+        $(TAB tableNumber).find(ROOM_TABLE).tablesorter
+            debug: false
+            textExtraction: 'simple'
+
+        # Activate change listeners
+        $(OCCUPANCY_FIELD).change filterChanged
+        $(BUILDING_MODE_FIELD).change filterChanged
+        $(BUILDINGS_FIELD).change filterChanged
+
+    # Create a new tab for this table, load it, and activate it
+    new_tab = $("<li><a href=\"#tab#{ tableNumber }\">
+                Search #{ tableNumber + 1 }
+                </a></li>")
+    $(NEW_TAB_BUTTON).parent().before new_tab
+    # Show the table by triggering a click on (and thus activating) its tab
+    new_tab.children('a').trigger 'click'
+
+    tableCount++
+
+# Given a change event from a tab, returns the number of the tab activated
+# Returns -1 if activated tab couldn't be detected
+getActivatedTab = (event) ->
+    targetString = $(event.target).attr 'href'
+    re = new RegExp '#tab(\\d)'
+    matches = re.exec targetString
+    parseInt matches[1] ? -1
 
 $(document).ready ->
     # activate lottery number slider
@@ -171,14 +234,17 @@ $(document).ready ->
             $(ROOM_TABLE).trigger 'update'
     }
 
-    # activate Chosen plugin
-    $(".chzn-select").chosen()
+    $(NEW_TAB_BUTTON).click loadNewTable
+
+    # When switching tabs, remember the currently active one
+    $(RESULT_TABS).change (event) ->
+        activeTab = getActivatedTab event
+        # Also, make sure the probabilities are updated
+        updateProbabilities()
     
-    # activate TableSorter plugin
-    $(ROOM_TABLE).tablesorter
-        debug: false
-        textExtraction: 'simple'
-    
-    # populate building select with buildings
-    populateBuildingSelect()
+    # Retrieve all buildings, which will then be used to populate select box
+    downloadBuildings()
+
+    # Create the first tab for the user
+    loadNewTable()
 

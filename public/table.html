@@ -1,0 +1,91 @@
+        <table class="room_table bordered-table zebra-striped">
+            <thead>
+                <tr>
+                    <th style="width: 5%">&#9733;</th>
+                    <th style="width: 15%">Occupancy</th>
+                    <th style="width: 28%">Building</th>
+                    <th style="width: 10%">Room</th>
+                    <th style="width: 20%">Information</th>
+                    <th style="width: 12%">Probability</th>
+                    <th style="width: 10%">Available</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>
+                        <select
+                            data-placeholder="Occupancy"
+                            class="chzn-select occupancy"
+                            size="1"
+                            multiple="multiple"
+                         >
+                             <option value=""></option>
+                             <option value="1">1</option>
+                             <option value="2">2</option>
+                             <option value="3">3</option>
+                             <option value="4">4</option>
+                             <option value="5">5</option>
+                         </select>
+                    </th>
+                    <th>
+                        <select
+                            class="chzn-select building-mode"
+                            size="1"
+                            style="width: 100px;"
+                         >
+                             <option value="include">Include</option>
+                             <option value="exclude">Exclude</option>
+                         </select>
+                         <br />
+                         <select
+                            data-placeholder="Buildings"
+                            class="chzn-select select-buildings"
+                            size="1"
+                            multiple="multiple"
+                         >
+                             <option value=""></option>
+
+                         </select>
+                     </th>
+                     <th>
+                         <input
+                            name="rooms"
+                            type="text"
+                            placeholder="Rooms"
+                            class="chzn-container chzn-container-single chzn-single chzn-search"
+                         />
+                     </th>
+                     <th></th>
+                     <th>
+                        <input
+                            name="rooms"
+                            type="text"
+                            placeholder="Probability"
+                            class="chzn-container chzn-container-single chzn-single chzn-search"
+                         />
+
+                     </th>
+                     <th></th>
+                </tr>
+
+            </thead>
+            <tbody class="results">
+                <!-- an example row -->
+                <tr>
+                    <td colspan="7" style="text-align: center">
+                        No results yet! Try specifying some criteria.
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>&#9733;</th>
+                    <th>Occupancy</th>
+                    <th>Building</th>
+                    <th>Room</th>
+                    <th>Information</th>
+                    <th>Probability</th>
+                    <th>Available</th>
+                </tr>
+            </tfoot>
+        </table>
+

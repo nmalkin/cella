@@ -10,10 +10,10 @@ body {
     max-width: 500px;
 }
 
-#room_table {
+.room_table {
     table-layout: fixed;
 }
 
-#room_table input, .chzn-container {
+.room_table input, .chzn-container {
     max-width: 90%;
 }
