@@ -184,25 +184,34 @@ filterChanged = (event) ->
             (resultRooms) ->
                 activateRooms activeTab, resultRooms
 
+# Returns the number of the newest tab that exists on the tab
+# (i.e., ignoring deleted tabs)
+# Returns -1 if there is no newest tab.
+getNewestTab = ->
+    i = nextTabNumber - 1
+    while i >= 0 and $(TAB i).length == 0
+        i--
+    return i
+
 # Deletes the table and tab with the given number
 closeTab = (tabToDelete) ->
-    # If current tab is being deleted, switch to last active tab
-    if tabToDelete == activeTab and lastActiveTab != -1
-        $("#tab#{ lastActiveTab }control").children('a').trigger 'click'
-        # TODO: if it happens again, switch to newest tab
-        lastActiveTab = -1 # for now, if that happens, sit without activated tab
-    
     # Remove the tab and its content
     $("#tab#{ tabToDelete }control").remove()
     $(TAB tabToDelete).remove()
 
     activeRooms[tabToDelete] = []
-    
+
     tabCount--
 
     # If we're out of tables, create a new one.
     if tabCount == 0
         loadNewTab()
+    # If current tab is being deleted, switch to last active tab,
+    # or the newest one, if the last active one is no longer known.
+    else if tabToDelete == activeTab
+        nextTab = if lastActiveTab == -1 then getNewestTab() else lastActiveTab
+        $("#tab#{ nextTab }control").children('a').trigger 'click'
+        lastActiveTab = -1
 
 # Creates a new tab and loads a new table into it
 loadNewTab = () ->
