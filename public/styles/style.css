@@ -12,7 +12,6 @@ body {
 
 .close_tab, .close_tab:hover {
     margin-left: 6px;
-    margin-right: -5px;
     padding: 4px;
     text-decoration: none;
 }
