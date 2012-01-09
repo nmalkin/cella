@@ -10,6 +10,13 @@ body {
     max-width: 500px;
 }
 
+.close_tab, .close_tab:hover {
+    margin-left: 6px;
+    margin-right: -5px;
+    padding: 4px;
+    text-decoration: none;
+}
+
 .room_table {
     table-layout: fixed;
 }

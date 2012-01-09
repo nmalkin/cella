@@ -22,14 +22,18 @@ BUILDINGS_FIELD = '.select-buildings'
 # PARAMETERIZED CONSTANTS
 
 TAB = (tabNumber) -> "#tab#{ tabNumber }"
-    # NOTE: this scheme is also used in loadNewTable and getActivatedTab
+    # NOTE: this scheme is also used in loadNewTab and getActivatedTab
 
 
 ## GLOBALS
 # The number of tables/tabs currently open
-tableCount = 0
+tabCount = 0
+# Number of the next tab to be created (numbers are not reused)
+nextTabNumber = 0
 # The number of the currently activated tab
 activeTab = -1;
+# The number of the previous activated tab
+lastActiveTab = -1;
 # An array of all campus areas
 # Campus areas are objects with a name and an array of buildings
 campusAreas = []
@@ -180,23 +184,45 @@ filterChanged = (event) ->
             (resultRooms) ->
                 activateRooms activeTab, resultRooms
 
+# Deletes the table and tab with the given number
+closeTab = (tabToDelete) ->
+    # If current tab is being deleted, switch to last active tab
+    if tabToDelete == activeTab and lastActiveTab != -1
+        $("#tab#{ lastActiveTab }control").children('a').trigger 'click'
+        # TODO: if it happens again, switch to newest tab
+        lastActiveTab = -1 # for now, if that happens, sit without activated tab
+    
+    # Remove the tab and its content
+    $("#tab#{ tabToDelete }control").remove()
+    $(TAB tabToDelete).remove()
+
+    activeRooms[tabToDelete] = []
+    
+    tabCount--
+
+    # If we're out of tables, create a new one.
+    if tabCount == 0
+        loadNewTab()
 
 # Creates a new tab and loads a new table into it
-loadNewTable = () ->
-    tableNumber = tableCount # This is table #...
+loadNewTab = () ->
+    tabNumber = nextTabNumber
+
+    nextTabNumber++
+    tabCount++
 
     # Create a div to hold the table
-    $(RESULT_TABLES).append "<div id=\"tab#{ tableNumber }\"></div>"
+    $(RESULT_TABLES).append "<div id=\"tab#{ tabNumber }\"></div>"
 
     # Load empty table into tab
-    $(TAB tableNumber).load 'table.html', ->
-        populateBuildingSelect tableNumber
+    $(TAB tabNumber).load 'table.html', ->
+        populateBuildingSelect tabNumber
 
         # Activate Chosen plugin for the new table
         $(".chzn-select").chosen()
  
         # activate TableSorter plugin
-        $(TAB tableNumber).find(ROOM_TABLE).tablesorter
+        $(TAB tabNumber).find(ROOM_TABLE).tablesorter
             debug: false
             textExtraction: 'simple'
 
@@ -205,15 +231,18 @@ loadNewTable = () ->
         $(BUILDING_MODE_FIELD).change filterChanged
         $(BUILDINGS_FIELD).change filterChanged
 
-    # Create a new tab for this table, load it, and activate it
-    new_tab = $("<li><a href=\"#tab#{ tableNumber }\">
-                Search #{ tableNumber + 1 }
+    # Create a new tab for this table
+    new_tab = $("<li id=\"tab#{ tabNumber }control\">
+                <a href=\"#tab#{ tabNumber }\">
+                Search #{ tabNumber + 1 }
+                <span class=\"close_tab\" title=\"Close tab\">&#10006;</span>
                 </a></li>")
     $(NEW_TAB_BUTTON).parent().before new_tab
+
+    new_tab.find('.close_tab').click (-> closeTab tabNumber)
+
     # Show the table by triggering a click on (and thus activating) its tab
     new_tab.children('a').trigger 'click'
-
-    tableCount++
 
 # Given a change event from a tab, returns the number of the tab activated
 # Returns -1 if activated tab couldn't be detected
@@ -234,10 +263,11 @@ $(document).ready ->
             $(ROOM_TABLE).trigger 'update'
     }
 
-    $(NEW_TAB_BUTTON).click loadNewTable
+    $(NEW_TAB_BUTTON).click loadNewTab
 
     # When switching tabs, remember the currently active one
     $(RESULT_TABS).change (event) ->
+        lastActiveTab = activeTab
         activeTab = getActivatedTab event
         # Also, make sure the probabilities are updated
         updateProbabilities()
@@ -246,5 +276,5 @@ $(document).ready ->
     downloadBuildings()
 
     # Create the first tab for the user
-    loadNewTable()
+    loadNewTab()
 
