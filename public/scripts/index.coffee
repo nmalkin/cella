@@ -47,10 +47,40 @@ roomsToLookUp = []
 
 ## FUNCTIONS
 
-# Downloads and saves campus areas and buildings from the server
-downloadBuildings = ->
-    $.getJSON 'campus_areas', (result) ->
-        campusAreas = result
+# Saves key->item in persistent storage
+savePersistent = (key, item) ->
+    sessionStorage.setItem key, JSON.stringify item
+
+getPersistent = (key) ->
+    item = sessionStorage.getItem key
+    if item?
+        JSON.parse item
+    else
+        null
+
+# Loads buildings from storage (if available) or downloads them from the server
+loadBuildings = ->
+    campusAreas = getPersistent 'campusAreas'
+
+    # If buildings haven't been saved yet, get them from the server
+    if not campusAreas?
+        $.getJSON 'campus_areas', (result) ->
+            campusAreas = result
+            savePersistent 'campusAreas', campusAreas
+
+# Clears data in persistent storage and displays confirmation message
+clearPersistent = () ->
+    sessionStorage.clear()
+
+    # Replace control with success message for a few seconds
+    container = $(this)
+    container.unbind 'click'
+    currentContents = container.html()
+    container.html '<span class="label success">Done</span>'
+    window.setTimeout (-> 
+        container.html currentContents
+        container.bind 'click', clearPersistent
+    ), 1500
 
 # Adds an option group to the building select box (given)
 # with its value being the campus area
@@ -154,7 +184,11 @@ lookUpRooms = (next = ->)->
                 for room in resultRooms
                     allRooms[room.id] = room
                     $(".room#{ room.id }").replaceWith roomHTML room
-                roomsToLookUp = []
+
+                roomsToLookUp = [] # no more rooms to look up (for now)
+
+                # Update allRooms in storage
+                savePersistent 'allRooms', allRooms
 
                 next()
     else
@@ -164,6 +198,7 @@ lookUpRooms = (next = ->)->
 # Calls next after it's done.
 activateRooms = (tabNumber, rooms, next = ->) ->
     activeRooms[tabNumber] = rooms
+    savePersistent 'activeRooms', activeRooms
 
     # add activated rooms to table
     $(TAB tabNumber).find(RESULTS_DIV).html ''
@@ -193,13 +228,18 @@ getNewestTab = ->
         i--
     return i
 
+# Activates the given tab by triggering a click on its tab control
+activateTab = (tabNumber) ->
+    $("#tab#{ tabNumber }control").children('a').trigger 'click'
+
 # Deletes the table and tab with the given number
 closeTab = (tabToDelete) ->
     # Remove the tab and its content
     $("#tab#{ tabToDelete }control").remove()
     $(TAB tabToDelete).remove()
 
-    activeRooms[tabToDelete] = []
+    activeRooms[tabToDelete] = null
+    savePersistent 'activeRooms', activeRooms
 
     tabCount--
 
@@ -210,16 +250,11 @@ closeTab = (tabToDelete) ->
     # or the newest one, if the last active one is no longer known.
     else if tabToDelete == activeTab
         nextTab = if lastActiveTab == -1 then getNewestTab() else lastActiveTab
-        $("#tab#{ nextTab }control").children('a').trigger 'click'
+        activateTab nextTab
         lastActiveTab = -1
 
-# Creates a new tab and loads a new table into it
-loadNewTab = () ->
-    tabNumber = nextTabNumber
-
-    nextTabNumber++
-    tabCount++
-
+# Creates a new tab with given tab number and loads a new table into it
+loadTab = (tabNumber, next = ->) ->
     # Create a div to hold the table
     $(RESULT_TABLES).append "<div id=\"tab#{ tabNumber }\"></div>"
 
@@ -240,6 +275,8 @@ loadNewTab = () ->
         $(BUILDING_MODE_FIELD).change filterChanged
         $(BUILDINGS_FIELD).change filterChanged
 
+        next()
+
     # Create a new tab for this table
     new_tab = $("<li id=\"tab#{ tabNumber }control\">
                 <a href=\"#tab#{ tabNumber }\">
@@ -250,8 +287,16 @@ loadNewTab = () ->
 
     new_tab.find('.close_tab').click (-> closeTab tabNumber)
 
-    # Show the table by triggering a click on (and thus activating) its tab
-    new_tab.children('a').trigger 'click'
+    activateTab tabNumber
+
+# Creates a new tab with the next available tab number
+loadNewTab = () ->
+    tabNumber = nextTabNumber
+
+    nextTabNumber++
+    tabCount++
+
+    loadTab tabNumber
 
 # Given a change event from a tab, returns the number of the tab activated
 # Returns -1 if activated tab couldn't be detected
@@ -260,6 +305,43 @@ getActivatedTab = (event) ->
     re = new RegExp '#tab(\\d)'
     matches = re.exec targetString
     parseInt matches[1] ? -1
+
+# Loads application state from storage
+# This includes rooms, open tabs, etc.
+loadStateFromStorage = () ->
+    t = getPersistent 'allRooms'
+    allRooms = t if t?
+
+    retrievedLastActiveTab = getPersistent 'lastActiveTab'
+
+    retrievedActiveTab = getPersistent 'activeTab'
+
+    # Load tabs
+    t = getPersistent 'activeRooms'
+    if t?
+        activeRooms = t
+
+        tabCount = 0
+        nextTabNumber = 0
+
+        (->
+            if tab?
+                tabCount++
+
+                # Create function that, when called, activates this tab's rooms
+                activateMyRooms = ( (tabToActivate) ->
+                    () -> activateRooms tabToActivate, activeRooms[tabToActivate]
+                ) nextTabNumber # avoids binding to nextTabNumber
+
+                loadTab nextTabNumber, activateMyRooms
+
+            nextTabNumber++
+        )() for tab in activeRooms
+
+    lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
+    activeTab = retrievedActiveTab if retrievedActiveTab?
+    activateTab activeTab
+
 
 $(document).ready ->
     # activate lottery number slider
@@ -274,16 +356,25 @@ $(document).ready ->
 
     $(NEW_TAB_BUTTON).click loadNewTab
 
+    $('#clear_data').click clearPersistent
+
     # When switching tabs, remember the currently active one
     $(RESULT_TABS).change (event) ->
         lastActiveTab = activeTab
         activeTab = getActivatedTab event
+
+        savePersistent 'lastActiveTab', lastActiveTab
+        savePersistent 'activeTab', activeTab
+
         # Also, make sure the probabilities are updated
         updateProbabilities()
     
     # Retrieve all buildings, which will then be used to populate select box
-    downloadBuildings()
+    loadBuildings()
 
-    # Create the first tab for the user
-    loadNewTab()
+    loadStateFromStorage()
 
+    if tabCount == 0
+        loadNewTab()
+
+    
