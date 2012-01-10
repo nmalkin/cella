@@ -312,8 +312,12 @@ loadStateFromStorage = () ->
     t = getPersistent 'allRooms'
     allRooms = t if t?
 
-    retrievedLastActiveTab = getPersistent 'lastActiveTab'
+    lotteryNumber = getPersistent 'lotteryNumber'
+    if lotteryNumber?
+        $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
+        $(LOTTERY_SLIDER).slider('value', lotteryNumber)
 
+    retrievedLastActiveTab = getPersistent 'lastActiveTab'
     retrievedActiveTab = getPersistent 'activeTab'
 
     # Load tabs
@@ -352,6 +356,7 @@ $(document).ready ->
             $(LOTTERY_NUMBER_DISPLAY).text ui.value
             updateProbabilities()
             $(ROOM_TABLE).trigger 'update'
+            savePersistent 'lotteryNumber', ui.value
     }
 
     $(NEW_TAB_BUTTON).click loadNewTab
