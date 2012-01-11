@@ -16,6 +16,22 @@ body {
     text-decoration: none;
 }
 
+.filter {
+    min-height: 70px;
+}
+
+.filter-set {
+    display: inline;
+}
+
+.occupancy {
+    width: 100px;
+}
+
+.select-buildings {
+    width: 550px;
+}
+
 .room_table {
     table-layout: fixed;
 }
