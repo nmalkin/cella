@@ -24,6 +24,14 @@ body {
     max-width: 90%;
 }
 
+.star {
+    text-align: center;
+}
+
+.header.star:after {
+    content: none;
+}
+
 footer {
     text-align: center;
 }

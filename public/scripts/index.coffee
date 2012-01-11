@@ -175,7 +175,7 @@ updateProbabilities = ->
 # Returns a string with the HTML for a row in the table with the given room information
 roomHTML = (room) ->
     "<tr class=\"room#{ room.id }\">
-        <td>&#9734;</td>
+        <td class=\"star\">&#9734;</td>
         <td>#{ room.occupancy }</td>
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
