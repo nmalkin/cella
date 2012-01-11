@@ -34,6 +34,10 @@ nextTabNumber = 0
 activeTab = -1;
 # The number of the previous activated tab
 lastActiveTab = -1;
+# The occupancy selected in each tab
+selectedOccupancy = []
+# The buildings selected in each tab
+selectedBuildings = []
 # An array of all campus areas
 # Campus areas are objects with a name and an array of buildings
 campusAreas = []
@@ -101,7 +105,23 @@ populateBuildingSelect = (tabNumber) ->
         campusArea.buildings.sort() for campusArea in campusAreas
     
     # Tell the Chosen plugin that the select has been updated
-    buildingSelect.trigger "liszt:updated"
+    buildingSelect.trigger 'liszt:updated'
+
+# Selects each given occupancy in this tab's select box
+selectOccupancy = (tabNumber, occupancies) ->
+    if tabNumber != -1 and occupancies? and occupancies.length > 0
+        occupancySelect = $(TAB tabNumber).find(OCCUPANCY_FIELD)
+
+        occupancySelect.find("option[value=\"#{ occupancy }\"]").attr('selected',
+            'selected') for occupancy in occupancies
+
+# Selects each of the given buildings in this tab's building select box
+selectBuildings = (tabNumber, buildings) ->
+    if tabNumber != -1 and buildings? and buildings.length > 0
+        buildingSelect = $(TAB tabNumber).find(BUILDINGS_FIELD)
+
+        buildingSelect.find("option[value=\"#{ building }\"]").attr('selected',
+            'selected') for building in buildings
 
 # Returns an array with integer values for occupancy selected by the user
 getChosenOccupancy = (tabNumber) ->
@@ -211,13 +231,21 @@ activateRooms = (tabNumber, rooms, next = ->) ->
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
     if activeTab != -1
+        occupancy = getChosenOccupancy activeTab
+        buildings = getChosenBuildings activeTab
+
         $.getJSON 'get_rooms',
             {
-                occupancy: getChosenOccupancy(activeTab).join ','
-                buildings: getChosenBuildings(activeTab).join ','
+                occupancy: occupancy.join ','
+                buildings: buildings.join ','
             },
             (resultRooms) ->
                 activateRooms activeTab, resultRooms
+
+        selectedOccupancy[activeTab] = occupancy 
+        selectedBuildings[activeTab] = buildings
+        savePersistent 'selectedOccupancy', selectedOccupancy
+        savePersistent 'selectedBuildings', selectedBuildings
 
 # Returns the number of the newest tab that exists on the tab
 # (i.e., ignoring deleted tabs)
@@ -261,6 +289,9 @@ loadTab = (tabNumber, next = ->) ->
     # Load empty table into tab
     $(TAB tabNumber).load 'table.html', ->
         populateBuildingSelect tabNumber
+
+        selectOccupancy tabNumber, selectedOccupancy[tabNumber]
+        selectBuildings tabNumber, selectedBuildings[tabNumber]
 
         # Activate Chosen plugin for the new table
         $(".chzn-select").chosen()
@@ -316,6 +347,11 @@ loadStateFromStorage = () ->
     if lotteryNumber?
         $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
         $(LOTTERY_SLIDER).slider('value', lotteryNumber)
+
+    t = getPersistent 'selectedOccupancy'
+    selectedOccupancy = t if t?
+    t = getPersistent 'selectedBuildings'
+    selectedBuildings = t if t?
 
     retrievedLastActiveTab = getPersistent 'lastActiveTab'
     retrievedActiveTab = getPersistent 'activeTab'
