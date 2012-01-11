@@ -29,7 +29,7 @@ TAB = (tabNumber) -> "#tab#{ tabNumber }"
 # The number of tables/tabs currently open
 tabCount = 0
 # Number of the next tab to be created (numbers are not reused)
-nextTabNumber = 0
+nextTabNumber = 1
 # The number of the currently activated tab
 activeTab = -1;
 # The number of the previous activated tab
@@ -311,7 +311,7 @@ loadTab = (tabNumber, next = ->) ->
     # Create a new tab for this table
     new_tab = $("<li id=\"tab#{ tabNumber }control\">
                 <a href=\"#tab#{ tabNumber }\">
-                Search #{ tabNumber + 1 }
+                Search #{ tabNumber }
                 <span class=\"close_tab\" title=\"Close tab\">&#10006;</span>
                 </a></li>")
     $(NEW_TAB_BUTTON).parent().before new_tab
@@ -320,20 +320,20 @@ loadTab = (tabNumber, next = ->) ->
 
     activateTab tabNumber
 
-# Creates a new tab with the next available tab number
-loadNewTab = () ->
+# Creates a new tab with the next available tab number, call next when done
+loadNewTab = (next) ->
     tabNumber = nextTabNumber
 
     nextTabNumber++
     tabCount++
 
-    loadTab tabNumber
+    loadTab tabNumber, next
 
 # Given a change event from a tab, returns the number of the tab activated
 # Returns -1 if activated tab couldn't be detected
 getActivatedTab = (event) ->
     targetString = $(event.target).attr 'href'
-    re = new RegExp '#tab(\\d)'
+    re = new RegExp '#tab(\\d+)'
     matches = re.exec targetString
     parseInt matches[1] ? -1
 
@@ -415,7 +415,11 @@ $(document).ready ->
 
     loadStateFromStorage()
 
+    # If there are no tabs, create one
     if tabCount == 0
-        loadNewTab()
+        # But switch back to the star-tab if it's activated
+        next = if activeTab == 0 then (-> activateTab 0) else (->)
+        loadNewTab next
+
 
     

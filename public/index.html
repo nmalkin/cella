@@ -65,12 +65,44 @@
         </div>
 
         <ul id="result_tabs" class="tabs" data-tabs="tabs">
-            <li><a href="#starred_results">&#9733;</a></li>
+            <li id="tab0control"><a href="#tab0">&#9733;</a></li>
             <li><a id="new_tab">&#10010;</a></li>
         </ul>
         
         <div id="result_tables" class="tab-content">
-            <div id="starred_results"></div>
+            <div id="tab0"><!-- starred results -->
+                <table class="room_table bordered-table zebra-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%">&#9733;</th>
+                            <th style="width: 15%">Occupancy</th>
+                            <th style="width: 28%">Building</th>
+                            <th style="width: 10%">Room</th>
+                            <th style="width: 20%">Information</th>
+                            <th style="width: 12%">Probability</th>
+                            <th style="width: 10%">Available</th>
+                        </tr>
+                    </thead>
+                    <tbody class="results">
+                        <tr>
+                            <td colspan="7" style="text-align: center">
+                                Starred results will appear in this tab.
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>&#9733;</th>
+                            <th>Occupancy</th>
+                            <th>Building</th>
+                            <th>Room</th>
+                            <th>Information</th>
+                            <th>Probability</th>
+                            <th>Available</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
 
         <footer>
