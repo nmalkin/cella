@@ -28,7 +28,7 @@ To get them, once you have cloned the repository:
     cake install:dependencies
 
 Note that you will need to `cake install:dependencies`
-whenever any of these submodules change.
+whenever any submodules change.
 
 
 Building
@@ -48,4 +48,4 @@ To run the server:
     node build/server.js
 
 The server runs, by default, on port 8888.
-(i.e., to access it, go to `http://127.0.0.1:8888/`)
+(i.e., to access it, go to http://127.0.0.1:8888/)
