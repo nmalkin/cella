@@ -25,6 +25,7 @@ task 'install:dependencies', 'Install front-end dependencies', ->
     exec 'cp -f lib/chosen/chosen/chosen.jquery.js public/scripts/chosen.js', processOutput
     exec 'cp -f lib/bootstrap/js/bootstrap-dropdown.js public/scripts/bootstrap-dropdown.js', processOutput
     exec 'cp -f lib/bootstrap/js/bootstrap-tabs.js public/scripts/bootstrap-tabs.js', processOutput
+    exec 'cp -f lib/tablesorter/js/jquery.tablesorter.js public/scripts/tablesorter.js', processOutput
 
     # CSS
     exec 'cp -f lib/chosen/chosen/chosen.css public/styles/chosen.css', processOutput

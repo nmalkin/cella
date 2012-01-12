@@ -4,3 +4,6 @@
 [submodule "lib/bootstrap"]
 	path = lib/bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "lib/tablesorter"]
+	path = lib/tablesorter
+	url = git://github.com/Mottie/tablesorter.git
