@@ -25,6 +25,11 @@ Building
 --------
 To build the source code for this project, run `cake build` from the top-level directory.
 
+If you are working with the source code, you can use the `--watch / -w` option
+so that the project is automatically rebuilt when any of the source files change.
+
+    cake -w build
+
 
 Running
 -------
