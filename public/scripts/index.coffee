@@ -19,6 +19,10 @@ OCCUPANCY_FIELD = '.occupancy'
 BUILDING_MODE_FIELD = '.building-mode'
 BUILDINGS_FIELD = '.select-buildings'
 
+STAR_TAB = 0
+STAR_FILLED = '&#9733;'
+STAR_EMPTY = '&#9734;'
+
 # PARAMETERIZED CONSTANTS
 
 TAB = (tabNumber) -> "#tab#{ tabNumber }"
@@ -29,7 +33,7 @@ TAB = (tabNumber) -> "#tab#{ tabNumber }"
 # The number of tables/tabs currently open
 tabCount = 0
 # Number of the next tab to be created (numbers are not reused)
-nextTabNumber = 1
+nextTabNumber = 1 # starts at 1 because 0 is reserved for STAR_TAB
 # The number of the currently activated tab
 activeTab = -1;
 # The number of the previous activated tab
@@ -43,8 +47,9 @@ selectedBuildings = []
 campusAreas = []
 # All rooms whose information we have, referenced by id
 allRooms = {}
-# List of rooms currently displayed
+# Array of arrays; each is an array of rooms displayed in respective tab
 activeRooms = []
+activeRooms[STAR_TAB] = []
 # List of rooms that we need to look up
 roomsToLookUp = []
 
@@ -173,9 +178,10 @@ updateProbabilities = ->
             updateRoomProbability roomID, lotteryNumber
 
 # Returns a string with the HTML for a row in the table with the given room information
-roomHTML = (room) ->
+roomHTML = (room, filledStar=false) ->
+    star = if filledStar then STAR_FILLED else STAR_EMPTY
     "<tr class=\"room#{ room.id }\">
-        <td class=\"star\">&#9734;</td>
+        <td class=\"star\">#{ star }</td>
         <td>#{ room.occupancy }</td>
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
@@ -187,11 +193,17 @@ roomHTML = (room) ->
 # Adds room with given room id to the table
 addRoom = (tabNumber, roomID) ->
     if roomID of allRooms
-        html = roomHTML allRooms[roomID]
+        isStarred = if activeRooms[STAR_TAB]? then \
+            activeRooms[STAR_TAB].indexOf(roomID) != -1 else false
+        html = roomHTML allRooms[roomID], isStarred
     else
         roomsToLookUp.push roomID
         html = "<tr class=\"room#{ roomID }\"><td colspan=\"7\"></td></tr>"
     $(TAB tabNumber).find(RESULTS_DIV).append html
+
+# Removes room from tab
+removeRoom = (tabNumber, roomID) ->
+    $(TAB tabNumber).find(".room#{ roomID }").remove()
 
 # Looks up any rooms in the roomsToLookUp list
 # and replaces their row in the results table with a fully populated one
@@ -221,11 +233,13 @@ activateRooms = (tabNumber, rooms, next = ->) ->
     savePersistent 'activeRooms', activeRooms
 
     # add activated rooms to table
-    $(TAB tabNumber).find(RESULTS_DIV).html ''
+    myTab = $(TAB tabNumber)
+    myTab.find(RESULTS_DIV).html ''
     addRoom tabNumber, room for room in activeRooms[tabNumber]
     lookUpRooms ->
+        myTab.find('.star').click toggleStar
         updateProbabilities()
-        $(ROOM_TABLE).trigger 'update'
+        myTab.find(ROOM_TABLE).trigger 'update'
         next()
 
 # Callback that gets called when the filter options are changed
@@ -246,6 +260,62 @@ filterChanged = (event) ->
         selectedBuildings[activeTab] = buildings
         savePersistent 'selectedOccupancy', selectedOccupancy
         savePersistent 'selectedBuildings', selectedBuildings
+
+# Returns the ID of the room whose star was clicked 
+# (or a similar event was generated)
+# Return -1 if no match was found.
+getRoomFromStarEvent = (event) ->
+    roomRow = $(event.target).parent 'tr'
+    if roomRow.length > 0
+        roomString = roomRow.attr 'class'
+        matches = (new RegExp 'room(\\d+)').exec roomString
+        parseInt matches[1] ? -1
+    else
+        -1
+
+# "Stars" the room with the given ID
+# Starred rooms are saved and displayed in the "star" tab 
+starRoom = (roomID) ->
+    # Set a "starred" icon (for all rooms with this ID in all tables)
+    $(".room#{ roomID }").children('.star').html STAR_FILLED
+
+    # Remember this room as being starred
+    if not activeRooms[STAR_TAB]?
+        activeRooms[STAR_TAB] = []
+    (activeRooms[STAR_TAB]).push roomID
+    savePersistent 'activeRooms', activeRooms
+
+    # Add this room to starred-result table
+    addRoom STAR_TAB, roomID
+
+    # Add toggle listener
+    $(TAB STAR_TAB).find('.star').click toggleStar
+
+# Undoes the starring of the given room
+unstarRoom = (roomID) ->
+    # Set "unstarred" icon
+    $(".room#{ roomID }").children('.star').html STAR_EMPTY
+
+    # Remove from list of starred rooms
+    index = activeRooms[STAR_TAB].indexOf roomID
+    if index == -1
+        return
+    activeRooms[STAR_TAB][index..index] = []
+    savePersistent 'activeRooms', activeRooms
+
+    # Remove this room from star-table
+    removeRoom STAR_TAB, roomID
+
+
+# Processes a click event and stars/unstars its room
+toggleStar = (event) ->
+    room = getRoomFromStarEvent event
+    if room != -1
+        isStarred = activeRooms[STAR_TAB].indexOf(room) != -1
+        if isStarred
+            unstarRoom room
+        else
+            starRoom room
 
 # Returns the number of the newest tab that exists on the tab
 # (i.e., ignoring deleted tabs)
@@ -361,6 +431,10 @@ loadStateFromStorage = () ->
     if t?
         activeRooms = t
 
+        # Set aside starred rooms to process after all the tabs are created
+        starredRooms = activeRooms[STAR_TAB]
+        activeRooms[STAR_TAB] = null
+
         tabCount = 0
         nextTabNumber = 0
 
@@ -377,6 +451,15 @@ loadStateFromStorage = () ->
 
             nextTabNumber++
         )() for tab in activeRooms
+
+        # Re-star the starred rooms
+        if starredRooms?
+            # TODO: this is a hacky way to make sure rooms are starred
+            # only after all the tabs have been loaded.
+            # What we really want is to have this wait on an event, or be in a callback.
+            window.setTimeout (-> starRoom room for room in starredRooms), 250
+        else
+            activeRooms[STAR_TAB]= []
 
     lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
     activeTab = retrievedActiveTab if retrievedActiveTab?
@@ -418,7 +501,7 @@ $(document).ready ->
     # If there are no tabs, create one
     if tabCount == 0
         # But switch back to the star-tab if it's activated
-        next = if activeTab == 0 then (-> activateTab 0) else (->)
+        next = if activeTab == STAR_TAB then (-> activateTab STAR_TAB) else (->)
         loadNewTab next
 
 
