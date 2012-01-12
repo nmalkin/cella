@@ -11,14 +11,41 @@ It is a successor to _Domus_, a desktop application with similar goals, built by
 Dependencies
 ------------
 
-This application runs on top of [node.js](http://nodejs.org/) (tested with versions 0.6.6).
+This application runs on top of [node.js](http://nodejs.org/) (tested with version 0.6.6).
 
 You will need the following node modules.
 They can be most easily obtained using [npm](http://npmjs.org/).
 
+- [CoffeeScript](http://jashkenas.github.com/coffee-script/) (tested with 1.2.0)
 - [connect](http://senchalabs.github.com/connect/) (tested with 1.8.5)
 - [sqlite3](https://github.com/developmentseed/node-sqlite3) (tested with 2.1.1)
 
-To compile the code, you will need
-[CoffeeScript](http://jashkenas.github.com/coffee-script/)
-(which can also be obtained through npm).
+Additional dependencies are included as submodules within the Git repository.
+To get them, once you have cloned the repository:
+
+    git submodule init
+    git submodule update
+    cake install:dependencies
+
+Note that you will need to `cake install:dependencies`
+whenever any submodules change.
+
+
+Building
+--------
+To build the source code for this project, run `cake build` from the top-level directory.
+
+If you are working with the source code, you can use the `--watch / -w` option
+so that the project is automatically rebuilt when any of the source files change.
+
+    cake -w build
+
+
+Running
+-------
+To run the server:
+
+    node build/server.js
+
+The server runs, by default, on port 8888.
+(i.e., to access it, go to http://127.0.0.1:8888/)

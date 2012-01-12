@@ -10,7 +10,7 @@ server.use connect.router (app) ->
     app.get '/room_info', api.room_info
     app.get '/buildings', api.buildings
     app.get '/campus_areas', api.campus_areas
-server.use connect.static __dirname + '/public'
+server.use connect.static __dirname + '/..' + '/public'
 
 
 server.listen(8888)
