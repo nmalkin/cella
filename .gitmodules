@@ -1,6 +1,6 @@
-[submodule "public/chosen"]
-	path = public/chosen
+[submodule "lib/chosen"]
+	path = lib/chosen
 	url = git://github.com/harvesthq/chosen.git
-[submodule "public/bootstrap"]
-	path = public/bootstrap
+[submodule "lib/bootstrap"]
+	path = lib/bootstrap
 	url = git://github.com/twitter/bootstrap.git

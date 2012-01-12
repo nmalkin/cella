@@ -20,6 +20,16 @@ They can be most easily obtained using [npm](http://npmjs.org/).
 - [connect](http://senchalabs.github.com/connect/) (tested with 1.8.5)
 - [sqlite3](https://github.com/developmentseed/node-sqlite3) (tested with 2.1.1)
 
+Additional dependencies are included as submodules within the Git repository.
+To get them, once you have cloned the repository:
+
+    git submodule init
+    git submodule update
+    cake install:dependencies
+
+Note that you will need to `cake install:dependencies`
+whenever any of these submodules change.
+
 
 Building
 --------
