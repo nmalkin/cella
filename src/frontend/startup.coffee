@@ -46,7 +46,7 @@ loadStateFromStorage = () ->
         )() for tab in activeRooms
 
         # Re-star the starred rooms
-        if starredRooms?
+        if starredRooms? and starredRooms.length > 0
             # TODO: this is a hacky way to make sure rooms are starred
             # only after all the tabs have been loaded.
             # What we really want is to have this wait on an event, or be in a callback.
