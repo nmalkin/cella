@@ -46,13 +46,17 @@ loadStateFromStorage = () ->
         )() for tab in activeRooms
 
         # Re-star the starred rooms
+        log starredRooms
         if starredRooms? and starredRooms.length > 0
+            clearStarPlaceholderMessage()
+
             # TODO: this is a hacky way to make sure rooms are starred
             # only after all the tabs have been loaded.
             # What we really want is to have this wait on an event, or be in a callback.
             window.setTimeout (-> starRoom room for room in starredRooms), 250
         else
             activeRooms[STAR_TAB]= []
+            showStarPlaceholderMessage()
 
     lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
     activeTab = retrievedActiveTab if retrievedActiveTab?
@@ -97,5 +101,6 @@ $(document).ready ->
         next = if activeTab == STAR_TAB then (-> activateTab STAR_TAB) else (->)
         loadNewTab next
 
-
-    
+    # Display star placeholder message if no rooms are starred
+    if activeRooms[STAR_TAB].length == 0
+        showStarPlaceholderMessage()

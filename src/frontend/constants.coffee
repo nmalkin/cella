@@ -17,6 +17,9 @@ BUILDINGS_FIELD = '.select-buildings'
 STAR_TAB = 0
 STAR_FILLED = '&#9733;'
 STAR_EMPTY = '&#9734;'
+STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
+                                Starred results will appear in this tab.
+                            </td></tr>'
 
 # PARAMETERIZED CONSTANTS
 

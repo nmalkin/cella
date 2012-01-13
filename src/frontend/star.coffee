@@ -41,7 +41,22 @@ toggleStar = (event) ->
         isStarred = activeRooms[STAR_TAB].indexOf(room) != -1
         if isStarred
             unstarRoom room
+
+            # If no rooms are left in the star tab, display placeholder message
+            if activeRooms[STAR_TAB].length == 0
+                showStarPlaceholderMessage()
         else
+            # If the placeholder message is there, remove it
+            # (now that there are some rooms in the list)
+            if activeRooms[STAR_TAB].length == 0
+                clearStarPlaceholderMessage()
+
             starRoom room
 
+# Displays placeholder message in the star tab
+showStarPlaceholderMessage = () ->
+    $(TAB STAR_TAB).find(RESULTS_DIV).html STAR_PLACEHOLDER_MESSAGE
 
+# Clears the placeholder message from the star tab
+clearStarPlaceholderMessage = () ->
+    $(TAB STAR_TAB).find(RESULTS_DIV).html ''
