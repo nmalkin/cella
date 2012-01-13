@@ -3,13 +3,22 @@
 
 # Returns a string with the HTML for a row in the table with the given room information
 roomHTML = (room, filledStar=false) ->
+    # Is this room starred?
     star = if filledStar then STAR_FILLED else STAR_EMPTY
+
+    log room
+    label = (text) -> "<span class=\"label\">#{ text }</span> "
+    labels = ''
+    labels += if room.apartment then label 'Apartment Rate' else ''
+    labels += if room.sophomore then label 'Sophomore-Only' else ''
+    labels += if room.gender_neutral then label 'Gender-Neutral' else ''
+
     "<tr class=\"room#{ room.id }\">
         <td class=\"star\">#{ star }</td>
         <td>#{ room.occupancy }</td>
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
-        <td></td>
+        <td>#{ labels }</td>
         <td class=\"room#{ room.id }probability\"></td>
         <td></td>
     </tr>"
