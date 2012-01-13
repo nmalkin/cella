@@ -6,7 +6,6 @@ roomHTML = (room, filledStar=false) ->
     # Is this room starred?
     star = if filledStar then STAR_FILLED else STAR_EMPTY
 
-    log room
     label = (text) -> "<span class=\"label\">#{ text }</span> "
     labels = ''
     labels += if room.apartment then label 'Apartment Rate' else ''
