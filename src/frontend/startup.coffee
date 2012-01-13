@@ -46,7 +46,6 @@ loadStateFromStorage = () ->
         )() for tab in activeRooms
 
         # Re-star the starred rooms
-        log starredRooms
         if starredRooms? and starredRooms.length > 0
             clearStarPlaceholderMessage()
 
@@ -102,5 +101,5 @@ $(document).ready ->
         loadNewTab next
 
     # Display star placeholder message if no rooms are starred
-    if activeRooms[STAR_TAB].length == 0
+    if activeRooms[STAR_TAB]? and activeRooms[STAR_TAB].length == 0
         showStarPlaceholderMessage()
