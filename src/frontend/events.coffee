@@ -31,4 +31,19 @@ getRoomFromStarEvent = (event) ->
     else
         -1
 
+# Called when the slider is changed, this function updates all probabilities
+# in the active tab.
+sliderChanged = (event, ui) ->
+    lotteryNumber = if ui.value? then ui.value else MIN_LOTTERY_NUMBER 
 
+    # Display the selected lottery number to the user
+    $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
+
+    # Update the probability values in the table
+    updateProbabilities lotteryNumber
+
+    # Let the TableSorter plugin know the table has been updated
+    $(ROOM_TABLE).trigger 'update'
+
+    # Save the new lottery number
+    savePersistent 'lotteryNumber', lotteryNumber

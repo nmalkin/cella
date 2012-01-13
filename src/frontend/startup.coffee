@@ -67,11 +67,7 @@ $(document).ready ->
     $(LOTTERY_SLIDER).slider {
         min: MIN_LOTTERY_NUMBER,
         max: MAX_LOTTERY_NUMBER,
-        slide: (event, ui) ->
-            $(LOTTERY_NUMBER_DISPLAY).text ui.value
-            updateProbabilities()
-            $(ROOM_TABLE).trigger 'update'
-            savePersistent 'lotteryNumber', ui.value
+        slide: sliderChanged
     }
 
     $(NEW_TAB_BUTTON).click loadNewTab

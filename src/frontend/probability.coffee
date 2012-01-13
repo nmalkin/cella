@@ -25,9 +25,10 @@ updateRoomProbability = (roomID, lotteryNumber) ->
         $(".room#{ roomID }probability").text percentage
 
 # Goes through all active rooms and updates their probabilities
-# to match the currently selected lottery number
-updateProbabilities = ->
+# to match the lottery number.
+# If no lottery number is given, the currently selected one is used.
+updateProbabilities = (lotteryNumber = null) ->
+    lotteryNumber ?= getLotteryNumber()
     if activeTab != -1 and activeRooms[activeTab]?
-        lotteryNumber = getLotteryNumber()
         for roomID in activeRooms[activeTab] # only update rooms in active tab
             updateRoomProbability roomID, lotteryNumber
