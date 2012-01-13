@@ -15,22 +15,22 @@ frontendFiles = [
     'startup'
 ]
 
+libraryFiles = # library location : production location
+    # JS
+    'lib/chosen/chosen/chosen.jquery.js' : 'public/scripts/chosen.js'
+    'lib/bootstrap/js/bootstrap-dropdown.js' : 'public/scripts/bootstrap-dropdown.js'
+    'lib/bootstrap/js/bootstrap-tabs.js' : 'public/scripts/bootstrap-tabs.js'
+    'lib/tablesorter/js/jquery.tablesorter.js' : 'public/scripts/tablesorter.js'
+
+    # CSS
+    'lib/chosen/chosen/chosen.css' : 'public/styles/chosen.css'
+    'lib/chosen/chosen/chosen-sprite.png' : 'public/styles/chosen-sprite.png'
+    'lib/bootstrap/bootstrap.css' : 'public/styles/bootstrap.css'
+
 processOutput = (err, stdout, stderr) ->
     throw err if err
     if stdout or stderr
         console.log stdout + stderr
-
-task 'install:dependencies', 'Install front-end dependencies', ->
-    # JS
-    exec 'cp -f lib/chosen/chosen/chosen.jquery.js public/scripts/chosen.js', processOutput
-    exec 'cp -f lib/bootstrap/js/bootstrap-dropdown.js public/scripts/bootstrap-dropdown.js', processOutput
-    exec 'cp -f lib/bootstrap/js/bootstrap-tabs.js public/scripts/bootstrap-tabs.js', processOutput
-    exec 'cp -f lib/tablesorter/js/jquery.tablesorter.js public/scripts/tablesorter.js', processOutput
-
-    # CSS
-    exec 'cp -f lib/chosen/chosen/chosen.css public/styles/chosen.css', processOutput
-    exec 'cp -f lib/chosen/chosen/chosen-sprite.png public/styles/chosen-sprite.png', processOutput
-    exec 'cp -f lib/bootstrap/bootstrap.css public/styles/bootstrap.css', processOutput
 
 task 'build:frontend', 'Build frontend code', ->
     files = ("src/frontend/#{ file }.coffee" for file in frontendFiles).join ' '
@@ -59,3 +59,11 @@ task 'build', 'Build project', (options) ->
     else
         invoke 'build:server'
         invoke 'build:frontend'
+
+
+task 'install:dependencies', 'Install front-end dependencies', ->
+    exec "cp -f #{ oldLocation } #{ newLocation }", processOutput \
+        for oldLocation, newLocation of libraryFiles
+
+task 'install', 'Install application', ->
+    invoke 'install:dependencies'
