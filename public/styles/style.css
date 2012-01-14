@@ -42,13 +42,15 @@ body {
     table-layout: fixed;
 }
 
-.room_table input, .chzn-container {
+.filter .chzn-container {
     max-width: 90%;
     vertical-align: top;
 }
 
-.chzn-container-single, .chzn-single, 
-.chzn-container-single .chzn-single {
+.filter .chzn-container-single,
+.filter .chzn-single, 
+.filter .chzn-container-single,
+.filter .chzn-single {
     height: 30px;
     line-height: 30px;
 }
