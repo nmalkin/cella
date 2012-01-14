@@ -6,6 +6,10 @@ loadStateFromStorage = () ->
     t = getPersistent 'allRooms'
     allRooms = t if t?
 
+    sophomore = getPersistent 'sophomore'
+    if sophomore?
+        setSophomoreStatus sophomore
+
     lotteryNumber = getPersistent 'lotteryNumber'
     if lotteryNumber?
         $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
@@ -71,6 +75,8 @@ $(document).ready ->
         max: MAX_LOTTERY_NUMBER,
         slide: sliderChanged
     }
+
+    $(SOPHOMORE_CHECKBOX).change sophomoreChanged 
 
     $(NEW_TAB_BUTTON).click loadNewTab
 

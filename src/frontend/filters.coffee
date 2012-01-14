@@ -64,3 +64,11 @@ includeChosenBuildings = (tabNumber) ->
 # Returns an array with the currently selected buildings
 getChosenBuildings = (tabNumber) ->
     $(TAB tabNumber).find(BUILDINGS_FIELD).val() ? []
+
+# Returns true if the "I am a sophomore" checkbox is checked.
+isSophomore = () ->
+    $(SOPHOMORE_CHECKBOX).prop 'checked'
+
+# Checks the sophomore checkbox if argument is true
+setSophomoreStatus = (sophomore) ->
+    $(SOPHOMORE_CHECKBOX).prop 'checked', sophomore

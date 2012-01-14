@@ -12,6 +12,7 @@ filterChanged = (event) ->
                 occupancy: occupancy.join ','
                 buildings: buildings.join ','
                 include_buildings: includeBuildings 
+                sophomore: isSophomore()
             },
             (resultRooms) ->
                 activateRooms activeTab, resultRooms
@@ -51,3 +52,8 @@ sliderChanged = (event, ui) ->
 
     # Save the new lottery number
     savePersistent 'lotteryNumber', lotteryNumber
+
+# Called when the sophomore status checkbox is toggled
+sophomoreChanged = (event) ->
+    savePersistent 'sophomore', isSophomore()
+    filterChanged event

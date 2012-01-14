@@ -15,14 +15,17 @@ resultToResponse = (result, response) ->
 
 # Builds a response that is a JSON array of room ids
 # of rooms that fit the required features.
-# The query must include the following fields: occupancy, buildings
 exports.get_rooms = (req, res, next) ->
-    # get the query parameters: occupancy, buildings
+    requiredParams = ['occupancy', 'buildings', 'include_buildings', 'sophomore']
+
     params = (url.parse req.url, true).query
-    
-    # make sure we actually have some values for occupancy and buildings
-    if not (params.occupancy? and params.buildings? and params.include_buildings?)
-        res.writeHead 200, {'Content-Type': 'text/plan'} # TODO: I'd like this to be a 400 code, but browsers seem to interpret that as a 404
+
+    # Check for required parameters
+    requiredParamsPresent = true 
+    requiredParamsPresent &= params[req]? for req in requiredParams
+    if not requiredParamsPresent 
+        res.writeHead 200, {'Content-Type': 'text/plan'}
+        # TODO: I'd like this to be a 400 code, but browsers seem to interpret that as a 404
         res.end 'Missing required parameters\n'
     else
         # multiple values in the query strings will be delimited by commas.
@@ -35,8 +38,13 @@ exports.get_rooms = (req, res, next) ->
         isBoolean = (val) -> val == 'true' or val == 'false'
         booleanValue = (val) -> val == 'true'
 
+        # Include or exclude the buildings from the query? (default: include)
         req_include = if isBoolean params.include_buildings \
             then booleanValue params.include_buildings else true
+
+        # Include sophomore-only housing? (default: no)
+        req_sophomore = if isBoolean params.sophomore \
+            then booleanValue params.sophomore else false
 
         # the occupancy values are strings, should be converted to ints
         req_occupancy = (parseInt value for value in req_occupancy \
@@ -48,6 +56,18 @@ exports.get_rooms = (req, res, next) ->
             # we just return no results.
             resultToResponse [], res
         else
+            # If the user isn't a sophomore, we should check if any of their
+            # buildings are sophomore-only.
+            if not req_sophomore
+                sophomoreCheck = (building) ->
+                    buildings.buildings[building].sophomore == false
+            else
+                sophomoreCheck = -> true
+
+            # Make sure the buildings exist and do the sophomore check, if needed.
+            req_buildings = (building for building in req_buildings \
+                when buildings.buildings[building]? and sophomoreCheck building)
+
             rooms.select req_occupancy, req_include, req_buildings, (result) ->
                 resultToResponse result, res
             

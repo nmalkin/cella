@@ -3,6 +3,7 @@
 MIN_LOTTERY_NUMBER = 1
 MAX_LOTTERY_NUMBER = 800
 
+SOPHOMORE_CHECKBOX = '#sophomore'
 LOTTERY_SLIDER = '#lottery'
 LOTTERY_NUMBER_DISPLAY = '#lottery_number'
 NEW_TAB_BUTTON = '#new_tab'
