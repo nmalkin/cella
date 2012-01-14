@@ -39,6 +39,13 @@ selectBuildings = (tabNumber, buildings) ->
         buildingSelect.find("option[value=\"#{ building }\"]").attr('selected',
             'selected') for building in buildings
 
+# Selects the include or exclude option in the given tab
+selectInclude = (tabNumber, includeBuildings) ->
+    if tabNumber != -1 and (includeBuildings == true or includeBuildings == false)
+        select = $(TAB tabNumber).find(BUILDING_MODE_FIELD)
+        option = if includeBuildings then 'include' else 'exclude'
+        select.find("option[value=\"#{ option }\"]").attr('selected', 'selected')
+
 # Returns an array with integer values for occupancy selected by the user
 getChosenOccupancy = (tabNumber) ->
     value = $(TAB tabNumber).find(OCCUPANCY_FIELD).val() ? []

@@ -5,19 +5,23 @@ filterChanged = (event) ->
     if activeTab != -1
         occupancy = getChosenOccupancy activeTab
         buildings = getChosenBuildings activeTab
+        includeBuildings = includeChosenBuildings activeTab
 
         $.getJSON 'get_rooms',
             {
                 occupancy: occupancy.join ','
                 buildings: buildings.join ','
+                include_buildings: includeBuildings 
             },
             (resultRooms) ->
                 activateRooms activeTab, resultRooms
 
         selectedOccupancy[activeTab] = occupancy 
         selectedBuildings[activeTab] = buildings
+        selectedIncludes[activeTab] = includeBuildings
         savePersistent 'selectedOccupancy', selectedOccupancy
         savePersistent 'selectedBuildings', selectedBuildings
+        savePersistent 'selectedIncludes', selectedIncludes 
 
 # Returns the ID of the room whose star was clicked 
 # (or a similar event was generated)

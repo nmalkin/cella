@@ -14,8 +14,9 @@ nonEmptyArray = (arr) ->
 # Looks up rooms that match the given occupancy [an array of ints] 
 # and are in the given buildings [an array of strings],
 # then calls the callback with the array of room ids
-exports.select = (occupancy, buildings, callback) ->
-    console.log "Selecting rooms of size #{ occupancy } in #{ buildings }"
+exports.select = (occupancy, includeBuildings, buildings, callback) ->
+    console.log "Selecting rooms of size #{ occupancy }" +
+        "#{ if (not includeBuildings) then ' not' else '' } in #{ buildings }"
 
     query = 'SELECT rowid FROM rooms_with_regressions WHERE ('
     params = []
@@ -34,9 +35,18 @@ exports.select = (occupancy, buildings, callback) ->
             console.error "Invalid #{ database_field }: #{ values}"
     
     buildQuery 'occupancy', occupancy
-    query += ') AND ('
+
+    if includeBuildings
+        console.log 'including'
+        query += ') AND ('
+    else
+        console.log 'not including'
+        query += ') AND NOT ('
+
     buildQuery 'building', buildings
     query += ')'
+
+    console.log 'inc', includeBuildings, 'q', query, 'b', buildings
 
     db.all query, params, (err, rows) ->
         if err?

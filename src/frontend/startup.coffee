@@ -15,6 +15,8 @@ loadStateFromStorage = () ->
     selectedOccupancy = t if t?
     t = getPersistent 'selectedBuildings'
     selectedBuildings = t if t?
+    t = getPersistent 'selectedIncludes'
+    selectedIncludes = t if t?
 
     retrievedLastActiveTab = getPersistent 'lastActiveTab'
     retrievedActiveTab = getPersistent 'activeTab'

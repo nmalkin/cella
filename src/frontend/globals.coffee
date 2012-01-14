@@ -18,6 +18,9 @@ selectedOccupancy = []
 # The buildings selected in each tab
 selectedBuildings = []
 
+# The choice of whether to include or exclude buildings from each tab
+selectedIncludes = []
+
 # An array of all campus areas
 # Campus areas are objects with a name and an array of buildings
 campusAreas = []

@@ -1,7 +1,7 @@
 url = require 'url'
 
 rooms = require './rooms.js'
-buildings = require('./buildings')
+buildings = require './buildings'
 
 
 # Given a result, writes it stringified to the response
@@ -21,7 +21,7 @@ exports.get_rooms = (req, res, next) ->
     params = (url.parse req.url, true).query
     
     # make sure we actually have some values for occupancy and buildings
-    if not (params.occupancy? and params.buildings?)
+    if not (params.occupancy? and params.buildings? and params.include_buildings?)
         res.writeHead 200, {'Content-Type': 'text/plan'} # TODO: I'd like this to be a 400 code, but browsers seem to interpret that as a 404
         res.end 'Missing required parameters\n'
     else
@@ -29,6 +29,14 @@ exports.get_rooms = (req, res, next) ->
         # explode them into arrays
         req_occupancy = params.occupancy.split ','
         req_buildings = params.buildings.split ','
+
+        # Check for whether the parameter is a boolean.
+        # The comparison uses strings since this is a GET request (passed in URL).
+        isBoolean = (val) -> val == 'true' or val == 'false'
+        booleanValue = (val) -> val == 'true'
+
+        req_include = if isBoolean params.include_buildings \
+            then booleanValue params.include_buildings else true
 
         # the occupancy values are strings, should be converted to ints
         req_occupancy = (parseInt value for value in req_occupancy \
@@ -40,7 +48,7 @@ exports.get_rooms = (req, res, next) ->
             # we just return no results.
             resultToResponse [], res
         else
-            rooms.select req_occupancy, req_buildings, (result) ->
+            rooms.select req_occupancy, req_include, req_buildings, (result) ->
                 resultToResponse result, res
             
 # Sets the response to a JSON array of objects with room info

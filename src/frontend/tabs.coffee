@@ -53,6 +53,7 @@ loadTab = (tabNumber, next = ->) ->
 
         selectOccupancy tabNumber, selectedOccupancy[tabNumber]
         selectBuildings tabNumber, selectedBuildings[tabNumber]
+        selectInclude tabNumber, selectedIncludes[tabNumber]
 
         # Activate Chosen plugin for the new table
         $(".chzn-select").chosen()
