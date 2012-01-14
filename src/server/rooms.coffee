@@ -12,7 +12,8 @@ nonEmptyArray = (arr) ->
     (isArray arr) and arr.length > 0
 
 # Looks up rooms that match the given occupancy [an array of ints] 
-# and are in the given buildings [an array of strings],
+# and are [if includeBuildings is true] or are not [if includeBuildings is false]
+# in the given buildings [an array of strings],
 # then calls the callback with the array of room ids
 exports.select = (occupancy, includeBuildings, buildings, callback) ->
     console.log "Selecting rooms of size #{ occupancy }" +
@@ -37,16 +38,12 @@ exports.select = (occupancy, includeBuildings, buildings, callback) ->
     buildQuery 'occupancy', occupancy
 
     if includeBuildings
-        console.log 'including'
         query += ') AND ('
     else
-        console.log 'not including'
         query += ') AND NOT ('
 
     buildQuery 'building', buildings
     query += ')'
-
-    console.log 'inc', includeBuildings, 'q', query, 'b', buildings
 
     db.all query, params, (err, rows) ->
         if err?
