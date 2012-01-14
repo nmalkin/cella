@@ -82,17 +82,8 @@ $(document).ready ->
 
     $('#clear_data').click clearPersistent
 
-    # When switching tabs, remember the currently active one
-    $(RESULT_TABS).change (event) ->
-        lastActiveTab = activeTab
-        activeTab = getActivatedTab event
-
-        savePersistent 'lastActiveTab', lastActiveTab
-        savePersistent 'activeTab', activeTab
-
-        # Also, make sure the probabilities are updated
-        updateProbabilities()
-    
+    $(RESULT_TABS).change tabChanged
+            
     # Retrieve all buildings, which will then be used to populate select box
     loadBuildings()
 

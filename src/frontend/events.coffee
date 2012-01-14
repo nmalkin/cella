@@ -24,6 +24,18 @@ filterChanged = (event) ->
         savePersistent 'selectedBuildings', selectedBuildings
         savePersistent 'selectedIncludes', selectedIncludes 
 
+# Called when user switches between tabs
+tabChanged = (event) ->
+    # Keep track of, and store, current and last active tab
+    lastActiveTab = activeTab
+    activeTab = getActivatedTab event
+
+    savePersistent 'lastActiveTab', lastActiveTab
+    savePersistent 'activeTab', activeTab
+
+    # Also, make sure the probabilities are updated
+    updateProbabilities()
+
 # Returns the ID of the room whose star was clicked 
 # (or a similar event was generated)
 # Return -1 if no match was found.
