@@ -19,6 +19,16 @@ exports.select = (occupancy, includeBuildings, buildings, callback) ->
     console.log "Selecting rooms of size #{ occupancy }" +
         "#{ if (not includeBuildings) then ' not' else '' } in #{ buildings }"
 
+    # In any of the following cases, we know we won't get any results.
+    if (not isArray occupancy) or
+    occupancy.length <= 0 or
+    (not isArray buildings) or
+    (buildings.length <= 0 and includeBuildings)
+        console.log 'No results possible'
+        callback []
+        return
+
+    # Build query to database
     query = 'SELECT rowid FROM rooms_with_regressions WHERE ('
     params = []
     
@@ -32,19 +42,20 @@ exports.select = (occupancy, includeBuildings, buildings, callback) ->
             for value in values[1..]
                 query += " OR #{ database_field } = ?"
                 params.push value
-        else
-            console.error "Invalid #{ database_field }: #{ values}"
     
     buildQuery 'occupancy', occupancy
 
-    if includeBuildings
-        query += ') AND ('
-    else
-        query += ') AND NOT ('
+    if buildings.length > 0
+        if includeBuildings
+            query += ') AND ('
+        else
+            query += ') AND NOT ('
 
-    buildQuery 'building', buildings
+        buildQuery 'building', buildings
+
     query += ')'
 
+    # Execute query
     db.all query, params, (err, rows) ->
         if err?
             console.error "An error occurred with the query: #{ error }"
