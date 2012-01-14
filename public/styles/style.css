@@ -17,11 +17,15 @@ body {
 }
 
 .filter {
+    display: table;
     min-height: 70px;
+    margin-bottom: 9px;
 }
 
 .filter-set {
-    display: inline;
+    display: table-cell;
+    vertical-align: top;
+    line-height: 32px;
 }
 
 .occupancy {
@@ -29,6 +33,8 @@ body {
 }
 
 .select-buildings {
+    display: table-cell;
+    vertical-align: top;
     width: 550px;
 }
 
@@ -38,6 +44,13 @@ body {
 
 .room_table input, .chzn-container {
     max-width: 90%;
+    vertical-align: top;
+}
+
+.chzn-container-single, .chzn-single, 
+.chzn-container-single .chzn-single {
+    height: 30px;
+    line-height: 30px;
 }
 
 .star {
