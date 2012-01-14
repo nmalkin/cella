@@ -36,6 +36,10 @@ tabChanged = (event) ->
     # Also, make sure the probabilities are updated
     updateProbabilities()
 
+# Called when the new-tab button is clicked
+newTabClicked = (event) ->
+    loadNewTab()
+
 # Returns the ID of the room whose star was clicked 
 # (or a similar event was generated)
 # Return -1 if no match was found.

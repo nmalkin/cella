@@ -83,7 +83,7 @@ loadTab = (tabNumber, next = ->) ->
     activateTab tabNumber
 
 # Creates a new tab with the next available tab number, calls next when done
-loadNewTab = (next) ->
+loadNewTab = (next = ->) ->
     tabNumber = nextTabNumber
 
     nextTabNumber++

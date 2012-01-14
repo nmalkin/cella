@@ -78,7 +78,7 @@ $(document).ready ->
 
     $(SOPHOMORE_CHECKBOX).change sophomoreChanged 
 
-    $(NEW_TAB_BUTTON).click loadNewTab
+    $(NEW_TAB_BUTTON).click newTabClicked
 
     $('#clear_data').click clearPersistent
 
