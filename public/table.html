@@ -1,3 +1,40 @@
+        <div class="filter">
+            <div class="filter-set" style="padding-left: 15px;">
+            Occupancy:
+                <select
+                    data-placeholder="Occupancy"
+                    class="chzn-select occupancy"
+                    size="1"
+                    multiple="multiple"
+                >
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="filter-set" style="padding-left: 10px;">
+            Buildings:
+                <select
+                    class="chzn-select building-mode"
+                    size="1"
+                    style="width: 100px;"
+                >
+                    <option value="include">Include</option>
+                    <option value="exclude">Exclude</option>
+                </select>
+                <select
+                    data-placeholder="Buildings"
+                    class="chzn-select select-buildings"
+                    size="1"
+                    multiple="multiple"
+                >
+                    <option value=""></option>
+                 </select>
+             </div>
+        </div>
         <table class="room_table bordered-table zebra-striped">
             <thead>
                 <tr>
@@ -9,64 +46,6 @@
                     <th style="width: 12%">Probability</th>
                     <th style="width: 10%">Available</th>
                 </tr>
-                <tr>
-                    <th></th>
-                    <th>
-                        <select
-                            data-placeholder="Occupancy"
-                            class="chzn-select occupancy"
-                            size="1"
-                            multiple="multiple"
-                         >
-                             <option value=""></option>
-                             <option value="1">1</option>
-                             <option value="2">2</option>
-                             <option value="3">3</option>
-                             <option value="4">4</option>
-                             <option value="5">5</option>
-                         </select>
-                    </th>
-                    <th>
-                        <select
-                            class="chzn-select building-mode"
-                            size="1"
-                            style="width: 100px;"
-                         >
-                             <option value="include">Include</option>
-                             <option value="exclude">Exclude</option>
-                         </select>
-                         <br />
-                         <select
-                            data-placeholder="Buildings"
-                            class="chzn-select select-buildings"
-                            size="1"
-                            multiple="multiple"
-                         >
-                             <option value=""></option>
-
-                         </select>
-                     </th>
-                     <th>
-                         <input
-                            name="rooms"
-                            type="text"
-                            placeholder="Rooms"
-                            class="chzn-container chzn-container-single chzn-single chzn-search"
-                         />
-                     </th>
-                     <th></th>
-                     <th>
-                        <input
-                            name="rooms"
-                            type="text"
-                            placeholder="Probability"
-                            class="chzn-container chzn-container-single chzn-single chzn-search"
-                         />
-
-                     </th>
-                     <th></th>
-                </tr>
-
             </thead>
             <tbody class="results">
                 <!-- an example row -->
