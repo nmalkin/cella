@@ -57,6 +57,7 @@ loadTab = (tabNumber, next = ->) ->
 
         # Activate Chosen plugin for the new table
         $(".chzn-select").chosen()
+        $(".group-result").bind 'click', selectCampusArea
  
         # activate TableSorter plugin
         $(TAB tabNumber).find(ROOM_TABLE).tablesorter
