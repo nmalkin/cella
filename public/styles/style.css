@@ -55,6 +55,21 @@ body {
     line-height: 30px;
 }
 
+.chzn-container .chzn-results .group-result {
+    cursor: pointer;
+}
+
+.chzn-container .chzn-results .group-result:hover {
+    background: #3875d7;
+    color: #FFFFFF;
+}
+
+.chzn-container .chzn-results .group-result:hover:after {
+    content: " (select all buildings in campus area)";
+    font-size: 8pt;
+    font-weight: normal;
+}
+
 .star {
     text-align: center;
 }
