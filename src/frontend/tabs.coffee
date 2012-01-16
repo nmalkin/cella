@@ -61,6 +61,10 @@ loadTab = (tabNumber, next = ->) ->
         # Create some new behavior for Chosen so that entire 
         # groups may be selected.
         $(".group-result").bind 'click', selectCampusArea
+
+        # Unselect all items when a group name is highlighted
+        # Only needed because first item is automatically highlighted
+        # when the Chosen options are first displayed.
         $(".group-result").bind 'mouseenter', (event) ->
             $(".group-option").trigger 'mouseleave'
  
