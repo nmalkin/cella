@@ -65,8 +65,8 @@ loadTab = (tabNumber, next = ->) ->
         # Unselect all items when a group name is highlighted
         # Only needed because first item is automatically highlighted
         # when the Chosen options are first displayed.
-        $(".chzn-container").bind 'mousedown', (event) ->
-            $(".active-result").trigger 'mouseleave'
+        $(".chzn-container").bind 'mousedown click', (event) ->
+            $(".highlighted").trigger 'mouseleave'
  
         # activate TableSorter plugin
         $(TAB tabNumber).find(ROOM_TABLE).tablesorter
