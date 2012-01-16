@@ -29,7 +29,7 @@ PROBABILITY_COLORS = [
     'rgb(255, 179, 87)'  # unlikely
     'rgb(240, 222, 82)' # average
     'rgb(20, 199, 89)'   # likely
-    'rgb(20, 198, 29)'    # very likely
+    'rgb(0, 138, 7)'    # very likely
 ]
 
 # PARAMETERIZED CONSTANTS
