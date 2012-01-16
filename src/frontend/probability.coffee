@@ -42,13 +42,13 @@ updateRoomProbability = (roomID, lotteryNumber) ->
     if allRooms[roomID]?
         probability = getRoomProbability allRooms[roomID], lotteryNumber
         percentage = "#{ Math.round probability * 100 }%"
-        $("#room#{ roomID }probability").text percentage
-        background = $("#room#{ roomID }probability").css "background-image"
+        #$(".room#{ roomID }probability").text percentage
+        background = $(".room#{ roomID }probability").css "background-image"
         if background?
             color = getProbabilityBarColor probability
             newBackground = recreateProbabilityGradient background, color
-            $("#room#{ roomID }probability").css "background-color", color
-            $("#room#{ roomID }probability").css "width", percentage
+            $(".room#{ roomID }probability").css "background-color", color
+            $(".room#{ roomID }probability").css "width", percentage
         
 # Goes through all active rooms and updates their probabilities
 # to match the lottery number.
