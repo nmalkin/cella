@@ -1,13 +1,15 @@
 db = require('./housing.js').db
 
 # An object with properties for each of the buildings
-exports.buildings = []
+exports.buildings = {}
 # An array of all the building names, sorted
 exports.names = []
 # An array of objects, 
 # each of which has a name (the campus area) and an array of the buildings in that area
 # sorted by name, alphabetically
 exports.campusAreas = []
+# An array with the names of buildings that are sophomore-only.
+exports.sophomoreOnly = []
 
 # load all buildings from database and build derivatives
 do ->
@@ -43,3 +45,7 @@ do ->
             # sort campus areas by name, alphabetically
             exports.campusAreas.sort (a, b) ->
                 a.name > b.name
+
+            # Identify sophomore-only buildings
+            exports.sophomoreOnly.push name \
+                for name, building of exports.buildings when building.sophomore
