@@ -85,3 +85,31 @@ footer {
 #clear_data {
     font-size: x-small;
 }
+
+.probability {
+    border-radius: 3px;
+    -webkit-border: 3px;
+    background-color: #e4e4e4;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #e4e4e4), color-stop(0.7, #eeeeee));
+    background-image: -webkit-linear-gradient(center bottom, #e4e4e4 0%, #eeeeee 70%);
+    background-image: -webkit-linear-gradient(left center, #14C759 0%, #14C759 73%);
+    background-image: -moz-linear-gradient(center bottom, #e4e4e4 0%, #eeeeee 70%);
+    background-image: -o-linear-gradient(bottom, #e4e4e4 0%, #eeeeee 70%);
+    background-image: -ms-linear-gradient(top, #e4e4e4 0%,#eeeeee 70%);
+    background-image: linear-gradient(top, #e4e4e4 0%,#eeeeee 70%);
+    color: #333333;
+    border: 1px solid #b4b4b4;
+    line-height: 18px;
+    padding: 3px 19px 3px 6px;
+}
+
+.probability div {
+    border-radius: 3px;
+    -webkit-border: 3px;
+    background-color: #e4e4e4;
+    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0, #14C759), color-stop(78, #14C759));
+    color: #333333;
+    line-height: 18px;
+    width: 100%;
+    height: 100%;
+}
