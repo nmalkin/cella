@@ -56,12 +56,20 @@ exports.get_rooms = (req, res, next) ->
             # we just return no results.
             resultToResponse [], res
         else
-            # If the user isn't a sophomore, we should check if any of their
-            # buildings are sophomore-only.
-            if not req_sophomore
-                sophomoreCheck = (building) ->
-                    buildings.buildings[building].sophomore == false
-            else
+            if req_include # If including given buildings:
+                # If the user isn't a sophomore, we should check if any of their
+                # buildings are sophomore-only (and exclude them).
+                if not req_sophomore
+                    sophomoreCheck = (building) ->
+                        buildings.buildings[building].sophomore == false
+                else
+                    sophomoreCheck = -> true
+            else # If excluding given buildings:
+                # If not a sophomore, add sophomore-only buildings to those
+                # being excluded.
+                if not req_sophomore
+                    req_buildings = req_buildings.concat buildings.sophomoreOnly
+
                 sophomoreCheck = -> true
 
             # Make sure the buildings exist and do the sophomore check, if needed.
