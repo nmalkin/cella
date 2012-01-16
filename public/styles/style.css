@@ -65,9 +65,10 @@ body {
 }
 
 .chzn-container .chzn-results .group-result:hover:after {
-    content: " (select all buildings in campus area)";
+    content: " select all buildings in campus area";
     font-size: 8pt;
     font-weight: normal;
+    vertical-align: 1px;
 }
 
 .star {
