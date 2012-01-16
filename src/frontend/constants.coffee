@@ -22,6 +22,16 @@ STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 Starred results will appear in this tab.
                             </td></tr>'
 
+# COLORS
+
+PROBABILITY_COLORS = [
+    'rgb(245, 79, 98)'  # very unlikely
+    'rgb(255, 179, 87)'  # unlikely
+    'rgb(240, 222, 82)' # average
+    'rgb(20, 199, 89)'   # likely
+    'rgb(20, 198, 29)'    # very likely
+]
+
 # PARAMETERIZED CONSTANTS
 
 TAB = (tabNumber) -> "#tab#{ tabNumber }"
