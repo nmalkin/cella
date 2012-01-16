@@ -85,7 +85,5 @@ selectCampusArea = (event) =>
             buildings.push next
     for building in buildings
        e = $("##{ building.id }")
-       e.trigger 'mouseenter'
        e.trigger 'mousedown'
        e.trigger 'mouseup'
-       e.trigger 'mouseleave'
