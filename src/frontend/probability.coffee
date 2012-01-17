@@ -18,36 +18,32 @@ getRoomProbability = (room, lotteryNumber) ->
     logit room.b0, room.b1, lotteryNumber
 
 # Returns the color of the probability bar given the probability
-getProbabilityBarColor = (probability) ->
-    console.log category = parseInt probability / (1.0 / 5)
-    PROBABILITY_COLORS[category]
+getProbabilityBarColors = (probability) ->
+    category = parseInt probability / (1.0 / 5)
+    [PROBABILITY_COLORS_DARK[category], PROBABILITY_COLORS[category]]
 
 # Reconstruct a new gradient for a probability bar given the old graident
-# and a new color
-recreateProbabilityGradient = (gradient, color) ->
+# and new colors
+recreateProbabilityGradient = (gradient, colors) ->
     if gradient.indexOf "linear-gradient" != -1
-        replacement = ", #{ color } 0%, "
-        replacement += "#{ color } 100%,"
-        regex = new RegExp ",[^,]+,[^,]+,"
-        gradient.replace regex, replacement
-    else
-        decimal = percentage.substr 0, pecentage.length - 2
-        replacement = "color-stop(0, #{ color }), "
-        replacement += "color-stop(1 #{ color }),"
-        regex = new RegExp ", color-stop[^)]+), color-stop[^)]+),"
-        gradient.replace regex, replacement
+        idx = gradient.indexOf "("
+        prefix = gradient.substr 0, idx
+        prefix + "(bottom, #{ colors[0] } 0%, #{ colors[1] } 70%)"
 
 # Update probability of room with given ID based on given lottery number
 updateRoomProbability = (roomID, lotteryNumber) ->
     if allRooms[roomID]?
         probability = getRoomProbability allRooms[roomID], lotteryNumber
+        if probability < .05
+            probability = .05
         percentage = "#{ Math.round probability * 100 }%"
         #$(".room#{ roomID }probability").text percentage
         background = $(".room#{ roomID }probability").css "background-image"
+        colors = getProbabilityBarColors probability
         if background?
-            color = getProbabilityBarColor probability
-            newBackground = recreateProbabilityGradient background, color
-            $(".room#{ roomID }probability").css "background-color", color
+            console.log newBackground = recreateProbabilityGradient background, colors
+            $(".room#{ roomID }probability").css "background-color", colors[1]
+            console.log $(".room#{ roomID }probability").css "background-image", newBackground
             $(".room#{ roomID }probability").css "width", percentage
         
 # Goes through all active rooms and updates their probabilities
