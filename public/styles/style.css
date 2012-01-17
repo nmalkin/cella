@@ -89,8 +89,8 @@ footer {
     background-image: -webkit-linear-gradient(center bottom, #e4e4e4 0%, #eeeeee 70%);
     background-image: -moz-linear-gradient(center bottom, #e4e4e4 0%, #eeeeee 70%);
     background-image: -o-linear-gradient(bottom, #e4e4e4 0%, #eeeeee 70%);
-    background-image: -ms-linear-gradient(top, #e4e4e4 0%,#eeeeee 70%);
-    background-image: linear-gradient(top, #e4e4e4 0%,#eeeeee 70%);
+    background-image: -ms-linear-gradient(top, #e4e4e4 0%, #eeeeee 70%);
+    background-image: linear-gradient(top, #e4e4e4 0%, #eeeeee 70%);
     border: 1px solid #b4b4b4;
 }
 
@@ -98,12 +98,12 @@ footer {
     display: inline-block;
     background-clip: padding-box;
     background-color: #e4e4e4;
-    //background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0, #14C759), color-stop(1, #14C759), color-stop(1, rgba(0,0,0,0)), color-stop(1, rgba(0, 0, 0, 0)));
-    //background-image: -webkit-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    //background-image: -moz-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    //background-image: -o-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    //background-image: -ms-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    //background-image: linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
+    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0, #14C759), color-stop(1, #14C759), color-stop(1, rgba(0,0,0,0)), color-stop(1, rgba(0, 0, 0, 0)));
+    background-image: -webkit-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
+    background-image: -moz-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
+    background-image: -o-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
+    background-image: -ms-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
+    background-image: linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
     color: #333333;
     width: 78%;
     text-align: right;
