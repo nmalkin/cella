@@ -29,6 +29,12 @@ recreateProbabilityGradient = (gradient, colors) ->
         idx = gradient.indexOf "("
         prefix = gradient.substr 0, idx
         prefix + "(bottom, #{ colors[0] } 0%, #{ colors[1] } 70%)"
+    else
+        idx = gradient.indexOf "("
+        prefix = gradient.substr 0, idx
+        newGradient += "(linear, left bottom, left top, "
+        newGradient += "color-stop(0, #{ colors[0] }), "
+        newGradient += "color-stop(0.7, #{ colors[1] }))"
 
 # Update probability of room with given ID based on given lottery number
 updateRoomProbability = (roomID, lotteryNumber) ->
