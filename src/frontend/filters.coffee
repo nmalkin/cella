@@ -87,3 +87,5 @@ selectCampusArea = (event) =>
        e = $("##{ building.id }")
        e.trigger 'mousedown'
        e.trigger 'mouseup'
+    console.log $("input:last").trigger 'blur'
+    #$("*").trigger 'blur'
