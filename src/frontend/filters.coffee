@@ -72,3 +72,18 @@ isSophomore = () ->
 # Checks the sophomore checkbox if argument is true
 setSophomoreStatus = (sophomore) ->
     $(SOPHOMORE_CHECKBOX).prop 'checked', sophomore
+
+# Called when a group item is selected in a Chosen select item, this function
+# selects all items in the group and adds them to the filter. This is needed
+# because Chosen does not provide for it out of the box.
+selectCampusArea = (event) =>
+    next = event.target
+    buildings = []
+    while next.nextSibling? and "group-result" != building = next.nextSibling.className
+        next = next.nextSibling
+        if building.indexOf "result-selected" == -1
+            buildings.push next
+    for building in buildings
+       e = $("##{ building.id }")
+       e.trigger 'mousedown'
+       e.trigger 'mouseup'
