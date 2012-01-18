@@ -53,4 +53,8 @@ sliderChanged = (event, ui) ->
 # Called when the sophomore status checkbox is toggled
 sophomoreChanged = (event) ->
     savePersistent 'sophomore', isSophomore()
-    filterChanged event
+    
+    tab = STAR_TAB + 1
+    while (tab < nextTabNumber) and activeRooms[tab]?
+        findSelectedRooms tab
+        tab++
