@@ -62,6 +62,8 @@ loadTab = (tabNumber, next = ->) ->
         $(TAB tabNumber).find(ROOM_TABLE).tablesorter
             debug: false
             textExtraction: 'simple'
+        # Supplement to TableSorter, to save current sort order
+        $(TAB tabNumber).find('.header').click tableHeaderClicked
 
         # Activate change listeners
         $(OCCUPANCY_FIELD).change filterChanged
