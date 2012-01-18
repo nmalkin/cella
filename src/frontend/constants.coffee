@@ -22,6 +22,10 @@ STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 Starred results will appear in this tab.
                             </td></tr>'
 
+NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
+                                No results were found. Try some other criteria.
+                            </td></tr>'
+
 # PARAMETERIZED CONSTANTS
 
 TAB = (tabNumber) -> "#tab#{ tabNumber }"

@@ -52,12 +52,17 @@ activateRooms = (tabNumber, rooms, next = ->) ->
     activeRooms[tabNumber] = rooms
     savePersistent 'activeRooms', activeRooms
 
-    # add activated rooms to table
     myTab = $(TAB tabNumber)
-    myTab.find(RESULTS_DIV).html ''
-    addRoom tabNumber, room for room in activeRooms[tabNumber]
-    lookUpRooms ->
-        myTab.find('.star').click toggleStar
-        updateProbabilities()
-        myTab.find(ROOM_TABLE).trigger 'update'
+
+    # add activated rooms to table
+    if activeRooms[tabNumber].length == 0
+        myTab.find(RESULTS_DIV).html NO_RESULT_PLACEHOLDER_MESSAGE 
         next()
+    else
+        myTab.find(RESULTS_DIV).html ''
+        addRoom tabNumber, room for room in activeRooms[tabNumber]
+        lookUpRooms ->
+            myTab.find('.star').click toggleStar
+            updateProbabilities()
+            myTab.find(ROOM_TABLE).trigger 'update'
+            next()
