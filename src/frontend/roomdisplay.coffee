@@ -19,7 +19,7 @@ roomHTML = (room, filledStar=false) ->
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
         <td>#{ labels }</td>
-        <td class=\"room#{ room.id }probability\"></td>
+        <td><div class=\"probability\"><div class=\"room#{ room.id }probability\">&nbsp;</div></td>
         <td></td>
     </tr>"
 

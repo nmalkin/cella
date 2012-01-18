@@ -17,13 +17,41 @@ logit = (b0, b1, x) ->
 getRoomProbability = (room, lotteryNumber) ->
     logit room.b0, room.b1, lotteryNumber
 
+# Returns the color of the probability bar given the probability
+getProbabilityBarColors = (probability) ->
+    category = parseInt probability / (1.0 / 5)
+    [PROBABILITY_COLORS_DARK[category], PROBABILITY_COLORS[category]]
+
+# Reconstruct a new gradient for a probability bar given the old graident
+# and new colors
+recreateProbabilityGradient = (gradient, colors) ->
+    if gradient.indexOf "linear-gradient" != -1
+        idx = gradient.indexOf "("
+        prefix = gradient.substr 0, idx
+        prefix + "(bottom, #{ colors[0] } 0%, #{ colors[1] } 70%)"
+    else
+        idx = gradient.indexOf "("
+        prefix = gradient.substr 0, idx
+        newGradient += "(linear, left bottom, left top, "
+        newGradient += "color-stop(0, #{ colors[0] }), "
+        newGradient += "color-stop(0.7, #{ colors[1] }))"
+
 # Update probability of room with given ID based on given lottery number
 updateRoomProbability = (roomID, lotteryNumber) ->
     if allRooms[roomID]?
         probability = getRoomProbability allRooms[roomID], lotteryNumber
+        if probability < .05
+            probability = .05
         percentage = "#{ Math.round probability * 100 }%"
-        $(".room#{ roomID }probability").text percentage
-
+        #$(".room#{ roomID }probability").text percentage
+        background = $(".room#{ roomID }probability").css "background-image"
+        colors = getProbabilityBarColors probability
+        if background?
+            console.log newBackground = recreateProbabilityGradient background, colors
+            $(".room#{ roomID }probability").css "background-color", colors[1]
+            console.log $(".room#{ roomID }probability").css "background-image", newBackground
+            $(".room#{ roomID }probability").css "width", percentage
+        
 # Goes through all active rooms and updates their probabilities
 # to match the lottery number.
 # If no lottery number is given, the currently selected one is used.
