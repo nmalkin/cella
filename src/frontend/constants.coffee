@@ -40,6 +40,10 @@ PROBABILITY_COLORS = [
     'rgb(0, 184, 9)'    # very likely
 ]
 
+NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
+                                No results were found. Try some other criteria.
+                            </td></tr>'
+
 # PARAMETERIZED CONSTANTS
 
 TAB = (tabNumber) -> "#tab#{ tabNumber }"

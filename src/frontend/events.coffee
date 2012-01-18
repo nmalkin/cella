@@ -3,26 +3,7 @@
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
     if activeTab != -1
-        occupancy = getChosenOccupancy activeTab
-        buildings = getChosenBuildings activeTab
-        includeBuildings = includeChosenBuildings activeTab
-
-        $.getJSON 'get_rooms',
-            {
-                occupancy: occupancy.join ','
-                buildings: buildings.join ','
-                include_buildings: includeBuildings 
-                sophomore: isSophomore()
-            },
-            (resultRooms) ->
-                activateRooms activeTab, resultRooms
-
-        selectedOccupancy[activeTab] = occupancy 
-        selectedBuildings[activeTab] = buildings
-        selectedIncludes[activeTab] = includeBuildings
-        savePersistent 'selectedOccupancy', selectedOccupancy
-        savePersistent 'selectedBuildings', selectedBuildings
-        savePersistent 'selectedIncludes', selectedIncludes 
+        findSelectedRooms activeTab
 
 # Called when user switches between tabs
 tabChanged = (event) ->
@@ -72,4 +53,8 @@ sliderChanged = (event, ui) ->
 # Called when the sophomore status checkbox is toggled
 sophomoreChanged = (event) ->
     savePersistent 'sophomore', isSophomore()
-    filterChanged event
+    
+    tab = STAR_TAB + 1
+    while (tab < nextTabNumber) and activeRooms[tab]?
+        findSelectedRooms tab
+        tab++

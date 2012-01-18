@@ -88,13 +88,13 @@ footer {
 .probability div {
     display: inline-block;
     background-clip: padding-box;
-    background-color: #e4e4e4;
-    background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0, #14C759), color-stop(1, #14C759), color-stop(1, rgba(0,0,0,0)), color-stop(1, rgba(0, 0, 0, 0)));
-    background-image: -webkit-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    background-image: -moz-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    background-image: -o-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    background-image: -ms-linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
-    background-image: linear-gradient(left, #14c759 0%, #14c759 100%, rgba(0,0,0,0) 100%, rgba(0,0,0,0) 100%);
+    background-color: #14c759;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #14C759), color-stop(0.7, #14C759));
+    background-image: -webkit-linear-gradient(bottom, #14c759 0%, #14c759 70%);
+    background-image: -moz-linear-gradient(bottom, #14c759 0%, #14c759 70%);
+    background-image: -o-linear-gradient(bottom, #14c759 0%, #14c759 70%);
+    background-image: -ms-linear-gradient(bottom, #14c759 0%, #14c759 70%);
+    background-image: linear-gradient(bottom, #14c759 0%, #14c759 70%);
     color: #333333;
     width: 78%;
     text-align: right;

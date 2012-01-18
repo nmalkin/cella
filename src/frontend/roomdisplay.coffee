@@ -10,7 +10,8 @@ roomHTML = (room, filledStar=false) ->
     labels = ''
     labels += if room.apartment then label 'Apartment Rate' else ''
     labels += if room.sophomore then label 'Sophomore-Only' else ''
-    labels += if room.gender_neutral then label 'Gender-Neutral' else ''
+    labels += if room.gender_neutral and
+        room.occupancy > 1 then label 'Gender-Neutral' else ''
 
     "<tr class=\"room#{ room.id }\">
         <td class=\"star\">#{ star }</td>
