@@ -1,6 +1,30 @@
 ## Functions having to do with processing rooms:
 #  looking them up, activating them
 
+# Performs a query to find the rooms according to the criteria in the filters
+# of the given tab.
+findSelectedRooms = (tab) ->
+    occupancy = getChosenOccupancy tab
+    buildings = getChosenBuildings tab
+    includeBuildings = includeChosenBuildings tab
+
+    $.getJSON 'get_rooms',
+        {
+            occupancy: occupancy.join ','
+            buildings: buildings.join ','
+            include_buildings: includeBuildings 
+            sophomore: isSophomore()
+        },
+        (resultRooms) ->
+            activateRooms tab, resultRooms
+
+    selectedOccupancy[tab] = occupancy 
+    selectedBuildings[tab] = buildings
+    selectedIncludes[tab] = includeBuildings
+    savePersistent 'selectedOccupancy', selectedOccupancy
+    savePersistent 'selectedBuildings', selectedBuildings
+    savePersistent 'selectedIncludes', selectedIncludes 
+
 # Looks up any rooms in the roomsToLookUp list
 # and replaces their row in the results table with a fully populated one
 # Calls next after it's done.
@@ -28,12 +52,17 @@ activateRooms = (tabNumber, rooms, next = ->) ->
     activeRooms[tabNumber] = rooms
     savePersistent 'activeRooms', activeRooms
 
-    # add activated rooms to table
     myTab = $(TAB tabNumber)
-    myTab.find(RESULTS_DIV).html ''
-    addRoom tabNumber, room for room in activeRooms[tabNumber]
-    lookUpRooms ->
-        myTab.find('.star').click toggleStar
-        updateProbabilities()
-        myTab.find(ROOM_TABLE).trigger 'update'
+
+    # add activated rooms to table
+    if activeRooms[tabNumber].length == 0
+        myTab.find(RESULTS_DIV).html NO_RESULT_PLACEHOLDER_MESSAGE 
         next()
+    else
+        myTab.find(RESULTS_DIV).html ''
+        addRoom tabNumber, room for room in activeRooms[tabNumber]
+        lookUpRooms ->
+            myTab.find('.star').click toggleStar
+            updateProbabilities()
+            myTab.find(ROOM_TABLE).trigger 'update'
+            next()
