@@ -69,9 +69,13 @@ loadTab = (tabNumber, next = ->) ->
             $(".highlighted").trigger 'mouseleave'
  
         # activate TableSorter plugin
-        $(TAB tabNumber).find(ROOM_TABLE).tablesorter
-            debug: false
-            textExtraction: 'simple'
+        try
+            $(TAB tabNumber).find(ROOM_TABLE).tablesorter
+                debug: false
+                textExtraction: 'simple'
+                sortList: [[2,0], [3,0]]
+        catch error
+
         # Supplement to TableSorter, to save current sort order
         $(TAB tabNumber).find('.header').click tableHeaderClicked
 
