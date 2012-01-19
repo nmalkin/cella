@@ -37,35 +37,39 @@ loadStateFromStorage = () ->
         tabCount = 0
         nextTabNumber = 0
 
-        (->
-            if tab?
-                tabCount++
+        # Wait for all tabs to be loaded
+        await
+            loadAndActivateTab = (tabNumber, rooms, next) ->
+                if rooms?
+                    tabCount++
 
-                # Create function that, when called, activates this tab's rooms
-                activateMyRooms = ( (tabToActivate) ->
-                    () -> activateRooms tabToActivate, activeRooms[tabToActivate]
-                ) nextTabNumber # avoids binding to nextTabNumber
+                    # Load current tab
+                    await loadTab tabNumber, defer()
+                    
+                    # Now that tab is loaded, populate it with rooms
+                    activateRooms tabNumber, rooms, next
+                else
+                    next()
 
-                loadTab nextTabNumber, activateMyRooms
+                return
 
-            nextTabNumber++
-        )() for tab in activeRooms
+            for tab in activeRooms
+                loadAndActivateTab nextTabNumber, tab, defer()
+                nextTabNumber++
 
+        # Now that all tabs have been loaded:
         # Re-star the starred rooms
         if starredRooms? and starredRooms.length > 0
             clearStarPlaceholderMessage()
-
-            # TODO: this is a hacky way to make sure rooms are starred
-            # only after all the tabs have been loaded.
-            # What we really want is to have this wait on an event, or be in a callback.
-            window.setTimeout (-> starRoom room for room in starredRooms), 250
+            starRoom room for room in starredRooms
         else
             activeRooms[STAR_TAB]= []
             showStarPlaceholderMessage()
 
-    lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
-    activeTab = retrievedActiveTab if retrievedActiveTab?
-    activateTab activeTab
+        # Activate the last active tab
+        lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
+        activeTab = retrievedActiveTab if retrievedActiveTab?
+        activateTab activeTab
 
 
 $(document).ready ->
