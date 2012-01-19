@@ -47,9 +47,9 @@ updateRoomProbability = (roomID, lotteryNumber) ->
         background = $(".room#{ roomID }probability").css "background-image"
         colors = getProbabilityBarColors probability
         if background?
-            console.log newBackground = recreateProbabilityGradient background, colors
+            newBackground = recreateProbabilityGradient background, colors
             $(".room#{ roomID }probability").css "background-color", colors[1]
-            console.log $(".room#{ roomID }probability").css "background-image", newBackground
+            $(".room#{ roomID }probability").css "background-image", newBackground
             $(".room#{ roomID }probability").css "width", percentage
         
 # Goes through all active rooms and updates their probabilities
