@@ -99,3 +99,7 @@ footer {
     width: 78%;
     text-align: right;
 }
+
+.probability-text {
+    display: none;
+}

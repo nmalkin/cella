@@ -41,11 +41,18 @@ recreateProbabilityGradient = (gradient, colors) ->
 # Update probability of room with given ID based on given lottery number
 updateRoomProbability = (roomID, lotteryNumber) ->
     if allRooms[roomID]?
+        # Get probability
         probability = getRoomProbability allRooms[roomID], lotteryNumber
+
+        # Very low probability should still be seen; therefore "round" up to 5%.
         if probability < .05
             probability = .05
+
+        # Set the text value (for sorting; it will not be displayed)
         percentage = "#{ Math.round probability * 100 }%"
-        #$(".room#{ roomID }probability").text percentage
+        $(".room#{ roomID }probability").children('.probability-text').text percentage
+
+        # Display colored bar representing likelihood
         background = $(".room#{ roomID }probability").css "background-image"
         colors = getProbabilityBarColors probability
         if background?
