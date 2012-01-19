@@ -47,7 +47,18 @@ loadStateFromStorage = () ->
                     await loadTab tabNumber, defer()
                     
                     # Now that tab is loaded, populate it with rooms
-                    activateRooms tabNumber, rooms, next
+                    await activateRooms tabNumber, rooms, defer()
+
+                    # Execute callback
+                    next()
+                    # XXX: for some reason, if this is placed after the sorting
+                    # trigger (and it gets called), the code is never reached.
+
+                    # Sort the table according to the saved order
+                    sortOrder = getPersistent "sort_tab#{ tabNumber }"
+                    if sortOrder?
+                        $(TAB tabNumber).find(ROOM_TABLE).trigger 'sorton',
+                            [[sortOrder]]
                 else
                     next()
 
