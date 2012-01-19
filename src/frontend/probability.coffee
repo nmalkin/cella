@@ -20,6 +20,8 @@ getRoomProbability = (room, lotteryNumber) ->
 # Returns the color of the probability bar given the probability
 getProbabilityBarColors = (probability) ->
     category = parseInt probability / (1.0 / 5)
+    if category > 4
+       category = 4
     [PROBABILITY_COLORS_DARK[category], PROBABILITY_COLORS[category]]
 
 # Reconstruct a new gradient for a probability bar given the old graident
