@@ -68,7 +68,7 @@ loadTab = (tabNumber, next = ->) ->
         $(".group-result").bind 'mouseenter', (event) ->
             $(".highlighted").trigger 'mouseleave'
         $(".group-result").bind 'mouseup', (event) ->
-            console.log $(":focus")
+            console.log $("input:last").is(":focus")
  
         # activate TableSorter plugin
         $(TAB tabNumber).find(ROOM_TABLE).tablesorter
