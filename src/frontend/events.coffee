@@ -2,7 +2,7 @@
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
-    if activeTab != -1
+    if activeTab != -1 and !multiSelect
         findSelectedRooms activeTab
 
 # Called when user switches between tabs
@@ -28,7 +28,7 @@ getRoomFromStarEvent = (event) ->
     roomRow = $(event.target).parent 'tr'
     if roomRow.length > 0
         roomString = roomRow.attr 'class'
-        matches = (new RegExp 'room(\\d+)').exec roomString
+        matches = (new RegExp NAME ROOM '(\\d+)').exec roomString
         parseInt matches[1] ? -1
     else
         -1

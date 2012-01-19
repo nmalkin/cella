@@ -4,7 +4,7 @@
 # Starred rooms are saved and displayed in the "star" tab 
 starRoom = (roomID) ->
     # Set a "starred" icon (for all rooms with this ID in all tables)
-    $(".room#{ roomID }").children('.star').html STAR_FILLED
+    $(ROOM roomID).children('.star').html STAR_FILLED
 
     # Remember this room as being starred
     if not activeRooms[STAR_TAB]?
@@ -21,7 +21,7 @@ starRoom = (roomID) ->
 # Undoes the starring of the given room
 unstarRoom = (roomID) ->
     # Set "unstarred" icon
-    $(".room#{ roomID }").children('.star').html STAR_EMPTY
+    $(ROOM roomID).children('.star').html STAR_EMPTY
 
     # Remove from list of starred rooms
     index = activeRooms[STAR_TAB].indexOf roomID
