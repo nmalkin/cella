@@ -12,6 +12,9 @@ activeTab = -1;
 # The number of the previous activated tab
 lastActiveTab = -1;
 
+# Whether or not multiple buildings are being selected at once
+multiSelect = false;
+
 # The occupancy selected in each tab
 selectedOccupancy = []
 
