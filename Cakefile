@@ -1,3 +1,5 @@
+COFFEE = 'coffee'
+
 {exec, spawn} = require 'child_process'
 
 frontendFiles = [
@@ -32,23 +34,34 @@ processOutput = (err, stdout, stderr) ->
     if stdout or stderr
         console.log stdout + stderr
 
-task 'build:frontend', 'Build frontend code', ->
+
+option '-c', '--coffee [PATH]', 'Path to CoffeeScript executable'
+
+task 'build:frontend', 'Build frontend code', (options) ->
+    coffee = options.coffee ? COFFEE
+
     files = ("src/frontend/#{ file }.coffee" for file in frontendFiles).join ' '
-    exec "coffee --compile --join index.coffee --output public/scripts/ #{ files }",
+    exec "#{coffee} --compile --join index.coffee --output public/scripts/ #{ files }",
         processOutput
 
-task 'build:watch:frontend', 'Rebuild frontend when source changes', ->
+task 'build:watch:frontend', 'Rebuild frontend when source changes', (options) ->
+    coffee = options.coffee ? COFFEE
+
     args = ['--compile', '--watch', '--join', 'index.coffee',
         '--output', 'public/scripts/']
     files = ("src/frontend/#{ file }.coffee" for file in frontendFiles)
-    spawn 'coffee', (args.concat files), customFds: [0..2]
+    spawn coffee, (args.concat files), customFds: [0..2]
 
-task 'build:server', 'Build server code', ->
-    exec 'coffee --compile --output build/ src/server/',
+task 'build:server', 'Build server code', (options) ->
+    coffee = options.coffee ? COFFEE
+
+    exec "#{coffee} --compile --output build/ src/server/",
         processOutput
 
-task 'build:watch:server', 'Rebuild server when source changes', ->
-    spawn 'coffee', ['--compile', '--watch', '--output', 'build/', 'src/server/'],
+task 'build:watch:server', 'Rebuild server when source changes', (options) ->
+    coffee = options.coffee ? COFFEE
+
+    spawn coffee, ['--compile', '--watch', '--output', 'build/', 'src/server/'],
         customFds: [0..2]
 
 option '-w', '--watch', 'Watch source files for changes'
