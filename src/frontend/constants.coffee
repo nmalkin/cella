@@ -14,6 +14,7 @@ RESULTS_DIV = '.results'
 OCCUPANCY_FIELD = '.occupancy'
 BUILDING_MODE_FIELD = '.building-mode'
 BUILDINGS_FIELD = '.select-buildings'
+PROBABILITY_TEXT = '.probability-text'
 
 STAR_TAB = 0
 STAR_FILLED = '&#9733;'
@@ -48,3 +49,5 @@ NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
 
 TAB = (tabNumber) -> "#tab#{ tabNumber }"
     # NOTE: this scheme is also used in loadNewTab and getActivatedTab
+
+PROBABILITY = (roomID) -> ".room#{ roomID }probability"

@@ -48,18 +48,20 @@ updateRoomProbability = (roomID, lotteryNumber) ->
         if probability < .05
             probability = .05
 
+        probabilityContainer = $(PROBABILITY roomID)
+
         # Set the text value (for sorting; it will not be displayed)
         percentage = "#{ Math.round probability * 100 }%"
-        $(".room#{ roomID }probability").children('.probability-text').text percentage
+        probabilityContainer.children(PROBABILITY_TEXT).text percentage
 
         # Display colored bar representing likelihood
-        background = $(".room#{ roomID }probability").css "background-image"
+        background = probabilityContainer.css "background-image"
         colors = getProbabilityBarColors probability
         if background?
             newBackground = recreateProbabilityGradient background, colors
-            $(".room#{ roomID }probability").css "background-color", colors[1]
-            $(".room#{ roomID }probability").css "background-image", newBackground
-            $(".room#{ roomID }probability").css "width", percentage
+            probabilityContainer.css "background-color", colors[1]
+            probabilityContainer.css "background-image", newBackground
+            probabilityContainer.css "width", percentage
         
 # Goes through all active rooms and updates their probabilities
 # to match the lottery number.
