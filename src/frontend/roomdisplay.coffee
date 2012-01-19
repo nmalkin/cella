@@ -13,13 +13,20 @@ roomHTML = (room, filledStar=false) ->
     labels += if room.gender_neutral and
         room.occupancy > 1 then label 'Gender-Neutral' else ''
 
-    "<tr class=\"room#{ room.id }\">
+    "<tr class=\"#{ NAME ROOM room.id }\">
         <td class=\"star\">#{ star }</td>
         <td>#{ room.occupancy }</td>
         <td>#{ room.building}</td>
         <td>#{ room.room }</td>
         <td>#{ labels }</td>
-        <td class=\"room#{ room.id }probability\"></td>
+        <td>
+            <div class=\"probability\">
+                <div class=\"#{ NAME PROBABILITY room.id }\">
+                    <span class=\"probability-text\">&nbsp;</span>
+                    &nbsp;
+                </div
+            </div>
+        </td>
         <td></td>
     </tr>"
 
@@ -31,11 +38,11 @@ addRoom = (tabNumber, roomID) ->
         html = roomHTML allRooms[roomID], isStarred
     else
         roomsToLookUp.push roomID
-        html = "<tr class=\"room#{ roomID }\"><td colspan=\"7\"></td></tr>"
+        html = "<tr class=\"#{ NAME ROOM roomID }\"><td colspan=\"7\"></td></tr>"
     $(TAB tabNumber).find(RESULTS_DIV).append html
 
 # Removes room from tab
 removeRoom = (tabNumber, roomID) ->
-    $(TAB tabNumber).find(".room#{ roomID }").remove()
+    $(TAB tabNumber).find(ROOM roomID).remove()
 
 
