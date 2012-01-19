@@ -77,15 +77,16 @@ setSophomoreStatus = (sophomore) ->
 # selects all items in the group and adds them to the filter. This is needed
 # because Chosen does not provide for it out of the box.
 selectCampusArea = (event) =>
+    multiSelect = true
     next = event.target
     buildings = []
     while next.nextSibling? and "group-result" != building = next.nextSibling.className
         next = next.nextSibling
-        if building.indexOf "result-selected" == -1
+        if -1 != building.indexOf "active-result"
             buildings.push next
     for building in buildings
        e = $("##{ building.id }")
-       e.trigger 'mousedown'
        e.trigger 'mouseup'
-    console.log $("input:last").trigger 'blur'
-    #$("*").trigger 'blur'
+    $("input:last").trigger 'mouseenter' 
+    multiSelect = false
+    $(BUILDINGS_FIELD).trigger 'change'
