@@ -47,7 +47,14 @@ NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
 
 # PARAMETERIZED CONSTANTS
 
+# Given a constant (like the ones above), removes the first character,
+# which would be the . (for classes) or # (for IDs)
+NAME = (constant) -> constant.substring(1)
+
 TAB = (tabNumber) -> "#tab#{ tabNumber }"
-    # NOTE: this scheme is also used in loadNewTab and getActivatedTab
+
+CONTROL = (tabNumber) -> "#tab#{ tabNumber }control"
+
+ROOM = (roomID) -> ".room#{ roomID }"
 
 PROBABILITY = (roomID) -> ".room#{ roomID }probability"

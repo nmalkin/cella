@@ -4,7 +4,7 @@
 # Returns -1 if activated tab couldn't be detected
 getActivatedTab = (event) ->
     targetString = $(event.target).attr 'href'
-    re = new RegExp '#tab(\\d+)'
+    re = new RegExp TAB '(\\d+)'
     matches = re.exec targetString
     parseInt matches[1] ? -1
 
@@ -19,12 +19,12 @@ getNewestTab = ->
 
 # Activates the given tab by triggering a click on its tab control
 activateTab = (tabNumber) ->
-    $("#tab#{ tabNumber }control").children('a').trigger 'click'
+    $(CONTROL tabNumber).children('a').trigger 'click'
 
 # Deletes the table and tab with the given number
 closeTab = (tabToDelete) ->
     # Remove the tab and its content
-    $("#tab#{ tabToDelete }control").remove()
+    $(CONTROL tabToDelete).remove()
     $(TAB tabToDelete).remove()
 
     activeRooms[tabToDelete] = null
@@ -45,7 +45,7 @@ closeTab = (tabToDelete) ->
 # Creates a new tab with given tab number and loads a new table into it
 loadTab = (tabNumber, next = ->) ->
     # Create a div to hold the table
-    $(RESULT_TABLES).append "<div id=\"tab#{ tabNumber }\"></div>"
+    $(RESULT_TABLES).append "<div id=\"#{ NAME TAB tabNumber }\"></div>"
 
     # Load empty table into tab
     $(TAB tabNumber).load 'table.html', ->
@@ -81,8 +81,8 @@ loadTab = (tabNumber, next = ->) ->
         next()
 
     # Create a new tab for this table
-    new_tab = $("<li id=\"tab#{ tabNumber }control\">
-                <a href=\"#tab#{ tabNumber }\">
+    new_tab = $("<li id=\"#{ NAME CONTROL tabNumber }\">
+                <a href=\"##{ NAME TAB tabNumber }\">
                 Search #{ tabNumber }
                 <span class=\"close_tab\" title=\"Close tab\">&#10006;</span>
                 </a></li>")

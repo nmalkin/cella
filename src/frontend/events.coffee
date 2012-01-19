@@ -28,7 +28,7 @@ getRoomFromStarEvent = (event) ->
     roomRow = $(event.target).parent 'tr'
     if roomRow.length > 0
         roomString = roomRow.attr 'class'
-        matches = (new RegExp 'room(\\d+)').exec roomString
+        matches = (new RegExp NAME ROOM '(\\d+)').exec roomString
         parseInt matches[1] ? -1
     else
         -1
