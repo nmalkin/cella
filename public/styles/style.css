@@ -108,3 +108,7 @@ footer {
     width: 78%;
     text-align: right;
 }
+
+tfoot th {
+    border-top: 1px solid #ddd;
+}
