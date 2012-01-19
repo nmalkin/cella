@@ -2,7 +2,7 @@
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
-    if activeTab != -1
+    if activeTab != -1 and !multiSelect
         findSelectedRooms activeTab
 
 # Called when user switches between tabs

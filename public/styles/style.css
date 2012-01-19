@@ -55,6 +55,15 @@ body {
     line-height: 30px;
 }
 
+.chzn-container .chzn-results .group-result {
+    cursor: pointer;
+}
+
+.chzn-container .chzn-results .group-result:hover {
+    background: #3875d7;
+    color: #FFFFFF;
+}
+
 .star {
     text-align: center;
 }
@@ -102,4 +111,8 @@ footer {
 
 .probability-text {
     display: none;
+}
+
+tfoot th {
+    border-top: 1px solid #ddd;
 }
