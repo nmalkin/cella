@@ -79,7 +79,10 @@ loadStateFromStorage = () ->
 
         # Activate the last active tab
         lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
-        activeTab = retrievedActiveTab if retrievedActiveTab?
+        if retrievedActiveTab? and activeRooms[retrievedActiveTab]
+            activeTab = retrievedActiveTab
+        else
+            activeTab = getNewestTab()
         activateTab activeTab
 
 

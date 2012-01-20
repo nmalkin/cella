@@ -96,8 +96,6 @@ loadTab = (tabNumber, next = ->) ->
 
     new_tab.find('.close_tab').click (-> closeTab tabNumber)
 
-    activateTab tabNumber
-
 # Creates a new tab with the next available tab number, calls next when done
 loadNewTab = (next = ->) ->
     tabNumber = nextTabNumber
@@ -105,4 +103,6 @@ loadNewTab = (next = ->) ->
     nextTabNumber++
     tabCount++
 
-    loadTab tabNumber, next
+    loadTab tabNumber, ->
+        activateTab tabNumber
+        next()
