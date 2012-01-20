@@ -113,6 +113,11 @@ $(document).ready ->
 
     loadStateFromStorage()
 
+    $(TAB STAR_TAB).find(RESULTS_DIV).sortable {
+        helper: tableDragHelper
+        update: tableReordered
+    }
+
     # If there are no tabs, create one
     if tabCount == 0
         # But switch back to the star-tab if it's activated

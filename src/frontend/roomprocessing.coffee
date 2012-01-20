@@ -1,6 +1,15 @@
 ## Functions having to do with processing rooms:
 #  looking them up, activating them
 
+# Given a room result row, extracts the ID of the given room
+# (More generally, takes an element whose class identifies a room.)
+# e.g., <tr class="room1234">...</tr> -> 1234
+# Returns -1 if there was a problem with the parsing.
+getRoomFromRow = (roomRow) ->
+    roomString = roomRow.attr 'class'
+    matches = (new RegExp NAME ROOM '(\\d+)').exec roomString
+    parseInt matches[1] ? -1
+
 # Performs a query to find the rooms according to the criteria in the filters
 # of the given tab.
 findSelectedRooms = (tab) ->

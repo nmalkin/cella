@@ -27,9 +27,7 @@ newTabClicked = (event) ->
 getRoomFromStarEvent = (event) ->
     roomRow = $(event.target).parent 'tr'
     if roomRow.length > 0
-        roomString = roomRow.attr 'class'
-        matches = (new RegExp NAME ROOM '(\\d+)').exec roomString
-        parseInt matches[1] ? -1
+        getRoomFromRow roomRow
     else
         -1
 
@@ -66,3 +64,26 @@ tableSorted = (event, table) ->
 
     # Save the sort order for the session
     savePersistent "sort_tab#{ activeTab }", sortList
+
+# Helper for jQuery UI's sortable plugin, preserves row width when dragging.
+# (Without it, columns shrink in the process.)
+# Code from http://stackoverflow.com/a/1372954 and based on 
+# http://www.foliotek.com/devblog/make-table-rows-sortable-using-jquery-ui-sortable/
+tableDragHelper = (event, tr) ->
+    originals = tr.children()
+    helper = tr.clone()
+    helper.children().each (index) ->
+        $(this).width originals.eq(index).width()
+    return helper
+
+# Called when the result table has been reordered by drag-and-drop
+tableReordered = (event, ui) ->
+    # Clear the array of starred tabs
+    activeRooms[STAR_TAB] = []
+
+    # Re-populate the array in the new order of the rooms
+    $(TAB STAR_TAB).find(RESULTS_DIV).children().each (index, row) ->
+        activeRooms[STAR_TAB].push getRoomFromRow $(row)
+
+    # Store the updated list of rooms
+    savePersistent 'activeRooms', activeRooms
