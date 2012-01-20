@@ -59,21 +59,10 @@ sophomoreChanged = (event) ->
         findSelectedRooms tab
         tab++
 
-# Extracts and saves the clicked-on column number from the results table
-tableHeaderClicked = (event) ->
-    # Get the column that was clicked
-    target = $(event.target)
-    header = if target.is 'th' then target else target.parent 'th'
-    column = header.index()
+# Extracts and saves the current sort order from the results table
+tableSorted = (event, table) ->
+    # Get the sortList from the table
+    sortList = event.target.config.sortList
 
-    # Next, we want to get the direction of the sort (ascending/descending),
-    # but the sort may not be done yet. Wait for it to finish.
-    $(TAB activeTab).find(ROOM_TABLE).bind 'sortEnd', ->
-        # Unbind, because there's no need to listen further.
-        $(TAB activeTab).find(ROOM_TABLE).unbind()
-
-        # Determine the sort order (0 = ascending, 1 = descending)
-        sortOrder = if header.hasClass('headerSortDown') then 0 else 1
-
-        # Save the sort order for the session
-        savePersistent "sort_tab#{ activeTab }", [column, sortOrder]
+    # Save the sort order for the session
+    savePersistent "sort_tab#{ activeTab }", sortList

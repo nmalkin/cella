@@ -69,15 +69,16 @@ loadTab = (tabNumber, next = ->) ->
             $(".highlighted").trigger 'mouseleave'
  
         # activate TableSorter plugin
+        resultTable = $(TAB tabNumber).find(ROOM_TABLE)
         try
-            $(TAB tabNumber).find(ROOM_TABLE).tablesorter
+            resultTable.tablesorter
                 debug: false
                 textExtraction: 'simple'
                 sortList: [[2,0], [3,0]]
         catch error
 
         # Supplement to TableSorter, to save current sort order
-        $(TAB tabNumber).find('.header').click tableHeaderClicked
+        resultTable.bind 'sortEnd', tableSorted
 
         # Activate change listeners
         $(OCCUPANCY_FIELD).change filterChanged
