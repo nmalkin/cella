@@ -113,11 +113,6 @@ $(document).ready ->
 
     loadStateFromStorage()
 
-    $(TAB STAR_TAB).find(RESULTS_DIV).sortable {
-        helper: tableDragHelper
-        update: tableReordered
-    }
-
     # If there are no tabs, create one
     if tabCount == 0
         # But switch back to the star-tab if it's activated
@@ -127,3 +122,30 @@ $(document).ready ->
     # Display star placeholder message if no rooms are starred
     if activeRooms[STAR_TAB]? and activeRooms[STAR_TAB].length == 0
         showStarPlaceholderMessage()
+
+    # Activate drag-and-drop of results in star tab
+    $(TAB STAR_TAB).find(RESULTS_DIV).sortable
+        helper: tableDragHelper
+        update: starTableReordered
+
+    # Enable sorting of results in star tab
+    starResultTable = $(TAB STAR_TAB).find(ROOM_TABLE)
+    try
+        starResultTable.tablesorter
+            debug: false
+            textExtraction: 'simple'
+    catch error
+        log error
+
+    # At the end of sorting, store the new order of the starred rooms
+    starResultTable.bind 'sortEnd', starTableReordered
+
+    # When user initiates sorting, new rooms may have been starred/added,
+    # so trigger a table update, so that these rooms are taken into account.
+    # NOTE that this means the table will be sorted twice (once by the 'update'
+    # and once by the actual click handler; and if the latter happens first,
+    # that sort will be "incorrect"); however, this doesn't have side-effects.
+    starResultTable.find('.header').click ->
+        starResultTable.trigger 'update'
+
+

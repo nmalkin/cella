@@ -76,8 +76,8 @@ tableDragHelper = (event, tr) ->
         $(this).width originals.eq(index).width()
     return helper
 
-# Called when the result table has been reordered by drag-and-drop
-tableReordered = (event, ui) ->
+# Called when the star tab's result table has been reordered
+starTableReordered = (event, ui) ->
     # Clear the array of starred tabs
     activeRooms[STAR_TAB] = []
 
