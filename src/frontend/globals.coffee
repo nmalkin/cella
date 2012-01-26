@@ -37,3 +37,6 @@ activeRooms[STAR_TAB] = []
 
 # List of rooms that we need to look up
 roomsToLookUp = []
+
+# For each tab, the lottery number reflected by the rooms' probabilities
+lotteryNumberWhenUpdated = []

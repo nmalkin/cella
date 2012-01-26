@@ -68,6 +68,13 @@ updateRoomProbability = (roomID, lotteryNumber) ->
 # If no lottery number is given, the currently selected one is used.
 updateProbabilities = (lotteryNumber = null) ->
     lotteryNumber ?= getLotteryNumber()
-    if activeTab != -1 and activeRooms[activeTab]?
-        for roomID in activeRooms[activeTab] # only update rooms in active tab
+
+    # Only update rooms in the current tab (to increase speed) and
+    # if the lottery number has changed since the last update
+    if activeTab != -1 and activeRooms[activeTab]? and
+    lotteryNumberWhenUpdated[activeTab] != lotteryNumber
+        for roomID in activeRooms[activeTab]
             updateRoomProbability roomID, lotteryNumber
+
+        lotteryNumberWhenUpdated[activeTab] = lotteryNumber
+
