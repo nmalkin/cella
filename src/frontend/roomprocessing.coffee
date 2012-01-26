@@ -8,7 +8,7 @@
 getRoomFromRow = (roomRow) ->
     roomString = roomRow.attr 'class'
     matches = (new RegExp NAME ROOM '(\\d+)').exec roomString
-    parseInt matches[1] ? -1
+    return if matches? then parseInt matches[1] ? -1 else -1
 
 # Performs a query to find the rooms according to the criteria in the filters
 # of the given tab.
