@@ -16,11 +16,11 @@ This application runs on top of [node.js](http://nodejs.org/) (tested with versi
 You will need the following node modules.
 They can be most easily obtained using [npm](http://npmjs.org/).
 
-- [iced-coffee-script](http://maxtaco.github.com/coffee-script/) * (tested with 1.2.0f)
+- [iced-coffee-script](http://maxtaco.github.com/coffee-script/)\* (tested with 1.2.0f)
 - [connect](http://senchalabs.github.com/connect/) (tested with 1.8.5)
 - [sqlite3](https://github.com/developmentseed/node-sqlite3) (tested with 2.1.1)
 
-* - should be installed globally
+\* - should be installed globally
 
 Additional dependencies are included as submodules within the Git repository.
 To get them, once you have cloned the repository:
