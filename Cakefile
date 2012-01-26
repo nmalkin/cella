@@ -44,7 +44,7 @@ task 'build:frontend', 'Build frontend code', (options) ->
     exec "#{coffee} --compile --join index.coffee --output public/scripts/ #{ files }",
         processOutput
 
-task 'build:watch:frontend', 'Rebuild frontend when source changes', (options) ->
+task 'build:frontend:watch', 'Rebuild frontend when source changes', (options) ->
     coffee = options.coffee ? COFFEE
 
     args = ['--compile', '--watch', '--join', 'index.coffee',
@@ -58,7 +58,7 @@ task 'build:server', 'Build server code', (options) ->
     exec "#{coffee} --compile --output build/ src/server/",
         processOutput
 
-task 'build:watch:server', 'Rebuild server when source changes', (options) ->
+task 'build:server:watch', 'Rebuild server when source changes', (options) ->
     coffee = options.coffee ? COFFEE
 
     spawn coffee, ['--compile', '--watch', '--output', 'build/', 'src/server/'],
@@ -67,8 +67,8 @@ task 'build:watch:server', 'Rebuild server when source changes', (options) ->
 option '-w', '--watch', 'Watch source files for changes'
 task 'build', 'Build project', (options) ->
     if options.watch?
-        invoke 'build:watch:frontend'
-        invoke 'build:watch:server'
+        invoke 'build:frontend:watch'
+        invoke 'build:server:watch'
     else
         invoke 'build:server'
         invoke 'build:frontend'
