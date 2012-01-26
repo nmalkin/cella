@@ -1,4 +1,4 @@
-COFFEE = 'coffee'
+COFFEE = 'iced'
 
 {exec, spawn} = require 'child_process'
 
@@ -35,7 +35,7 @@ processOutput = (err, stdout, stderr) ->
         console.log stdout + stderr
 
 
-option '-c', '--coffee [PATH]', 'Path to CoffeeScript executable'
+option '-c', '--coffee [PATH]', 'Path to IcedCoffeeScript executable'
 
 task 'build:frontend', 'Build frontend code', (options) ->
     coffee = options.coffee ? COFFEE
