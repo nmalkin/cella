@@ -3,7 +3,7 @@ connect = require 'connect'
 api = require './housing_api.js'
 
 server = connect.createServer()
-server.use connect.favicon()
+server.use connect.favicon __dirname + '/..' + '/public/favicon.ico'
 server.use connect.logger()
 server.use connect.router (app) ->
     app.get '/get_rooms', api.get_rooms
