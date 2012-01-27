@@ -41,6 +41,10 @@ PROBABILITY_COLORS = [
     'rgb(0, 184, 9)'    # very likely
 ]
 
+APARTMENT_RATE_COLOR = '#5c56ea'
+SOPHOMORE_COLOR = '#00d9dc'
+GENDER_NEUTRAL_COLOR = '#e102ba'
+
 NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 No results were found. Try some other criteria.
                             </td></tr>'
