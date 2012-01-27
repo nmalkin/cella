@@ -58,7 +58,7 @@ exports.select = (occupancy, includeBuildings, buildings, callback) ->
     # Execute query
     db.all query, params, (err, rows) ->
         if err?
-            console.error "An error occurred with the query: #{ error }"
+            console.error "An error occurred with the query: #{ err }"
             callback [] # return empty array
         else
             console.log "Search returned #{ rows.length } results"
@@ -93,11 +93,11 @@ exports.info = (ids, callback) ->
             query += " OR rowid = ?"
             params.push value
     else
-        console.error "Invalid room id: #{ ids}"
+        console.error "Invalid room id: #{ ids }"
     
     db.all query, params, (err, rows) ->
          if err?
-            console.error "An error occurred with the query: #{ error }"
+            console.error "An error occurred with the query: #{ err }"
             callback [] # return empty array
          else
             console.log "Successfully received information about #{ rows.length } rooms"
