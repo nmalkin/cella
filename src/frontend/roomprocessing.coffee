@@ -66,6 +66,7 @@ activateRooms = (tabNumber, rooms, next = ->) ->
     # add activated rooms to table
     if activeRooms[tabNumber].length == 0
         myTab.find(RESULTS_DIV).html NO_RESULT_PLACEHOLDER_MESSAGE 
+        myTab.find(ROOM_TABLE).trigger 'update'
         next()
     else
         myTab.find(RESULTS_DIV).html ''
