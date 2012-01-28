@@ -19,6 +19,8 @@ They can be most easily obtained using [npm](http://npmjs.org/).
 - [iced-coffee-script](http://maxtaco.github.com/coffee-script/)\* (tested with 1.2.0f)
 - [connect](http://senchalabs.github.com/connect/) (tested with 1.8.5)
 - [sqlite3](https://github.com/developmentseed/node-sqlite3) (tested with 2.1.1)
+- [github-flavored-markdown](https://github.com/isaacs/github-flavored-markdown) (tested with 1.0.0)
+- [mustache](https://github.com/janl/mustache.js) (tested with 0.4.0)
 
 \* - should be installed globally
 

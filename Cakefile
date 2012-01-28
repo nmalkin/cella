@@ -64,8 +64,41 @@ task 'build:server:watch', 'Rebuild server when source changes', (options) ->
     spawn coffee, ['--compile', '--watch', '--output', 'build/', 'src/server/'],
         customFds: [0..2]
 
+task 'build:about', 'Build about page', (options) ->
+    coffee = options.coffee ? COFFEE
+
+    fs = require 'fs'
+    await
+        # Load Markdown file
+        fs.readFile 'doc/about.md', 'utf8', defer err1, md
+        # Load template file
+        fs.readFile 'templates/about.html', 'utf8', defer err2, template
+    
+    if err1? or err2?
+        console.error err1, err2
+        return
+
+    # Convert Markdown to HTML
+    ghm = require 'github-flavored-markdown'
+    html = ghm.parse md
+
+    # Insert HTML into template
+    mustache = require 'mustache'
+    view = { content: html }
+    page = mustache.to_html template, view
+    
+    # Write output
+    fs.writeFile 'public/about.html', page, 'utf8', (err) ->
+        if err?
+            console.error err
+
+task 'build:docs', 'Build documentation pages', ->
+    invoke 'build:about'
+
 option '-w', '--watch', 'Watch source files for changes'
 task 'build', 'Build project', (options) ->
+    invoke 'build:docs'
+
     if options.watch?
         invoke 'build:frontend:watch'
         invoke 'build:server:watch'
