@@ -18,7 +18,7 @@ That's it!
 ### Did you know that you can...
 
 * sort results by clicking on the column headers
-* sort results by *multiple columns* by pressing down the *Shift* key when clicking on the heade
+* sort results by *multiple columns* by pressing down the *Shift* key when clicking on the header
 * open multiple searches in multiple tabs
 * click on the stars next to the results to add them to the "star tab"
 * rearrange results in the star tab by dragging and dropping
