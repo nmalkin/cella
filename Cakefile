@@ -21,13 +21,13 @@ libraryFiles = # library location : production location
     # JS
     'lib/chosen/chosen/chosen.jquery.js' : 'public/scripts/chosen.js'
     'lib/bootstrap/js/bootstrap-dropdown.js' : 'public/scripts/bootstrap-dropdown.js'
-    'lib/bootstrap/js/bootstrap-tabs.js' : 'public/scripts/bootstrap-tabs.js'
+    'lib/bootstrap/js/bootstrap-tab.js' : 'public/scripts/bootstrap-tab.js'
     'lib/tablesorter/js/jquery.tablesorter.js' : 'public/scripts/tablesorter.js'
 
     # CSS
     'lib/chosen/chosen/chosen.css' : 'public/styles/chosen.css'
     'lib/chosen/chosen/chosen-sprite.png' : 'public/styles/chosen-sprite.png'
-    'lib/bootstrap/bootstrap.css' : 'public/styles/bootstrap.css'
+    'lib/bootstrap/bootstrap/css/bootstrap.css' : 'public/styles/bootstrap.css'
 
 processOutput = (err, stdout, stderr) ->
     throw err if err

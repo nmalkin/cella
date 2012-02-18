@@ -10,15 +10,18 @@
 </head>
 <body>
     <div class="container">
-        <header class="topbar" data-dropdown="dropdown">
-            <div class="fill">
+        <header class="navbar navbar-fixed-top" data-dropdown="dropdown">
+            <div class="navbar-inner">
                 <div class="container">
                     <a class="brand" href="/">Cella</a>
                     <ul class="nav" style="float: right">
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#"
-                                title="Helpful links about the housing lottery"
-                                >Lottery Links</a>
+                                data-toggle="dropdown"
+                                title="Helpful links about the housing lottery">
+                                <span class="caret"></span>
+                                Lottery Links
+                            </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/index.php">
@@ -56,11 +59,7 @@
 
     <!-- scripts -->
     <script type="text/javascript" src="scripts/jquery.js"></script>
-    <script type="text/javascript" src="scripts/chosen.js"></script>
-    <script type="text/javascript" src="scripts/tablesorter.js"></script>
-    <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/bootstrap-dropdown.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap-tabs.js"></script>
 </body>
 </html>
 
