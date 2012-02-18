@@ -1,6 +1,6 @@
 About Cella
 ===========
-Cella is a web-based application to help participants in the Brown University [Housing Lottery](http://reslife.brown.edu/current_students/lottery/about.html) identify desired rooms conveniently and efficiently.
+Cella is a web-based application to help participants in the [Brown University](http://www.brown.edu/) [Housing Lottery](http://reslife.brown.edu/current_students/lottery/about.html) identify desired rooms conveniently and efficiently.
 
 It is developed by [Nathan Malkin][] and [Sumner Warren][] and is a successor to _Domus_, a desktop application with similar goals, built by us and [Miya Schneider][] for [CS 32](http://cs.brown.edu/courses/csci0320.html).
 
@@ -15,7 +15,7 @@ Then, choose the occupancy of the rooms you want to search for and the buildings
 
 That's it!
 
-### Did you know that you can...
+### Did you know? You can...
 
 * sort results by clicking on the column headers
 * sort results by *multiple columns* by pressing down the *Shift* key when clicking on the header
