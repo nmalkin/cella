@@ -33,9 +33,10 @@ To get them, once you have cloned the repository:
 
     git submodule init
     git submodule update
+    ./cake build:dependencies
     ./cake install:dependencies
 
-Note that you will need to `./cake install:dependencies`
+Note that you will need to build and install the dependencies
 whenever any submodules change.
 
 
