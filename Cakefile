@@ -41,7 +41,7 @@ task 'build:frontend', 'Build frontend code', (options) ->
     coffee = options.coffee ? COFFEE
 
     files = ("src/frontend/#{ file }.coffee" for file in frontendFiles).join ' '
-    exec "#{coffee} --compile --join index.coffee --output public/scripts/ #{ files }",
+    exec "#{coffee} --compile --runtime inline --join index.coffee --output public/scripts/ #{ files }",
         processOutput
 
 task 'build:frontend:watch', 'Rebuild frontend when source changes', (options) ->
