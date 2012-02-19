@@ -12,6 +12,7 @@ Questions and Answers
 Choose your lottery number (or an estimate for it) in the box at the top. Select the checkbox if you are a sophomore.
 
 Then, choose the occupancy of the rooms you want to search for and the buildings to include, or exclude, in the search.
+(This includes sophomore-only housing in your search.)
 
 That's it!
 
@@ -24,9 +25,11 @@ That's it!
 * rearrange results in the star tab by dragging and dropping
 
 ### What does the probability bar mean?
-The probability bar represents how likely we think it is that you will get this room based on the lottery number you entered. A full (green) bar means we are confident that you can get this room. An empty (red) bar means we're pretty confident that somebody will get the room before you.
+The probability bar represents how likely we think it is that you will get this room. This prediction is based on the room's performance in previous years and the lottery number you entered.
 
-But don't trust us (too much). The prediction is based on results from previous years, which aren't necessarily predictive of future results. Some rooms may have few old results, affecting the quality of the prediction.
+A full (green) bar means you have a good shot at getting this room. An empty (red) bar means your chances of getting this room are slim.
+
+But don't trust us (too much). The prediction is based on results from previous years, which aren't necessarily predictive of future results. Some rooms may have few old results, affecting the quality of the prediction. Additionally, renovations of rooms and buildings may affect their desirability.
 
 The actual calculation of the probability is performed by fitting a [logistic model](http://en.wikipedia.org/wiki/Logistic_regression) to a room's previous lottery numbers. We thank Neil Thakral for this suggestion.
 
