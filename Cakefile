@@ -22,6 +22,8 @@ libraryFiles = # library location : production location
     'lib/chosen/chosen/chosen.jquery.js' : 'public/scripts/chosen.js'
     'lib/bootstrap/js/bootstrap-dropdown.js' : 'public/scripts/bootstrap-dropdown.js'
     'lib/bootstrap/js/bootstrap-tab.js' : 'public/scripts/bootstrap-tab.js'
+    'lib/bootstrap/js/bootstrap-tooltip.js' : 'public/scripts/bootstrap-tooltip.js'
+    'lib/bootstrap/js/bootstrap-popover.js' : 'public/scripts/bootstrap-popover.js'
     'lib/tablesorter/js/jquery.tablesorter.js' : 'public/scripts/tablesorter.js'
 
     # CSS
