@@ -1,6 +1,5 @@
 Cella
 =====
-
 Cella is a web-based application to help participants in the Brown University
 [Housing Lottery](http://reslife.brown.edu/current_students/lottery/about.html)
 identify desired rooms conveniently and efficiently.
@@ -10,39 +9,42 @@ It is a successor to _Domus_, a desktop application with similar goals, built by
 
 Dependencies
 ------------
+This application runs on top of [node.js](http://nodejs.org/).
 
-This application runs on top of [node.js](http://nodejs.org/) (tested with version 0.6.6).
+Cella depends on the following node modules:
 
-You will need the following node modules.
-They can be most easily obtained using [npm](http://npmjs.org/).
+- [iced-coffee-script](http://maxtaco.github.com/coffee-script/)
+- [connect](http://senchalabs.github.com/connect/)
+- [sqlite3](https://github.com/developmentseed/node-sqlite3)
+- [github-flavored-markdown](https://github.com/isaacs/github-flavored-markdown)
+- [mustache](https://github.com/janl/mustache.js)
 
-- [iced-coffee-script](http://maxtaco.github.com/coffee-script/)\* (tested with 1.2.0f)
-- [connect](http://senchalabs.github.com/connect/) (tested with 1.8.5)
-- [sqlite3](https://github.com/developmentseed/node-sqlite3) (tested with 2.1.1)
-- [github-flavored-markdown](https://github.com/isaacs/github-flavored-markdown) (tested with 1.0.0)
-- [mustache](https://github.com/janl/mustache.js) (tested with 0.4.0)
+Cella uses [npm](http://npmjs.org/) to manage these dependencies.  
+When you have npm installed, go to Cella's directory and run:
 
-\* - should be installed globally
+    npm install
+
+Afterwards, you can run `npm update` to make sure you have the latest dependencies installed.
 
 Additional dependencies are included as submodules within the Git repository.
 To get them, once you have cloned the repository:
 
     git submodule init
     git submodule update
-    icake install:dependencies
+    ./cake install:dependencies
 
-Note that you will need to `icake install:dependencies`
+Note that you will need to `./cake install:dependencies`
 whenever any submodules change.
 
 
 Building
 --------
-To build the source code for this project, run `icake build` from the top-level directory.
+To build the source code for this project, run `./cake build` from the top-level directory.
 
 If you are working with the source code, you can use the `--watch / -w` option
 so that the project is automatically rebuilt when any of the source files change.
 
-    icake -w build
+    ./cake -w build
 
 
 Running
