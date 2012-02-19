@@ -1,0 +1,24 @@
+{
+    "name": "cella",
+    "version": "0.1.0",
+    "author": "Nathan Malkin",
+    "description": "Brown University housing lottery helper",
+    "contributors": [
+        "Sumner Warren"
+    ],
+    "private": true,
+    "scripts": {
+        "start": "node build/server.js",
+        "postinstall": "ln -s node_modules/iced-coffee-script/bin/cake cake"
+    },
+    "engines": {
+        "node": ">=0.4.x"
+    }
+    "dependencies": {
+        "iced-coffee-script": ">=1.2.0p",
+        "connect": "1.8.x",
+        "sqlite3": "2.1.x",
+        "github-flavored-markdown": "1.0.x",
+        "mustache": "0.4.x"
+    }
+}
