@@ -47,7 +47,7 @@ task 'build:frontend', 'Build frontend code', (options) ->
 task 'build:frontend:watch', 'Rebuild frontend when source changes', (options) ->
     coffee = options.coffee ? COFFEE
 
-    args = ['--compile', '--watch', '--join', 'index.coffee',
+    args = ['--compile', '--runtime', 'inline', '--watch', '--join', 'index.coffee',
         '--output', 'public/scripts/']
     files = ("src/frontend/#{ file }.coffee" for file in frontendFiles)
     spawn coffee, (args.concat files), customFds: [0..2]
