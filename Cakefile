@@ -1,4 +1,4 @@
-COFFEE = 'iced'
+COFFEE = 'node_modules/iced-coffee-script/bin/coffee'
 
 {exec, spawn} = require 'child_process'
 
