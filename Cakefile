@@ -95,6 +95,14 @@ task 'build:about', 'Build about page', (options) ->
 task 'build:docs', 'Build documentation pages', ->
     invoke 'build:about'
 
+task 'build:bootstrap', 'Build Bootstrap library', ->
+    exec 'cd lib/bootstrap &&
+        PATH=../../node_modules/less/bin:../../node_modules/uglify-js/bin:$PATH &&
+        make', processOutput
+
+task 'build:libraries', 'Build libraries', ->
+    invoke 'build:bootstrap'
+
 option '-w', '--watch', 'Watch source files for changes'
 task 'build', 'Build project', (options) ->
     invoke 'build:docs'
@@ -108,6 +116,7 @@ task 'build', 'Build project', (options) ->
 
 
 task 'install:dependencies', 'Install front-end dependencies', ->
+    invoke 'build:libraries'
     exec "cp -f #{ oldLocation } #{ newLocation }", processOutput \
         for oldLocation, newLocation of libraryFiles
 
