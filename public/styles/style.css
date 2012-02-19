@@ -16,6 +16,10 @@ body {
     text-decoration: none;
 }
 
+#result_tables {
+    overflow: visible;
+}
+
 .filter {
     display: table;
     min-height: 70px;
