@@ -9,7 +9,7 @@
     "private": true,
     "scripts": {
         "start": "node build/server.js",
-        "postinstall": "ln -s node_modules/iced-coffee-script/bin/cake cake"
+        "postinstall": "ln -sf node_modules/iced-coffee-script/bin/cake cake"
     },
     "engines": {
         "node": ">=0.4.x"
