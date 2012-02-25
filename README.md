@@ -54,7 +54,7 @@ Running
 -------
 To run the server:
 
-    node build/server.js
+    npm start
 
 The server runs, by default, on port 8888.
 (i.e., to access it, go to http://127.0.0.1:8888/)
