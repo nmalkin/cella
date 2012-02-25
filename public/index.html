@@ -10,15 +10,18 @@
 </head>
 <body>
     <div class="container">
-        <header class="topbar" data-dropdown="dropdown">
-            <div class="fill">
+        <header class="navbar navbar-fixed-top" data-dropdown="dropdown">
+            <div class="navbar-inner">
                 <div class="container">
                     <a class="brand" href="/">Cella</a>
                     <ul class="nav" style="float: right">
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#"
-                                title="Helpful links about the housing lottery"
-                                >Lottery Links</a>
+                                data-toggle="dropdown"
+                                title="Helpful links about the housing lottery">
+                                <span class="caret"></span>
+                                Lottery Links
+                            </a>
                             <ul class="dropdown-menu">
                                 <li>
                                     <a href="http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/index.php">
@@ -46,32 +49,34 @@
             </div>
         </header>
 
-         <div class="well search_option_well span8">
-            <h5>About you</h5>
-                <div class="span5" style="float:right;margin-top: -15px">
-                    <div style="text-align: center; margin-bottom: 5px">
-                        Lottery number:
-                        <span id="lottery_number">1</span>
+        <div class="row">
+            <div class="well search_option_well span7">
+                <h4>About you</h4>
+                    <div class="span5" style="float:right; margin-top: -10px">
+                        <div style="text-align: center; margin-bottom: 5px">
+                            Lottery number:
+                            <span id="lottery_number">1</span>
+                        </div>
+                        <div id="lottery"></div>
                     </div>
-                    <div id="lottery"></div>
-                </div>
-                <div class="input">
-                        <ul class="inputs-list"><li>
-                        <label for="sophomore">
-                        <input type="checkbox" id="sophomore" name="sophomore" value="sophomore" />
-                        I am a sophomore</label>
-                        </li></ul>
-                </div>
+                    <div style="margin-top: 10px">
+                            <label class="checkbox" for="sophomore">
+                            <input type="checkbox" id="sophomore" name="sophomore" value="sophomore" />
+                            I am a sophomore</label>
+                    </div>
+            </div>
         </div>
 
-        <ul id="result_tabs" class="tabs" data-tabs="tabs">
-            <li id="tab0control"><a href="#tab0">&#9733;</a></li>
-            <li><a id="new_tab">&#10010;</a></li>
-        </ul>
+        <div>
+            <ul id="result_tabs" class="nav nav-tabs">
+                <li id="tab0control"><a href="#tab0" data-toggle="tab">&#9733;</a></li>
+                <li><a id="new_tab">&#10010;</a></li>
+            </ul>
+        </div>
         
         <div id="result_tables" class="tab-content">
-            <div id="tab0"><!-- starred results -->
-                <table class="room_table bordered-table zebra-striped">
+            <div class="tab-pane" id="tab0"><!-- starred results -->
+                <table class="room_table table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th style="width: 5%;" class="star">&#9733;</th>
@@ -115,7 +120,9 @@
     <script type="text/javascript" src="scripts/tablesorter.js"></script>
     <script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
     <script type="text/javascript" src="scripts/bootstrap-dropdown.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap-tabs.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap-tooltip.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap-popover.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
 </body>
 </html>

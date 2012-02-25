@@ -102,3 +102,20 @@ exports.buildings = (req, res, next) ->
 # each of which has a name (the campus area) and an array of the buildings in that area
 exports.campus_areas = (req, res, next) ->
     resultToResponse buildings.campusAreas, res
+
+# Responds with an object with lottery numbers for the given room
+exports.results = (req, res, next) ->
+    params = (url.parse req.url, true).query
+    
+    if not params.id?
+        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.end 'Missing required parameter\n'
+    else
+        id = parseInt params.id
+        if isNaN id
+            res.writeHead 200, {'Content-Type': 'text/plan'}
+            res.end 'Invalid parameter\n'
+            return
+
+        rooms.results id, (result) ->
+            resultToResponse result, res

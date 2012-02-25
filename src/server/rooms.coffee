@@ -1,6 +1,8 @@
 db = require('./housing.js').db
 buildings = require('./buildings').buildings
 
+YEARS = [2006, 2007, 2008, 2009, 2010, 2011]
+
 # Returns true if the given variable is an array.
 # The check is done using the method recommended here:
 #   http://stackoverflow.com/questions/4775722/javascript-check-if-object-is-array
@@ -121,3 +123,28 @@ exports.info = (ids, callback) ->
                 results.push result
             callback results
 
+# Looks up information about the given room [an room ID]
+# Calls the callback with an object that maps year to lottery number
+# (e.g., {2011: 415, ...})
+exports.results = (id, callback) ->
+    console.log "Room results requested about room #{ id }."
+    
+    columns = ['y' + year for year in YEARS]
+    column_string = columns.join ','
+
+    query = "SELECT #{ column_string } FROM rooms_with_regressions WHERE rowid = ?"
+    params = [id]
+    
+    db.get query, params, (err, row) ->
+         if err?
+            console.error "An error occurred with the query: #{ err }"
+            callback {} # return empty object
+         else
+            console.log "Successfully retrieved results for room #{ id }."
+            result = {}
+            for year in YEARS
+                result[year] = row['y' + year]
+
+            console.log result
+
+            callback result

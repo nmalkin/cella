@@ -6,6 +6,9 @@ loadStateFromStorage = () ->
     t = getPersistent 'allRooms'
     allRooms = t if t?
 
+    t = getPersistent 'roomResults'
+    roomResults = t if t?
+
     sophomore = getPersistent 'sophomore'
     if sophomore?
         setSophomoreStatus sophomore
@@ -106,7 +109,7 @@ $(document).ready ->
 
     $('#clear_data').click clearPersistent
 
-    $(RESULT_TABS).change tabChanged
+    $(RESULT_TABS + ' a[data-toggle="tab"]').live 'show', tabChanged
             
     # Retrieve all buildings, which will then be used to populate select box
     loadBuildings()

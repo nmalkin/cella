@@ -45,7 +45,7 @@ closeTab = (tabToDelete) ->
 # Creates a new tab with given tab number and loads a new table into it
 loadTab = (tabNumber, next = ->) ->
     # Create a div to hold the table
-    $(RESULT_TABLES).append "<div id=\"#{ NAME TAB tabNumber }\"></div>"
+    $(RESULT_TABLES).append "<div class=\"tab-pane\" id=\"#{ NAME TAB tabNumber }\"></div>"
 
     # Load empty table into tab
     $(TAB tabNumber).load 'table.html', ->
@@ -89,7 +89,7 @@ loadTab = (tabNumber, next = ->) ->
 
     # Create a new tab for this table
     new_tab = $("<li id=\"#{ NAME CONTROL tabNumber }\">
-                <a href=\"##{ NAME TAB tabNumber }\">
+                <a href=\"##{ NAME TAB tabNumber }\" data-toggle=\"tab\">
                 Search #{ tabNumber }
                 <span class=\"close_tab\" title=\"Close tab\">&#10006;</span>
                 </a></li>")

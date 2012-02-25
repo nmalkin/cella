@@ -9,7 +9,8 @@
     "private": true,
     "scripts": {
         "start": "node build/server.js",
-        "postinstall": "ln -sf node_modules/iced-coffee-script/bin/cake cake"
+        "postinstall": "ln -sf node_modules/iced-coffee-script/bin/cake cake",
+        "update": "git submodule update"
     },
     "engines": {
         "node": ">=0.4.x"
@@ -19,6 +20,8 @@
         "connect": "1.8.x",
         "sqlite3": "2.1.x",
         "github-flavored-markdown": "1.0.x",
-        "mustache": "0.4.x"
+        "mustache": "0.4.x",
+        "less": "1.x.x < 1.2.2 || > 1.2.2",
+        "uglify-js": "1.x.x"
     }
 }

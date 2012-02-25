@@ -21,13 +21,15 @@ libraryFiles = # library location : production location
     # JS
     'lib/chosen/chosen/chosen.jquery.js' : 'public/scripts/chosen.js'
     'lib/bootstrap/js/bootstrap-dropdown.js' : 'public/scripts/bootstrap-dropdown.js'
-    'lib/bootstrap/js/bootstrap-tabs.js' : 'public/scripts/bootstrap-tabs.js'
+    'lib/bootstrap/js/bootstrap-tab.js' : 'public/scripts/bootstrap-tab.js'
+    'lib/bootstrap/js/bootstrap-tooltip.js' : 'public/scripts/bootstrap-tooltip.js'
+    'lib/bootstrap/js/bootstrap-popover.js' : 'public/scripts/bootstrap-popover.js'
     'lib/tablesorter/js/jquery.tablesorter.js' : 'public/scripts/tablesorter.js'
 
     # CSS
     'lib/chosen/chosen/chosen.css' : 'public/styles/chosen.css'
     'lib/chosen/chosen/chosen-sprite.png' : 'public/styles/chosen-sprite.png'
-    'lib/bootstrap/bootstrap.css' : 'public/styles/bootstrap.css'
+    'lib/bootstrap/bootstrap/css/bootstrap.css' : 'public/styles/bootstrap.css'
 
 processOutput = (err, stdout, stderr) ->
     throw err if err
@@ -94,6 +96,14 @@ task 'build:about', 'Build about page', (options) ->
 
 task 'build:docs', 'Build documentation pages', ->
     invoke 'build:about'
+
+task 'build:bootstrap', 'Build Bootstrap library', ->
+    exec 'cd lib/bootstrap &&
+        PATH=../../node_modules/less/bin:../../node_modules/uglify-js/bin:$PATH &&
+        make bootstrap', processOutput
+
+task 'build:dependencies', 'Build libraries', ->
+    invoke 'build:bootstrap'
 
 option '-w', '--watch', 'Watch source files for changes'
 task 'build', 'Build project', (options) ->

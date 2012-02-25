@@ -40,3 +40,6 @@ roomsToLookUp = []
 
 # For each tab, the lottery number reflected by the rooms' probabilities
 lotteryNumberWhenUpdated = []
+
+# Past results for a particular room
+roomResults = {}

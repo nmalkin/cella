@@ -45,6 +45,7 @@ lookUpRooms = (next = ->)->
                 for room in resultRooms
                     allRooms[room.id] = room
                     $(".room#{ room.id }").replaceWith roomHTML room
+                    activateResultPopover room
 
                 roomsToLookUp = [] # no more rooms to look up (for now)
 
@@ -76,3 +77,13 @@ activateRooms = (tabNumber, rooms, next = ->) ->
             updateProbabilities()
             myTab.find(ROOM_TABLE).trigger 'update'
             next()
+
+# Gets previous results for given room and calls cb with them as argument
+getResults = (roomID, cb) ->
+    if roomID of roomResults
+        cb roomResults[roomID]
+    else
+        $.getJSON 'results', {id: roomID}, (results) ->
+            roomResults[roomID] = results
+            savePersistent 'roomResults', roomResults
+            cb results

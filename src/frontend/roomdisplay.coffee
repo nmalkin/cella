@@ -33,16 +33,57 @@ roomHTML = (room, filledStar=false) ->
         <td></td>
     </tr>"
 
+# Activate the popover that shows previous room results
+activateResultPopover = (room) ->
+    target = $(PROBABILITY room.id).parent '.probability'
+    hover = false
+    target.hover (-> # on mouse in
+        hover = true
+        getResults room.id, (results) ->
+            table = resultTableHTML results
+            target.popover
+                trigger: 'manual',
+                animation: true,
+                placement: 'top',
+                title: room.building + ' ' + room.room,
+                content: table
+            if hover
+                target.popover 'show'
+    ), (-> # on mouse out
+        hover = false
+        target.popover 'hide'
+    )
+
+# Returns a string of HTML with a table displaying given results
+# 'results' is an object of the form {year: number, ...); e.g,. {2011: 415}
+resultTableHTML = (results) ->
+    table = '<table class="table">'
+    
+    head = '<thead><tr><th>Year</th>'
+    body = '<tbody><tr><th>Lottery number</th>'
+    for year of results
+        head += "<td>#{ year }</td>"
+        body += "<td>#{ results[year] ? '-' }</td>"
+    
+    head += '</tr></thead>'
+    body += '</tr></tbody>'
+    
+    table += head + body + '</table>'
+    table
+
 # Adds room with given room id to the table
 addRoom = (tabNumber, roomID) ->
     if roomID of allRooms
         isStarred = if activeRooms[STAR_TAB]? then \
             activeRooms[STAR_TAB].indexOf(roomID) != -1 else false
-        html = roomHTML allRooms[roomID], isStarred
+        room = allRooms[roomID]
+        html = roomHTML room, isStarred
+        $(TAB tabNumber).find(RESULTS_DIV).append html
+        activateResultPopover room
     else
         roomsToLookUp.push roomID
         html = "<tr class=\"#{ NAME ROOM roomID }\"><td colspan=\"7\"></td></tr>"
-    $(TAB tabNumber).find(RESULTS_DIV).append html
+        $(TAB tabNumber).find(RESULTS_DIV).append html
 
 # Removes room from tab
 removeRoom = (tabNumber, roomID) ->
