@@ -44,7 +44,7 @@ lookUpRooms = (next = ->)->
             (resultRooms) ->
                 for room in resultRooms
                     allRooms[room.id] = room
-                    $(".room#{ room.id }").replaceWith roomHTML room
+                    $(ROOM room.id).replaceWith roomHTML room
                     activateResultPopover room
 
                 roomsToLookUp = [] # no more rooms to look up (for now)
