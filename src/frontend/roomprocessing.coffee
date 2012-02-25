@@ -85,4 +85,5 @@ getResults = (roomID, cb) ->
     else
         $.getJSON 'results', {id: roomID}, (results) ->
             roomResults[roomID] = results
+            savePersistent 'roomResults', roomResults
             cb results

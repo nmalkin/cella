@@ -6,6 +6,9 @@ loadStateFromStorage = () ->
     t = getPersistent 'allRooms'
     allRooms = t if t?
 
+    t = getPersistent 'roomResults'
+    roomResults = t if t?
+
     sophomore = getPersistent 'sophomore'
     if sophomore?
         setSophomoreStatus sophomore
