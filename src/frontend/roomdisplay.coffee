@@ -36,7 +36,9 @@ roomHTML = (room, filledStar=false) ->
 # Activate the popover that shows previous room results
 activateResultPopover = (room) ->
     target = $(PROBABILITY room.id).parent '.probability'
-    target.hover (-> 
+    hover = false
+    target.hover (-> # on mouse in
+        hover = true
         getResults room.id, (results) ->
             table = resultTableHTML results
             target.popover
@@ -45,8 +47,12 @@ activateResultPopover = (room) ->
                 placement: 'top',
                 title: room.building + ' ' + room.room,
                 content: table
-            target.popover 'show'
-    ), (-> target.popover 'hide')
+            if hover
+                target.popover 'show'
+    ), (-> # on mouse out
+        hover = false
+        target.popover 'hide'
+    )
 
 # Returns a string of HTML with a table displaying given results
 # 'results' is an object of the form {year: number, ...); e.g,. {2011: 415}
