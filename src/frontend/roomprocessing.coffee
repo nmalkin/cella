@@ -80,5 +80,9 @@ activateRooms = (tabNumber, rooms, next = ->) ->
 
 # Gets previous results for given room and calls cb with them as argument
 getResults = (roomID, cb) ->
-    $.getJSON 'results', {id: roomID}, (results) ->
-        cb results
+    if roomID of roomResults
+        cb roomResults[roomID]
+    else
+        $.getJSON 'results', {id: roomID}, (results) ->
+            roomResults[roomID] = results
+            cb results
