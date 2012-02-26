@@ -47,7 +47,14 @@ GENDER_NEUTRAL_COLOR = '#e102ba'
 
 NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 No results were found. Try some other criteria.
-                            </td></tr>'
+                            </td>
+                            <td class="no-width"></td>
+                            <td class="no-width"></td>
+                            <td class="no-width"></td>
+                            <td class="no-width"></td>
+                            <td class="no-width"></td>
+                            <td class="no-width"></td>
+                            </tr>'
 
 # PARAMETERIZED CONSTANTS
 

@@ -126,6 +126,11 @@ tfoot th {
     border-top: 1px solid #ddd;
 }
 
+td.no-width {
+    width: 0;
+    border: 0;
+}
+
 
 /*
  * TableSorter styles
