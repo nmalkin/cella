@@ -85,6 +85,10 @@ footer {
     font-size: x-small;
 }
 
+p.label_container:last-child {
+    margin-bottom: 0;
+}
+
 .probability {
     border-radius: 3px;
     -webkit-border: 3px;

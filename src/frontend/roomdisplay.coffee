@@ -8,7 +8,7 @@ roomHTML = (room, filledStar=false) ->
 
     label = (text, color = null) ->
         bg = if color? then "style=\"background-color: #{ color }\"" else ''
-        "<span class=\"label\" #{ bg }>#{ text }</span> "
+        "<p class=\"label_container\"><span class=\"label\" #{ bg }>#{ text }</span></p>"
 
     labels = ''
     labels += if room.apartment then label APARTMENT_RATE_LABEL, APARTMENT_RATE_COLOR else ''
