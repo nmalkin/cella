@@ -25,15 +25,7 @@ loadBuildings = ->
 
 # Clears data in persistent storage and displays confirmation message
 clearPersistent = () ->
-    sessionStorage.clear()
-
-    # Replace control with success message for a few seconds
-    container = $(this)
-    container.unbind 'click'
-    currentContents = container.html()
-    container.html '<span class="label success">Done</span>'
-    window.setTimeout (-> 
-        container.html currentContents
-        container.bind 'click', clearPersistent
-    ), 1500
-
+    if window.confirm 'Are you sure you want to reset the application?\n
+This will clear any searches and starred rooms.'
+        sessionStorage.clear()
+        window.location.reload()
