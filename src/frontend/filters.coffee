@@ -90,3 +90,12 @@ selectCampusArea = (event) =>
     $("input:last").trigger 'mouseenter' 
     multiSelect = false
     $(BUILDINGS_FIELD).trigger 'change'
+
+# Returns true if we know a priori
+# that no results can be found based on current filter values.
+noResultsPossible = (tab) ->
+    occupancy = getChosenOccupancy tab
+    buildings = getChosenBuildings tab
+    includeBuildings = includeChosenBuildings tab
+
+    return (occupancy.length == 0 or (buildings.length == 0 and includeBuildings))

@@ -56,6 +56,16 @@ NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                             <td class="no-width"></td>
                             </tr>'
 
+NO_RESULT_POSSIBLE_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
+    To get results, make sure both occupancy and buildings are selected.
+    </td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    </tr>'
 # PARAMETERIZED CONSTANTS
 
 # Given a constant (like the ones above), removes the first character,

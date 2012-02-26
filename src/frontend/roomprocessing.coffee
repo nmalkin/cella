@@ -17,15 +17,18 @@ findSelectedRooms = (tab) ->
     buildings = getChosenBuildings tab
     includeBuildings = includeChosenBuildings tab
 
-    $.getJSON 'get_rooms',
-        {
-            occupancy: occupancy.join ','
-            buildings: buildings.join ','
-            include_buildings: includeBuildings 
-            sophomore: isSophomore()
-        },
-        (resultRooms) ->
-            activateRooms tab, resultRooms
+    if noResultsPossible tab
+        activateRooms tab, []
+    else
+        $.getJSON 'get_rooms',
+            {
+                occupancy: occupancy.join ','
+                buildings: buildings.join ','
+                include_buildings: includeBuildings 
+                sophomore: isSophomore()
+            },
+            (resultRooms) ->
+                activateRooms tab, resultRooms
 
     selectedOccupancy[tab] = occupancy 
     selectedBuildings[tab] = buildings
@@ -66,7 +69,12 @@ activateRooms = (tabNumber, rooms, next = ->) ->
 
     # add activated rooms to table
     if activeRooms[tabNumber].length == 0
-        myTab.find(RESULTS_DIV).html NO_RESULT_PLACEHOLDER_MESSAGE 
+        if noResultsPossible tabNumber
+            message = NO_RESULT_POSSIBLE_PLACEHOLDER_MESSAGE 
+        else
+            message = NO_RESULT_PLACEHOLDER_MESSAGE 
+
+        myTab.find(RESULTS_DIV).html message
         myTab.find(ROOM_TABLE).trigger 'update'
         next()
     else
