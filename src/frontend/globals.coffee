@@ -43,3 +43,6 @@ lotteryNumberWhenUpdated = []
 
 # Past results for a particular room
 roomResults = {}
+
+# HTML for a new, blank tab
+newTabHTML = null

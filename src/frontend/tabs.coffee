@@ -47,8 +47,16 @@ loadTab = (tabNumber, next = ->) ->
     # Create a div to hold the table
     $(RESULT_TABLES).append "<div class=\"tab-pane\" id=\"#{ NAME TAB tabNumber }\"></div>"
 
-    # Load empty table into tab
-    $(TAB tabNumber).load 'table.html', ->
+    # Create a new tab control for this table
+    new_tab = $("<li id=\"#{ NAME CONTROL tabNumber }\">
+                <a href=\"##{ NAME TAB tabNumber }\" data-toggle=\"tab\">
+                Search #{ tabNumber }
+                <span class=\"close_tab\" title=\"Close tab\">&#10006;</span>
+                </a></li>")
+    $(NEW_TAB_BUTTON).parent().before new_tab
+    new_tab.find('.close_tab').click (-> closeTab tabNumber)
+
+    initTab = ->
         populateBuildingSelect tabNumber
 
         selectOccupancy tabNumber, selectedOccupancy[tabNumber]
@@ -87,15 +95,15 @@ loadTab = (tabNumber, next = ->) ->
 
         next()
 
-    # Create a new tab for this table
-    new_tab = $("<li id=\"#{ NAME CONTROL tabNumber }\">
-                <a href=\"##{ NAME TAB tabNumber }\" data-toggle=\"tab\">
-                Search #{ tabNumber }
-                <span class=\"close_tab\" title=\"Close tab\">&#10006;</span>
-                </a></li>")
-    $(NEW_TAB_BUTTON).parent().before new_tab
+    # Load empty table into tab
+    if newTabHTML?
+        $(TAB tabNumber).html newTabHTML
+        initTab()
+    else
+        $(TAB tabNumber).load 'table.html', (content) ->
+           newTabHTML = content
+           initTab()
 
-    new_tab.find('.close_tab').click (-> closeTab tabNumber)
 
 # Creates a new tab with the next available tab number, calls next when done
 loadNewTab = (next = ->) ->
