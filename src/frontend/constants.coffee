@@ -23,6 +23,12 @@ STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 Starred results will appear in this tab.
                             </td></tr>'
 
+# LABELS
+APARTMENT_RATE_LABEL = '<a href="http://brown.edu/lottery/rooms/rates.php" style="color:inherit">Apartment Rate</a>'
+SOPHOMORE_LABEL = 'Sophomore-Only'
+GENDER_NEUTRAL_LABEL = '<a href="http://brown.edu/lottery/rooms/gender_neutral.php" style="color:inherit">Gender-Neutral</a>'
+
+
 # COLORS
 
 PROBABILITY_COLORS_DARK = [

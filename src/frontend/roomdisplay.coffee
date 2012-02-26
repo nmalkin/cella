@@ -11,10 +11,10 @@ roomHTML = (room, filledStar=false) ->
         "<span class=\"label\" #{ bg }>#{ text }</span> "
 
     labels = ''
-    labels += if room.apartment then label 'Apartment Rate', APARTMENT_RATE_COLOR else ''
-    labels += if room.sophomore then label 'Sophomore-Only', SOPHOMORE_COLOR else ''
+    labels += if room.apartment then label APARTMENT_RATE_LABEL, APARTMENT_RATE_COLOR else ''
+    labels += if room.sophomore then label SOPHOMORE_LABEL, SOPHOMORE_COLOR else ''
     labels += if room.gender_neutral and
-        room.occupancy > 1 then label 'Gender-Neutral', GENDER_NEUTRAL_COLOR else ''
+        room.occupancy > 1 then label GENDER_NEUTRAL_LABEL, GENDER_NEUTRAL_COLOR else ''
 
     "<tr class=\"#{ NAME ROOM room.id }\">
         <td class=\"star\">#{ star }</td>
