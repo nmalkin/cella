@@ -153,3 +153,4 @@ $(document).ready ->
         starResultTable.trigger 'update'
 
     $("[rel=tooltip]").live 'mouseover', -> $(this).tooltip('show')
+    $("td.star").live 'click', toggleStar

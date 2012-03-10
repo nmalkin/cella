@@ -15,9 +15,6 @@ starRoom = (roomID) ->
     # Add this room to starred-result table
     addRoom STAR_TAB, roomID
 
-    # Add toggle listener
-    $(TAB STAR_TAB).find('.star').click toggleStar
-
 # Undoes the starring of the given room
 unstarRoom = (roomID) ->
     # Set "unstarred" icon
