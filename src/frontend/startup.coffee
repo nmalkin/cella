@@ -152,4 +152,4 @@ $(document).ready ->
     starResultTable.find('.header').click ->
         starResultTable.trigger 'update'
 
-    $("a[rel=tooltip]").live 'mouseover', -> $(this).tooltip('show')
+    $("[rel=tooltip]").live 'mouseover', -> $(this).tooltip('show')
