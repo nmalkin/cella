@@ -2,6 +2,7 @@ url = require 'url'
 
 rooms = require './rooms.js'
 buildings = require './buildings'
+floorplans = require './floorplans'
 
 
 # Given a result, writes it stringified to the response
@@ -119,3 +120,22 @@ exports.results = (req, res, next) ->
 
         rooms.results id, (result) ->
             resultToResponse result, res
+
+
+# Redirects to the URL of the floorplan for given room and building
+exports.floorplan = (req, res, next) ->
+    params = (url.parse req.url, true).query
+
+    if not (params.building? and params.room?)
+        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.end 'Missing required parameters\n'
+    else
+        floorplan_url = floorplans.url(params.building, params.room)
+        if not floorplan_url?
+            res.writeHead 200, {'Content-Type': 'text/plan'}
+            res.end 'Unrecognized input\n'
+        else # redirect to URL
+            res.writeHead 303, {'Location': floorplan_url} # HTTP 303: See Other
+            res.end 'Redirecting to ' + floorplan_url + '\n'
+
+

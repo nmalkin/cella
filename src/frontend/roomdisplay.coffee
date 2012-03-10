@@ -9,8 +9,13 @@ roomHTML = (room, filledStar=false) ->
     label = (text, color = null) ->
         bg = if color? then "style=\"background-color: #{ color }\"" else ''
         "<p class=\"label_container\"><span class=\"label\" #{ bg }>#{ text }</span></p>"
+    
+    floorplan_label = ->
+        "<a href=\"/floorplan?building=#{ room.building }&room=#{ room.room }\">" +
+        label 'Floorplan' +
+        '</a>'
 
-    labels = ''
+    labels = floorplan_label()
     labels += if room.apartment then label APARTMENT_RATE_LABEL, APARTMENT_RATE_COLOR else ''
     labels += if room.sophomore then label SOPHOMORE_LABEL, SOPHOMORE_COLOR else ''
     labels += if room.gender_neutral and

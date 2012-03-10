@@ -1,6 +1,6 @@
 connect = require 'connect'
 
-api = require './housing_api.js'
+api = require './housing_api'
 
 server = connect.createServer()
 server.use connect.favicon __dirname + '/..' + '/public/favicon.ico'
@@ -11,6 +11,7 @@ server.use connect.router (app) ->
     app.get '/buildings', api.buildings
     app.get '/campus_areas', api.campus_areas
     app.get '/results', api.results
+    app.get '/floorplan', api.floorplan
 server.use connect.static __dirname + '/..' + '/public'
 
 
