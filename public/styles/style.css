@@ -79,6 +79,11 @@ td.star, th.star {
     content: none;
 }
 
+#motd {
+    margin: 10px auto;
+    text-align: center;
+}
+
 footer {
     text-align: center;
 }
