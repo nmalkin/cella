@@ -37,7 +37,7 @@ roomHTML = (room, filledStar=false) ->
             </div>
         </td>
         <td style=\"text-align: center\">
-            <span class=\"label\" rel=\"tooltip\" title=\"2012-2013 availability not yet available\">?</span>
+            <span class=\"label\" rel=\"tooltip\" title=\"#{ NO_AVAILABILITY_DATA }\">?</span>
         </td>
     </tr>"
 

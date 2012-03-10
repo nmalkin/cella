@@ -16,6 +16,8 @@ BUILDING_MODE_FIELD = '.building-mode'
 BUILDINGS_FIELD = '.select-buildings'
 PROBABILITY_TEXT = '.probability-text'
 
+NO_AVAILABILITY_DATA = '2012-2013 availability not yet released'
+
 STAR_TAB = 0
 STAR_FILLED = '&#9733;'
 STAR_EMPTY = '&#9734;'
