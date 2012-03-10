@@ -69,7 +69,7 @@ body {
     color: #FFFFFF;
 }
 
-.star {
+td.star, th.star {
     text-align: center;
 }
 
