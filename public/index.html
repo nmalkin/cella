@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Cella</title>
+    <title>Cella: Brown On-Campus Housing Helper</title>
+    <meta name="description" content="Cella is a web-based application to help participants in the Brown University Housing Lottery identify desired rooms conveniently and efficiently." />
+    <meta name="keywords" content="cella,housing helper,brown,brown university,housing,housing lottery,rooms,dorms,on campus,search,domus">
+    <meta name="creator" content="Team Domus" />
     <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="styles/chosen.css" />
     <link rel="stylesheet" type="text/css" href="styles/jquery-ui/jquery-ui.css" />
@@ -49,17 +52,29 @@
             </div>
         </header>
 
+        <h1>Find campus housing with Cella</h1>
+
         <div class="row">
-            <div class="well search_option_well span8">
+            <div class="span4">
+                <p style="text-align: justify">
+                Cella is a tool for Brown University students
+                to <strong>find rooms on campus</strong> quickly and easily.
+                No more spreadsheets, room lists, and confusing web pages.
+                <strong>All the information you need is here</strong>, at your fingertips.
+                <a href="about.html">Learn more</a> or start searching!
+                </p>
+            </div>
+
+            <div class="well search_option_well span7">
                 <h4>About you</h4>
-                    <div class="span5" style="float:right; margin-top: -10px">
+                    <div class="span4" style="float:right; margin-top: -5px">
                         <div style="text-align: center; margin-bottom: 5px">
                             Lottery number:
                             <span id="lottery_number">1</span>
                         </div>
                         <div id="lottery"></div>
                     </div>
-                    <div style="margin-top: 10px">
+                    <div style="margin-top: 15px">
                             <label class="checkbox" for="sophomore">
                             <input type="checkbox" id="sophomore" name="sophomore" value="sophomore" />
                             Include sophomore-only housing</label>
