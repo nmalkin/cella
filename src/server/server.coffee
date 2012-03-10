@@ -1,6 +1,6 @@
 connect = require 'connect'
 
-api = require './housing_api'
+api = require './api'
 
 server = connect.createServer()
 server.use connect.favicon __dirname + '/..' + '/public/favicon.ico'
