@@ -11,7 +11,7 @@ roomHTML = (room, filledStar=false) ->
         "<p class=\"label_container\"><span class=\"label\" #{ bg }>#{ text }</span></p>"
     
     floorplan_label = ->
-        "<a href=\"/floorplan?building=#{ room.building }&room=#{ room.room }\"
+        "<a href=\"/floorplan?building=#{ encodeURIComponent room.building }&room=#{ room.room }\"
         rel=\"tooltip\" title=\"Click to access floorplans\">" +
         label 'Floorplan' +
         '</a>'
