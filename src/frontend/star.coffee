@@ -50,6 +50,9 @@ toggleStar = (event) ->
 
             starRoom room
 
+        # Star status has changed, so update TableSorter
+        $(ROOM_TABLE).trigger 'update'
+
 # Displays placeholder message in the star tab
 showStarPlaceholderMessage = () ->
     $(TAB STAR_TAB).find(RESULTS_DIV).html STAR_PLACEHOLDER_MESSAGE
