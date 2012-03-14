@@ -81,7 +81,7 @@ activateRooms = (tabNumber, rooms, next = ->) ->
         myTab.find(RESULTS_DIV).html ''
         addRoom tabNumber, room for room in activeRooms[tabNumber]
         lookUpRooms ->
-            updateProbabilities()
+            updateProbabilities null, true
             myTab.find(ROOM_TABLE).trigger 'update'
             next()
 
