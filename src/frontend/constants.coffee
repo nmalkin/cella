@@ -29,6 +29,10 @@ STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
 APARTMENT_RATE_LABEL = '<a href="http://brown.edu/lottery/rooms/rates.php" style="color:inherit">Apartment Rate</a>'
 SOPHOMORE_LABEL = 'Sophomore-Only'
 GENDER_NEUTRAL_LABEL = '<a href="http://brown.edu/lottery/rooms/gender_neutral.php" style="color:inherit">Gender-Neutral</a>'
+FLOORPLAN_LABEL = (room) ->
+    "<a href=\"/floorplan?building=#{ encodeURIComponent room.building }&room=#{ room.room }\"
+    rel=\"tooltip\" title=\"Click to access floorplans\"
+    style=\"color:inherit\">Floorplan</a>"
 
 
 # COLORS
@@ -49,9 +53,10 @@ PROBABILITY_COLORS = [
     'rgb(0, 184, 9)'    # very likely
 ]
 
-APARTMENT_RATE_COLOR = '#5c56ea'
-SOPHOMORE_COLOR = '#00d9dc'
-GENDER_NEUTRAL_COLOR = '#e102ba'
+FLOORPLAN_COLOR = '#4188d2'
+APARTMENT_RATE_COLOR = '#04346c'
+SOPHOMORE_COLOR = '#76bdf8'
+GENDER_NEUTRAL_COLOR = '#0d58a6'
 
 NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 No results were found. Try some other criteria.
