@@ -44,6 +44,9 @@ closeTab = (tabToDelete) ->
 
 # Creates a new tab with given tab number and loads a new table into it
 loadTab = (tabNumber, next = ->) ->
+    activeRooms[tabNumber] = []
+    savePersistent 'activeRooms', activeRooms
+
     # Create a div to hold the table
     $(RESULT_TABLES).append "<div class=\"tab-pane\" id=\"#{ NAME TAB tabNumber }\"></div>"
 
