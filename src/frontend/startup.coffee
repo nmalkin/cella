@@ -152,5 +152,8 @@ $(document).ready ->
     starResultTable.find('.header').click ->
         starResultTable.trigger 'update'
 
+    # Activate tooltips
     $("[rel=tooltip]").live 'mouseover', -> $(this).tooltip('show')
+
+    # Toggle star status when stars are clicked
     $("td.star").live 'click', toggleStar
