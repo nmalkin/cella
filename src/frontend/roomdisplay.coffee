@@ -36,21 +36,30 @@ roomHTML = (room, filledStar=false) ->
     </tr>"
 
 # Activate the popover that shows previous room results
-activateResultPopover = (room) ->
-    target = $(PROBABILITY room.id).parent '.probability'
+initResultPopover = (room, tabNumber = null) ->
+    if tabNumber?
+        target = $(TAB tabNumber).find(PROBABILITY room.id).parent '.probability'
+    else
+        target = $(PROBABILITY room.id).parent '.probability'
     hover = false
     target.hover (-> # on mouse in
         hover = true
-        getResults room.id, (results) ->
-            table = resultTableHTML results
-            target.popover
-                trigger: 'manual',
-                animation: true,
-                placement: 'top',
-                title: room.building + ' ' + room.room,
-                content: table
-            if hover
-                target.popover 'show'
+        
+        # Is this the first time this has been moused over?
+        if not target.data('popover_init')? # yes, set up the popover
+            getResults room.id, (results) ->
+                table = resultTableHTML results
+                target.popover
+                    trigger: 'manual',
+                    animation: true,
+                    placement: 'top',
+                    title: room.building + ' ' + room.room,
+                    content: table
+                target.data 'popover_init', true
+                if hover
+                    target.popover 'show'
+        else # no, show the popover
+            target.popover 'show'
     ), (-> # on mouse out
         hover = false
         target.popover 'hide'
@@ -82,7 +91,7 @@ addRoom = (tabNumber, roomID) ->
             room = allRooms[roomID]
             html = roomHTML room, isStarred
             $(TAB tabNumber).find(RESULTS_DIV).append html
-            activateResultPopover room
+            initResultPopover room, tabNumber
         else
             roomsToLookUp.push roomID
             html = "<tr class=\"#{ NAME ROOM roomID }\"><td colspan=\"7\"></td></tr>"
