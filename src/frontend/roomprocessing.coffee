@@ -38,26 +38,24 @@ findSelectedRooms = (tab) ->
     savePersistent 'selectedIncludes', selectedIncludes 
 
 # Looks up any rooms in the roomsToLookUp list
-# and replaces their row in the results table with a fully populated one
-# Calls next after it's done.
+# Calls next with list of rooms successfully looked up.
 lookUpRooms = (next = ->)->
     if roomsToLookUp.length > 0
         $.getJSON 'room_info', 
             {ids: roomsToLookUp.join ','},
             (resultRooms) ->
+                # Store the rooms that were successfully looked up
                 for room in resultRooms
                     allRooms[room.id] = room
-                    $(ROOM room.id).replaceWith roomHTML room
-                    initResultPopover room
-
-                roomsToLookUp = [] # no more rooms to look up (for now)
 
                 # Update allRooms in storage
                 savePersistent 'allRooms', allRooms
 
-                next()
+                roomsToLookUp = [] # no more rooms to look up (for now)
+
+                next resultRooms
     else
-        next()
+        next []
 
 # Updates the result table to show the given rooms
 # Calls next after it's done.
@@ -80,9 +78,17 @@ activateRooms = (tabNumber, rooms, next = ->) ->
     else
         myTab.find(RESULTS_DIV).html ''
         addRoom tabNumber, room for room in activeRooms[tabNumber]
-        lookUpRooms ->
+        lookUpRooms (lookedUpRooms) ->
+            # Display the looked up rooms
+            for room in lookedUpRooms
+                $(ROOM room.id).replaceWith roomHTML room
+                initResultPopover room
+
             updateProbabilities null, true
+
+            # Update TableSorter with new information
             myTab.find(ROOM_TABLE).trigger 'update'
+
             next()
 
 # Gets previous results for given room and calls cb with them as argument

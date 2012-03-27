@@ -83,7 +83,13 @@ starTableReordered = (event, ui) ->
 
     # Re-populate the array in the new order of the rooms
     $(TAB STAR_TAB).find(RESULTS_DIV).children().each (index, row) ->
-        activeRooms[STAR_TAB].push getRoomFromRow $(row)
+        room = getRoomFromRow $(row)
+        if room != -1 then activeRooms[STAR_TAB].push room
 
     # Store the updated list of rooms
     savePersistent 'activeRooms', activeRooms
+
+    updateStarredRoomURL()
+
+toggleShareWell = () ->
+    $(SHARE_WELL).toggle()

@@ -12,6 +12,18 @@ body {
     max-width: 500px;
 }
 
+#share-well {
+    display: none;
+    margin: 0 auto 15px auto;
+    width: 410px;
+}
+
+#share-link {
+    cursor: default;
+    width: 400px;
+    margin-bottom: 0;
+}
+
 .close_tab, .close_tab:hover {
     margin-left: 6px;
     padding: 4px;
@@ -140,6 +152,10 @@ tfoot th {
 td.no-width {
     width: 0;
     border: 0;
+}
+
+.modal {
+    display: none;
 }
 
 

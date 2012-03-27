@@ -3,6 +3,8 @@
 # "Stars" the room with the given ID
 # Starred rooms are saved and displayed in the "star" tab 
 starRoom = (roomID) ->
+    if not roomID of allRooms then return # An invalid ID has snuck in somehow. Ignore it.
+
     # Set a "starred" icon (for all rooms with this ID in all tables)
     $(ROOM roomID).children('.star').html STAR_FILLED
 
@@ -22,8 +24,7 @@ unstarRoom = (roomID) ->
 
     # Remove from list of starred rooms
     index = activeRooms[STAR_TAB].indexOf roomID
-    if index == -1
-        return
+    if index == -1 then return
     activeRooms[STAR_TAB][index..index] = []
     savePersistent 'activeRooms', activeRooms
 
@@ -50,6 +51,8 @@ toggleStar = (event) ->
 
             starRoom room
 
+        updateStarredRoomURL()
+
         # Star status has changed, so update TableSorter
         $(ROOM_TABLE).trigger 'update'
 
@@ -60,3 +63,14 @@ showStarPlaceholderMessage = () ->
 # Clears the placeholder message from the star tab
 clearStarPlaceholderMessage = () ->
     $(TAB STAR_TAB).find(RESULTS_DIV).html ''
+
+# Returns the current page's URL, with starred rooms appended as argument
+getStarredRoomURL = () ->
+    window.location.protocol + '//' +
+        window.location.host + '?starred=' + 
+        activeRooms[STAR_TAB].join ','
+
+# Updates page with link that includes currently starred rooms
+updateStarredRoomURL = () ->
+    starredRoomURL = getStarredRoomURL()
+    $(SHARE_LINK).val starredRoomURL

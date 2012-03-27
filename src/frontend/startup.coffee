@@ -2,7 +2,7 @@
 
 # Loads application state from storage
 # This includes rooms, open tabs, etc.
-loadStateFromStorage = () ->
+loadStateFromStorage = (cb) ->
     t = getPersistent 'allRooms'
     allRooms = t if t?
 
@@ -83,6 +83,7 @@ loadStateFromStorage = () ->
         if starredRooms? and starredRooms.length > 0
             clearStarPlaceholderMessage()
             starRoom room for room in starredRooms
+            updateStarredRoomURL()
         else
             activeRooms[STAR_TAB]= []
             showStarPlaceholderMessage()
@@ -95,6 +96,9 @@ loadStateFromStorage = () ->
             activeTab = getNewestTab()
         activateTab activeTab
 
+        cb()
+    else
+        cb()
 
 $(document).ready ->
     # activate lottery number slider
@@ -115,7 +119,9 @@ $(document).ready ->
     # Retrieve all buildings, which will then be used to populate select box
     loadBuildings()
 
-    loadStateFromStorage()
+    loadStateFromStorage ->
+        # Try to import starred room from URL query string
+        importRooms()
 
     # If there are no tabs, create one
     if tabCount == 0
@@ -157,3 +163,109 @@ $(document).ready ->
 
     # Toggle star status when stars are clicked
     $("td.star").live 'click', toggleStar
+
+    # Show sharing-info well when toggle message is clicked
+    $(SHARE_WELL_TOGGLE).click toggleShareWell
+
+    $(SHARE_LINK).focus -> $(this).select()
+
+
+
+importRooms = () ->
+    # Try to get starred rooms from search string
+    starred_param = /[\?&]starred=([\d,]*)(?:&|$)/.exec(window.location.search)
+    if not starred_param then return
+
+    # Extract room numbers from query string.
+    inputRooms = []
+    inputRoomsObject = {} # used to check for duplicates
+    re = /\d+/g # match numbers
+    while (match = re.exec starred_param[0])?
+        roomNumber = parseInt match[0]
+        if (not isNaN roomNumber) and # is a valid number
+        roomNumber > 0 and # somewhere in the expected range
+        not (roomNumber of inputRoomsObject) # not a duplicate
+            # Okay, save for further processing.
+            inputRooms.push roomNumber
+            inputRoomsObject[roomNumber] = true
+
+    knownRooms = []
+    for roomID in inputRooms
+        # Do I already have this room's information?
+        if roomID of allRooms # Yes
+            knownRooms.push roomID
+        else # No. We should look it up.
+            roomsToLookUp.push roomID
+
+    showImportWindow = (extraRooms = []) ->
+        # Get room information for known rooms (and add the extra ones in)
+        rooms = (allRooms[room] for room in knownRooms).concat extraRooms
+
+        if rooms.length == 0 then return
+
+        # Load modal window contents
+        $(IMPORT_WINDOW).load IMPORT_WINDOW_URL, ->
+            # Create a <li> for each room
+            makeRoomListItem = (room) -> "<li>#{ room.building } #{room.room }</li>"
+            roomList = (makeRoomListItem room for room in rooms).join ''
+
+            # Inject the list into the modal
+            $(IMPORT_ROOM_LIST).html roomList
+
+            # Are there starred rooms already?
+            importConflict = activeRooms[STAR_TAB]? and activeRooms[STAR_TAB].length > 0
+            
+            # Display the appropriate footer based on the answer.
+            $(IMPORT_CONFLICT).toggle importConflict
+            $(IMPORT_NO_CONFLICT).toggle !importConflict
+
+            # Show the modal
+            $(IMPORT_WINDOW).modal()
+
+            # When the modal is closed:
+            $(IMPORT_WINDOW).on 'hide', ->
+
+                # Clear search string
+                history.replaceState null, null, '/'
+
+            # If the user wants to add to the currently starred rooms.
+            $(IMPORT_UNION).click () ->
+                for room in rooms
+                    if -1 == activeRooms[STAR_TAB].indexOf room.id
+                        starRoom room.id
+
+                updateProbabilities null, true
+                updateStarredRoomURL()
+
+                # Activate star tab to show change
+                activateTab STAR_TAB
+
+            # If the user wants to replace the currently starred rooms.
+            $(IMPORT_REPLACE).click () ->
+                # Unstar currently starred rooms
+                if activeRooms[STAR_TAB]?
+                    toUnstar = activeRooms[STAR_TAB].slice 0 # make a copy
+                    unstarRoom room for room in toUnstar
+                else
+                    activeRooms[STAR_TAB] = []
+
+                if activeRooms[STAR_TAB].length == 0
+                    clearStarPlaceholderMessage()
+
+                # Star the new rooms
+                starRoom room.id for room in rooms
+
+                updateProbabilities null, true
+                updateStarredRoomURL()
+
+                # Activate star tab to show change
+                activateTab STAR_TAB
+
+    if roomsToLookUp.length > 0
+        # Don't have information about some rooms. Look them up.
+        lookUpRooms (lookedUpRooms) ->
+            # Then, display import window
+            showImportWindow lookedUpRooms
+    else
+        showImportWindow()
+

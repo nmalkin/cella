@@ -98,6 +98,15 @@
         
         <div id="result_tables" class="tab-content">
             <div class="tab-pane" id="tab0"><!-- starred results -->
+                <p style="margin-top: -10px; text-align: center">
+                    <a id="toggle-share-well">Share these rooms with others</a>
+                </p>
+                <div id="share-well" class="well well-small">
+                    <p style="text-indent:2px; margin-bottom: 0">Copy and paste this address: 
+                        <input type="text" id="share-link" readonly="readonly"></input>
+                    </p>
+                </div>
+
                 <table class="room_table table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -151,7 +160,13 @@
     <script type="text/javascript" src="scripts/bootstrap-tab.js"></script>
     <script type="text/javascript" src="scripts/bootstrap-tooltip.js"></script>
     <script type="text/javascript" src="scripts/bootstrap-popover.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap-modal.js"></script>
     <script type="text/javascript" src="scripts/index.js"></script>
+
+    <!-- hidden -->
+<div class="modal" id="import-modal">
+    <!-- loaded as needed -->
+</div>
 </body>
 </html>
 

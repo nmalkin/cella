@@ -24,6 +24,7 @@ libraryFiles = # library location : production location
     'lib/bootstrap/js/bootstrap-tab.js' : 'public/scripts/bootstrap-tab.js'
     'lib/bootstrap/js/bootstrap-tooltip.js' : 'public/scripts/bootstrap-tooltip.js'
     'lib/bootstrap/js/bootstrap-popover.js' : 'public/scripts/bootstrap-popover.js'
+    'lib/bootstrap/js/bootstrap-modal.js' : 'public/scripts/bootstrap-modal.js'
     'lib/tablesorter/js/jquery.tablesorter.js' : 'public/scripts/tablesorter.js'
 
     # CSS

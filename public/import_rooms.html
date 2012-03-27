@@ -1,0 +1,19 @@
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Import starred rooms</h3>
+    </div>
+    <div class="modal-body">
+        <p>Hey! It looks like you're trying to add these to the list of starred rooms:</p>
+        <ul id="import-room-list">
+            <!-- room list items will be inserted here -->
+        </ul>
+    </div>
+    <div class="modal-footer" id="import-conflict">
+        <a href="#" class="btn btn-primary import-union" data-dismiss="modal">Add to currently starred rooms</a>
+        <a href="#" class="btn btn-primary import-replace" data-dismiss="modal">Replace starred rooms</a>
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    </div>
+    <div class="modal-footer" id="import-no-conflict">
+        <a href="#" class="btn btn-primary import-replace" data-dismiss="modal">That's right, I am</a>
+        <a href="#" class="btn" data-dismiss="modal">Oops</a>
+    </div>
