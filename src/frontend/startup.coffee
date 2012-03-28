@@ -130,7 +130,7 @@ $(document).ready ->
         loadNewTab next
 
     # Display star placeholder message if no rooms are starred
-    if activeRooms[STAR_TAB]? and activeRooms[STAR_TAB].length == 0
+    if (not activeRooms[STAR_TAB]?) or activeRooms[STAR_TAB].length == 0
         showStarPlaceholderMessage()
 
     # Activate drag-and-drop of results in star tab
