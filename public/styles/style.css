@@ -163,33 +163,33 @@ td.no-width {
  * TableSorter styles
  * Taken from Bootstrap v1.4
  */
-table .header {
+table .tablesorter-header {
   cursor: pointer;
 }
-table .header:after {
+table .tablesorter-header:after {
   content: "";
   float: right;
-  margin-top: 7px;
+  margin-top: -11px;
   border-width: 0 4px 4px;
   border-style: solid;
   border-color: #000 transparent;
   visibility: hidden;
 }
-table .headerSortUp, table .headerSortDown {
+table .tablesorter-headerSortUp, table .tablesorter-headerSortDown {
   background-color: rgba(141, 192, 219, 0.25);
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
-table .header:hover:after {
+table .tablesorter-header:hover:after {
   visibility: visible;
 }
-table .headerSortDown:after, table .headerSortDown:hover:after {
+table .tablesorter-headerSortDown:after, table .tablesorter-headerSortDown:hover:after {
   visibility: visible;
   filter: alpha(opacity=60);
   -khtml-opacity: 0.6;
   -moz-opacity: 0.6;
   opacity: 0.6;
 }
-table .headerSortUp:after {
+table .tablesorter-headerSortUp:after {
   border-bottom: none;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
