@@ -61,9 +61,7 @@ loadStateFromStorage = (cb) ->
                         activateTab tabNumber
 
                         try
-                            setTimeout (->
-                                $(TAB tabNumber).find(ROOM_TABLE).trigger 'sorton', [sortOrder]
-                            ),  1
+                            $(TAB tabNumber).find(ROOM_TABLE).trigger 'sorton', [sortOrder]
                         catch error
                             log error
 
