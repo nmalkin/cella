@@ -63,10 +63,11 @@ PROBABILITY_COLORS = [
     'rgb(0, 184, 9)'    # very likely
 ]
 
-FLOORPLAN_COLOR = '#4188d2'
-APARTMENT_RATE_COLOR = '#04346c'
-SOPHOMORE_COLOR = '#76bdf8'
-GENDER_NEUTRAL_COLOR = '#0d58a6'
+# Label color classes
+FLOORPLAN_COLOR = 'floorplan_color'
+APARTMENT_RATE_COLOR = 'apartment_rate_color'
+SOPHOMORE_COLOR = 'sophomore_color'
+GENDER_NEUTRAL_COLOR = 'gender_neutral_color'
 
 NO_RESULT_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                                 No results were found. Try some other criteria.

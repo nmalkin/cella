@@ -159,6 +159,24 @@ td.no-width {
 }
 
 
+/** Label colors **/
+.floorplan_color {
+    background-color: #4188d2;
+}
+
+.apartment_rate_color {
+    background-color: #04346c;
+}
+
+.sophomore_color {
+    background-color: #76bdf8;
+}
+
+.gender_neutral_color {
+    background-color: #0d58a6;
+}
+
+
 /*
  * TableSorter styles
  * Taken from Bootstrap v1.4
