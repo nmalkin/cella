@@ -18,7 +18,7 @@ populateBuildingSelect = (tabNumber) ->
     buildingSelect = $(TAB tabNumber).find(BUILDINGS_FIELD)
 
     addCampusAreaToSelect buildingSelect, campusArea.name, \
-        campusArea.buildings.sort() for campusArea in campusAreas
+        campusArea.buildings.sort() for campusArea in _campusAreas
     
     # Tell the Chosen plugin that the select has been updated
     buildingSelect.trigger 'liszt:updated'
@@ -77,7 +77,7 @@ setSophomoreStatus = (sophomore) ->
 # selects all items in the group and adds them to the filter. This is needed
 # because Chosen does not provide for it out of the box.
 selectCampusArea = (event) =>
-    multiSelect = true
+    _multiSelect = true
     next = event.target
     buildings = []
     while next.nextSibling? and "group-result" != building = next.nextSibling.className
@@ -88,7 +88,7 @@ selectCampusArea = (event) =>
        e = $("##{ building.id }")
        e.trigger 'mouseup'
     $("input:last").trigger 'mouseenter' 
-    multiSelect = false
+    _multiSelect = false
     $(BUILDINGS_FIELD).trigger 'change'
 
 # Returns true if we know a priori

@@ -12,7 +12,7 @@ getActivatedTab = (event) ->
 # (i.e., ignoring deleted tabs)
 # Returns -1 if there is no newest tab.
 getNewestTab = ->
-    i = nextTabNumber - 1
+    i = _nextTabNumber - 1
     while i >= 0 and $(TAB i).length == 0
         i--
     return i
@@ -27,25 +27,25 @@ closeTab = (tabToDelete) ->
     $(CONTROL tabToDelete).remove()
     $(TAB tabToDelete).remove()
 
-    activeRooms[tabToDelete] = null
-    savePersistent 'activeRooms', activeRooms
+    _activeRooms[tabToDelete] = null
+    savePersistent '_activeRooms', _activeRooms
 
-    tabCount--
+    _tabCount--
 
     # If we're out of tables, create a new one.
-    if tabCount == 0
+    if _tabCount == 0
         loadNewTab()
     # If current tab is being deleted, switch to last active tab,
     # or the newest one, if the last active one is no longer known.
-    else if tabToDelete == activeTab
-        nextTab = if lastActiveTab == -1 then getNewestTab() else lastActiveTab
+    else if tabToDelete == _activeTab
+        nextTab = if _lastActiveTab == -1 then getNewestTab() else _lastActiveTab
         activateTab nextTab
-        lastActiveTab = -1
+        _lastActiveTab = -1
 
 # Creates a new tab with given tab number and loads a new table into it
 loadTab = (tabNumber, next = ->) ->
-    activeRooms[tabNumber] = []
-    savePersistent 'activeRooms', activeRooms
+    _activeRooms[tabNumber] = []
+    savePersistent '_activeRooms', _activeRooms
 
     # Create a div to hold the table
     $(RESULT_TABLES).append "<div class=\"tab-pane\" id=\"#{ NAME TAB tabNumber }\"></div>"
@@ -62,9 +62,9 @@ loadTab = (tabNumber, next = ->) ->
     initTab = ->
         populateBuildingSelect tabNumber
 
-        selectOccupancy tabNumber, selectedOccupancy[tabNumber]
-        selectBuildings tabNumber, selectedBuildings[tabNumber]
-        selectInclude tabNumber, selectedIncludes[tabNumber]
+        selectOccupancy tabNumber, _selectedOccupancy[tabNumber]
+        selectBuildings tabNumber, _selectedBuildings[tabNumber]
+        selectInclude tabNumber, _selectedIncludes[tabNumber]
 
         # Activate Chosen plugin for the new table
         $(".chzn-select").chosen()
@@ -99,21 +99,21 @@ loadTab = (tabNumber, next = ->) ->
         next()
 
     # Load empty table into tab
-    if newTabHTML?
-        $(TAB tabNumber).html newTabHTML
+    if _newTabHTML?
+        $(TAB tabNumber).html _newTabHTML
         initTab()
     else
         $(TAB tabNumber).load 'table.html', (content) ->
-           newTabHTML = content
+           _newTabHTML = content
            initTab()
 
 
 # Creates a new tab with the next available tab number, calls next when done
 loadNewTab = (next = ->) ->
-    tabNumber = nextTabNumber
+    tabNumber = _nextTabNumber
 
-    nextTabNumber++
-    tabCount++
+    _nextTabNumber++
+    _tabCount++
 
     loadTab tabNumber, ->
         activateTab tabNumber

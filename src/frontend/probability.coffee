@@ -40,9 +40,9 @@ recreateProbabilityGradient = (gradient, colors) ->
 
 # Update probability of room with given ID based on given lottery number
 updateRoomProbability = (roomID, lotteryNumber) ->
-    if allRooms[roomID]?
+    if _allRooms[roomID]?
         # Get probability
-        probability = getRoomProbability allRooms[roomID], lotteryNumber
+        probability = getRoomProbability _allRooms[roomID], lotteryNumber
 
         # Very low probability should still be seen; therefore "round" up to 5%.
         if probability < .05
@@ -73,10 +73,10 @@ updateProbabilities = (lotteryNumber = null, force = false) ->
 
     # Only update rooms in the current tab (to increase speed) and
     # if the lottery number has changed since the last update
-    if activeTab != -1 and activeRooms[activeTab]? and
-    (force or lotteryNumberWhenUpdated[activeTab] != lotteryNumber)
-        for roomID in activeRooms[activeTab]
+    if _activeTab != -1 and _activeRooms[_activeTab]? and
+    (force or _lotteryNumberWhenUpdated[_activeTab] != lotteryNumber)
+        for roomID in _activeRooms[_activeTab]
             updateRoomProbability roomID, lotteryNumber
 
-        lotteryNumberWhenUpdated[activeTab] = lotteryNumber
+        _lotteryNumberWhenUpdated[_activeTab] = lotteryNumber
 

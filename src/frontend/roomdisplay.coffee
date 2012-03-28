@@ -85,15 +85,15 @@ resultTableHTML = (results) ->
 # Adds room with given room id to the table
 addRoom = (tabNumber, roomID) ->
     if roomID > 0
-        if roomID of allRooms
-            isStarred = if activeRooms[STAR_TAB]? then \
-                activeRooms[STAR_TAB].indexOf(roomID) != -1 else false
-            room = allRooms[roomID]
+        if roomID of _allRooms
+            isStarred = if _activeRooms[STAR_TAB]? then \
+                _activeRooms[STAR_TAB].indexOf(roomID) != -1 else false
+            room = _allRooms[roomID]
             html = roomHTML room, isStarred
             $(TAB tabNumber).find(RESULTS_DIV).append html
             initResultPopover room, tabNumber
         else
-            roomsToLookUp.push roomID
+            _roomsToLookUp.push roomID
             html = "<tr class=\"#{ NAME ROOM roomID }\"><td colspan=\"7\"></td></tr>"
             $(TAB tabNumber).find(RESULTS_DIV).append html
 

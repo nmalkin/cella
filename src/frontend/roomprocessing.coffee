@@ -30,28 +30,28 @@ findSelectedRooms = (tab) ->
             (resultRooms) ->
                 activateRooms tab, resultRooms
 
-    selectedOccupancy[tab] = occupancy 
-    selectedBuildings[tab] = buildings
-    selectedIncludes[tab] = includeBuildings
-    savePersistent 'selectedOccupancy', selectedOccupancy
-    savePersistent 'selectedBuildings', selectedBuildings
-    savePersistent 'selectedIncludes', selectedIncludes 
+    _selectedOccupancy[tab] = occupancy 
+    _selectedBuildings[tab] = buildings
+    _selectedIncludes[tab] = includeBuildings
+    savePersistent '_selectedOccupancy', _selectedOccupancy
+    savePersistent '_selectedBuildings', _selectedBuildings
+    savePersistent '_selectedIncludes', _selectedIncludes 
 
-# Looks up any rooms in the roomsToLookUp list
+# Looks up any rooms in the _roomsToLookUp list
 # Calls next with list of rooms successfully looked up.
 lookUpRooms = (next = ->)->
-    if roomsToLookUp.length > 0
+    if _roomsToLookUp.length > 0
         $.getJSON 'room_info', 
-            {ids: roomsToLookUp.join ','},
+            {ids: _roomsToLookUp.join ','},
             (resultRooms) ->
                 # Store the rooms that were successfully looked up
                 for room in resultRooms
-                    allRooms[room.id] = room
+                    _allRooms[room.id] = room
 
-                # Update allRooms in storage
-                savePersistent 'allRooms', allRooms
+                # Update _allRooms in storage
+                savePersistent '_allRooms', _allRooms
 
-                roomsToLookUp = [] # no more rooms to look up (for now)
+                _roomsToLookUp = [] # no more rooms to look up (for now)
 
                 next resultRooms
     else
@@ -60,13 +60,13 @@ lookUpRooms = (next = ->)->
 # Updates the result table to show the given rooms
 # Calls next after it's done.
 activateRooms = (tabNumber, rooms, next = ->) ->
-    activeRooms[tabNumber] = rooms
-    savePersistent 'activeRooms', activeRooms
+    _activeRooms[tabNumber] = rooms
+    savePersistent '_activeRooms', _activeRooms
 
     myTab = $(TAB tabNumber)
 
     # add activated rooms to table
-    if activeRooms[tabNumber].length == 0
+    if _activeRooms[tabNumber].length == 0
         if noResultsPossible tabNumber
             message = NO_RESULT_POSSIBLE_PLACEHOLDER_MESSAGE 
         else
@@ -77,7 +77,7 @@ activateRooms = (tabNumber, rooms, next = ->) ->
         next()
     else
         myTab.find(RESULTS_DIV).html ''
-        addRoom tabNumber, room for room in activeRooms[tabNumber]
+        addRoom tabNumber, room for room in _activeRooms[tabNumber]
         lookUpRooms (lookedUpRooms) ->
             # Display the looked up rooms
             for room in lookedUpRooms
@@ -93,10 +93,10 @@ activateRooms = (tabNumber, rooms, next = ->) ->
 
 # Gets previous results for given room and calls cb with them as argument
 getResults = (roomID, cb) ->
-    if roomID of roomResults
-        cb roomResults[roomID]
+    if roomID of _roomResults
+        cb _roomResults[roomID]
     else
         $.getJSON 'results', {id: roomID}, (results) ->
-            roomResults[roomID] = results
-            savePersistent 'roomResults', roomResults
+            _roomResults[roomID] = results
+            savePersistent '_roomResults', _roomResults
             cb results

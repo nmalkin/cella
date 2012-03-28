@@ -2,17 +2,17 @@
 
 # Callback that gets called when the filter options are changed
 filterChanged = (event) ->
-    if activeTab != -1 and !multiSelect
-        findSelectedRooms activeTab
+    if _activeTab != -1 and !_multiSelect
+        findSelectedRooms _activeTab
 
 # Called when user switches between tabs
 tabChanged = (event) ->
     # Keep track of, and store, current and last active tab
-    lastActiveTab = activeTab
-    activeTab = getActivatedTab event
+    _lastActiveTab = _activeTab
+    _activeTab = getActivatedTab event
 
-    savePersistent 'lastActiveTab', lastActiveTab
-    savePersistent 'activeTab', activeTab
+    savePersistent '_lastActiveTab', _lastActiveTab
+    savePersistent '_activeTab', _activeTab
 
     # Also, make sure the probabilities are updated
     updateProbabilities()
@@ -53,7 +53,7 @@ sophomoreChanged = (event) ->
     savePersistent 'sophomore', isSophomore()
     
     tab = STAR_TAB + 1
-    while (tab < nextTabNumber) and activeRooms[tab]?
+    while (tab < _nextTabNumber) and _activeRooms[tab]?
         findSelectedRooms tab
         tab++
 
@@ -63,7 +63,7 @@ tableSorted = (event, table) ->
     sortList = event.target.config.sortList
 
     # Save the sort order for the session
-    savePersistent "sort_tab#{ activeTab }", sortList
+    savePersistent "sort_tab#{ _activeTab }", sortList
 
 # Helper for jQuery UI's sortable plugin, preserves row width when dragging.
 # (Without it, columns shrink in the process.)
@@ -79,15 +79,15 @@ tableDragHelper = (event, tr) ->
 # Called when the star tab's result table has been reordered
 starTableReordered = (event, ui) ->
     # Clear the array of starred tabs
-    activeRooms[STAR_TAB] = []
+    _activeRooms[STAR_TAB] = []
 
     # Re-populate the array in the new order of the rooms
     $(TAB STAR_TAB).find(RESULTS_DIV).children().each (index, row) ->
         room = getRoomFromRow $(row)
-        if room != -1 then activeRooms[STAR_TAB].push room
+        if room != -1 then _activeRooms[STAR_TAB].push room
 
     # Store the updated list of rooms
-    savePersistent 'activeRooms', activeRooms
+    savePersistent '_activeRooms', _activeRooms
 
     updateStarredRoomURL()
 

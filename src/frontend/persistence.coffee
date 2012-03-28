@@ -15,13 +15,13 @@ getPersistent = (key) ->
 
 # Loads buildings from storage (if available) or downloads them from the server
 loadBuildings = ->
-    campusAreas = getPersistent 'campusAreas'
+    _campusAreas = getPersistent '_campusAreas'
 
     # If buildings haven't been saved yet, get them from the server
-    if not campusAreas?
+    if not _campusAreas?
         $.getJSON 'campus_areas', (result) ->
-            campusAreas = result
-            savePersistent 'campusAreas', campusAreas
+            _campusAreas = result
+            savePersistent '_campusAreas', _campusAreas
 
 # Clears data in persistent storage and displays confirmation message
 clearPersistent = () ->

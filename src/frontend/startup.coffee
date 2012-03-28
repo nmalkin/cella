@@ -3,11 +3,11 @@
 # Loads application state from storage
 # This includes rooms, open tabs, etc.
 loadStateFromStorage = (cb) ->
-    t = getPersistent 'allRooms'
-    allRooms = t if t?
+    t = getPersistent '_allRooms'
+    _allRooms = t if t?
 
-    t = getPersistent 'roomResults'
-    roomResults = t if t?
+    t = getPersistent '_roomResults'
+    _roomResults = t if t?
 
     sophomore = getPersistent 'sophomore'
     if sophomore?
@@ -18,33 +18,33 @@ loadStateFromStorage = (cb) ->
         $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
         $(LOTTERY_SLIDER).slider('value', lotteryNumber)
 
-    t = getPersistent 'selectedOccupancy'
-    selectedOccupancy = t if t?
-    t = getPersistent 'selectedBuildings'
-    selectedBuildings = t if t?
-    t = getPersistent 'selectedIncludes'
-    selectedIncludes = t if t?
+    t = getPersistent '_selectedOccupancy'
+    _selectedOccupancy = t if t?
+    t = getPersistent '_selectedBuildings'
+    _selectedBuildings = t if t?
+    t = getPersistent '_selectedIncludes'
+    _selectedIncludes = t if t?
 
-    retrievedLastActiveTab = getPersistent 'lastActiveTab'
-    retrievedActiveTab = getPersistent 'activeTab'
+    retrievedLastActiveTab = getPersistent '_lastActiveTab'
+    retrievedActiveTab = getPersistent '_activeTab'
 
     # Load tabs
-    t = getPersistent 'activeRooms'
+    t = getPersistent '_activeRooms'
     if t?
-        activeRooms = t
+        _activeRooms = t
 
         # Set aside starred rooms to process after all the tabs are created
-        starredRooms = activeRooms[STAR_TAB]
-        activeRooms[STAR_TAB] = null
+        starredRooms = _activeRooms[STAR_TAB]
+        _activeRooms[STAR_TAB] = null
 
-        tabCount = 0
-        nextTabNumber = 0
+        _tabCount = 0
+        _nextTabNumber = 0
 
         # Wait for all tabs to be loaded
         await
             loadAndActivateTab = (tabNumber, rooms, next) ->
                 if rooms?
-                    tabCount++
+                    _tabCount++
 
                     # Load current tab
                     await loadTab tabNumber, defer()
@@ -74,9 +74,9 @@ loadStateFromStorage = (cb) ->
 
                 return
 
-            for tab in activeRooms
-                loadAndActivateTab nextTabNumber, tab, defer()
-                nextTabNumber++
+            for tab in _activeRooms
+                loadAndActivateTab _nextTabNumber, tab, defer()
+                _nextTabNumber++
 
         # Now that all tabs have been loaded:
         # Re-star the starred rooms
@@ -85,16 +85,16 @@ loadStateFromStorage = (cb) ->
             starRoom room for room in starredRooms
             updateStarredRoomURL()
         else
-            activeRooms[STAR_TAB]= []
+            _activeRooms[STAR_TAB]= []
             showStarPlaceholderMessage()
 
         # Activate the last active tab
-        lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
-        if retrievedActiveTab? and activeRooms[retrievedActiveTab]
-            activeTab = retrievedActiveTab
+        _lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
+        if retrievedActiveTab? and _activeRooms[retrievedActiveTab]
+            _activeTab = retrievedActiveTab
         else
-            activeTab = getNewestTab()
-        activateTab activeTab
+            _activeTab = getNewestTab()
+        activateTab _activeTab
 
         cb()
     else
@@ -124,13 +124,13 @@ $(document).ready ->
         importRooms()
 
     # If there are no tabs, create one
-    if tabCount == 0
+    if _tabCount == 0
         # But switch back to the star-tab if it's activated
-        next = if activeTab == STAR_TAB then (-> activateTab STAR_TAB) else (->)
+        next = if _activeTab == STAR_TAB then (-> activateTab STAR_TAB) else (->)
         loadNewTab next
 
     # Display star placeholder message if no rooms are starred
-    if (not activeRooms[STAR_TAB]?) or activeRooms[STAR_TAB].length == 0
+    if (not _activeRooms[STAR_TAB]?) or _activeRooms[STAR_TAB].length == 0
         showStarPlaceholderMessage()
 
     # Activate drag-and-drop of results in star tab
@@ -192,14 +192,14 @@ importRooms = () ->
     knownRooms = []
     for roomID in inputRooms
         # Do I already have this room's information?
-        if roomID of allRooms # Yes
+        if roomID of _allRooms # Yes
             knownRooms.push roomID
         else # No. We should look it up.
-            roomsToLookUp.push roomID
+            _roomsToLookUp.push roomID
 
     showImportWindow = (extraRooms = []) ->
         # Get room information for known rooms (and add the extra ones in)
-        rooms = (allRooms[room] for room in knownRooms).concat extraRooms
+        rooms = (_allRooms[room] for room in knownRooms).concat extraRooms
 
         if rooms.length == 0 then return
 
@@ -213,7 +213,7 @@ importRooms = () ->
             $(IMPORT_ROOM_LIST).html roomList
 
             # Are there starred rooms already?
-            importConflict = activeRooms[STAR_TAB]? and activeRooms[STAR_TAB].length > 0
+            importConflict = _activeRooms[STAR_TAB]? and _activeRooms[STAR_TAB].length > 0
             
             # Display the appropriate footer based on the answer.
             $(IMPORT_CONFLICT).toggle importConflict
@@ -231,7 +231,7 @@ importRooms = () ->
             # If the user wants to add to the currently starred rooms.
             $(IMPORT_UNION).click () ->
                 for room in rooms
-                    if -1 == activeRooms[STAR_TAB].indexOf room.id
+                    if -1 == _activeRooms[STAR_TAB].indexOf room.id
                         starRoom room.id
 
                 updateProbabilities null, true
@@ -243,13 +243,13 @@ importRooms = () ->
             # If the user wants to replace the currently starred rooms.
             $(IMPORT_REPLACE).click () ->
                 # Unstar currently starred rooms
-                if activeRooms[STAR_TAB]?
-                    toUnstar = activeRooms[STAR_TAB].slice 0 # make a copy
+                if _activeRooms[STAR_TAB]?
+                    toUnstar = _activeRooms[STAR_TAB].slice 0 # make a copy
                     unstarRoom room for room in toUnstar
                 else
-                    activeRooms[STAR_TAB] = []
+                    _activeRooms[STAR_TAB] = []
 
-                if activeRooms[STAR_TAB].length == 0
+                if _activeRooms[STAR_TAB].length == 0
                     clearStarPlaceholderMessage()
 
                 # Star the new rooms
@@ -261,7 +261,7 @@ importRooms = () ->
                 # Activate star tab to show change
                 activateTab STAR_TAB
 
-    if roomsToLookUp.length > 0
+    if _roomsToLookUp.length > 0
         # Don't have information about some rooms. Look them up.
         lookUpRooms (lookedUpRooms) ->
             # Then, display import window
