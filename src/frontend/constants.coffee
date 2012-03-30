@@ -6,6 +6,7 @@ MAX_LOTTERY_NUMBER = 800
 SOPHOMORE_CHECKBOX = '#sophomore'
 LOTTERY_SLIDER = '#lottery'
 LOTTERY_NUMBER_DISPLAY = '#lottery_number'
+LOADING_MESSAGE = '#loading'
 NEW_TAB_BUTTON = '#new_tab'
 RESULT_TABS = '#result_tabs'
 RESULT_TABLES = '#result_tables'

@@ -33,6 +33,9 @@ loadStateFromStorage = (cb) ->
     if t?
         _activeRooms = t
 
+        # This might take a while... show loading message
+        $(LOADING_MESSAGE).show()
+
         # Set aside starred rooms to process after all the tabs are created
         starredRooms = _activeRooms[STAR_TAB]
         _activeRooms[STAR_TAB] = null
@@ -118,6 +121,10 @@ $(document).ready ->
     loadBuildings()
 
     loadStateFromStorage ->
+        $(RESULT_TABLES).show()
+        $(RESULT_TABS).show()
+        $(LOADING_MESSAGE).hide()
+
         # Try to import starred room from URL query string
         importRooms()
 
@@ -166,7 +173,6 @@ $(document).ready ->
     $(SHARE_WELL_TOGGLE).click toggleShareWell
 
     $(SHARE_LINK).focus -> $(this).select()
-
 
 
 importRooms = () ->

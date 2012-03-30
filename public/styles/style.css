@@ -30,8 +30,20 @@ body {
     text-decoration: none;
 }
 
+#loading {
+    display: none;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#result_tabs {
+    display: none;
+}
+
 #result_tables {
     overflow: visible;
+    display: none;
 }
 
 .filter {
