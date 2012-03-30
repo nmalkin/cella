@@ -6,6 +6,7 @@ getActivatedTab = (event) ->
     targetString = $(event.target).attr 'href'
     re = new RegExp TAB '(\\d+)'
     matches = re.exec targetString
+    matches ?= -1
     parseInt matches[1] ? -1
 
 # Returns the number of the newest tab that exists on the tab bar
