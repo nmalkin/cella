@@ -145,6 +145,4 @@ exports.results = (id, callback) ->
             for year in YEARS
                 result[year] = row['y' + year]
 
-            console.log result
-
             callback result
