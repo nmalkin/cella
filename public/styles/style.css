@@ -149,6 +149,12 @@ table#star-table tr:hover {
     cursor: move;
 }
 
+table#star-table .probability,
+table#star-table .label,
+table#star-table td.star {
+    cursor: auto;
+}
+
 tfoot th {
     border-top: 1px solid #ddd;
 }
