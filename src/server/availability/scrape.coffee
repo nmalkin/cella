@@ -16,7 +16,7 @@ BUILDINGS = null
 # building: name of building
 # room: room number (string)
 # status: true if available, false if not
-recordRoomStatus = ->
+recordRoomStatus = require('./store').setAvailability
 
 # Is this a known building?
 knownBuilding = (candidate) ->
