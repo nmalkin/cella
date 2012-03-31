@@ -18,8 +18,8 @@ Cella depends on the following node modules:
 - [sqlite3](https://github.com/developmentseed/node-sqlite3)
 - [github-flavored-markdown](https://github.com/isaacs/github-flavored-markdown)
 - [mustache](https://github.com/janl/mustache.js)
-- [less]()
-- [uglify-js]()
+- [less](http://lesscss.org/) (for Bootstrap)
+- [uglify-js](https://github.com/mishoo/UglifyJS) (for Bootstrap)
 - [redis](https://github.com/mranney/node_redis)
 - [redis-url](https://github.com/ddollar/redis-url)
 
