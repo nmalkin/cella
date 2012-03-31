@@ -1,4 +1,5 @@
-db = require('./housing.js').db
+db = require('./housing').db
+events = require('./server').events
 
 # An object with properties for each of the buildings
 exports.buildings = {}
@@ -49,3 +50,6 @@ do ->
             # Identify sophomore-only buildings
             exports.sophomoreOnly.push name \
                 for name, building of exports.buildings when building.sophomore
+
+            # Setup done
+            events.emit 'buildingsReady'

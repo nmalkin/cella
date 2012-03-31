@@ -1,5 +1,9 @@
 connect = require 'connect'
 
+# Support for server-wide events
+exports.events = new (require 'events').EventEmitter
+
+# Set up API and server
 api = require './api'
 
 server = connect.createServer()
@@ -14,5 +18,8 @@ server.use connect.router (app) ->
     app.get '/floorplan', api.floorplan
 server.use connect.static __dirname + '/..' + '/public'
 
-
 server.listen(8888)
+
+
+# Start collecting availability data
+require './availability/scrape.js'
