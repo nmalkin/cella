@@ -18,8 +18,8 @@ Cella depends on the following node modules:
 - [sqlite3](https://github.com/developmentseed/node-sqlite3)
 - [github-flavored-markdown](https://github.com/isaacs/github-flavored-markdown)
 - [mustache](https://github.com/janl/mustache.js)
-- [less]()
-- [uglify-js]()
+- [less](http://lesscss.org/) (for Bootstrap)
+- [uglify-js](https://github.com/mishoo/UglifyJS) (for Bootstrap)
 
 Cella uses [npm](http://npmjs.org/) to manage these dependencies.  
 When you have npm installed, go to Cella's directory and run:
