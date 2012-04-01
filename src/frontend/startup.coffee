@@ -240,6 +240,7 @@ importRooms = () ->
 
                 updateProbabilities null, true
                 updateStarredRoomURL()
+                lookUpAvailability()
 
                 # Activate star tab to show change
                 activateTab STAR_TAB
@@ -261,6 +262,7 @@ importRooms = () ->
 
                 updateProbabilities null, true
                 updateStarredRoomURL()
+                lookUpAvailability()
 
                 # Activate star tab to show change
                 activateTab STAR_TAB
