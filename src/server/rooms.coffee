@@ -146,3 +146,29 @@ exports.results = (id, callback) ->
                 result[year] = row['y' + year]
 
             callback result
+
+# Calls cb with a list of room objects.
+# Each room object has:
+#   id
+#   building
+#   room
+exports.allRooms = (cb) ->
+    console.log 'Retrieving all rooms'
+
+    query = 'SELECT rowid, building, roomNumber FROM rooms_with_regressions'
+
+    db.all query, [], (err, rows) ->
+        if err?
+            console.error "An error occurred with the query: #{ err }"
+            cb {}
+        else
+            results = []
+            for row in rows
+                results.push {
+                    id: row.rowid
+                    building: row.building
+                    room: row.roomNumber
+                }
+
+            cb results
+    return
