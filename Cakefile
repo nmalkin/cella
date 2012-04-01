@@ -7,6 +7,7 @@ frontendFiles = [
     'constants'
     'globals'
     'persistence'
+    'availability'
     'roomdisplay'
     'probability'
     'filters'

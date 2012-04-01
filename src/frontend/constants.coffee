@@ -27,7 +27,7 @@ IMPORT_REPLACE = '.import-replace'
 IMPORT_CONFLICT = '#import-conflict'
 IMPORT_NO_CONFLICT = '#import-no-conflict'
 
-NO_AVAILABILITY_DATA = '2012-2013 availability not yet released'
+NO_AVAILABILITY_DATA = 'availability not available'
 
 STAR_TAB = 0
 STAR_FILLED = '&#9733;'
@@ -104,3 +104,5 @@ CONTROL = (tabNumber) -> "#tab#{ tabNumber }control"
 ROOM = (roomID) -> ".room#{ roomID }"
 
 PROBABILITY = (roomID) -> ".room#{ roomID }probability"
+
+AVAILABILITY = (roomID) -> ".availability#{ roomID }"

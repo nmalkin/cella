@@ -29,9 +29,7 @@ roomHTML = (room, filledStar=false) ->
                 </div
             </div>
         </td>
-        <td style=\"text-align: center\">
-            <span class=\"label\" rel=\"tooltip\" title=\"#{ NO_AVAILABILITY_DATA }\">?</span>
-        </td>
+        <td style=\"text-align: center\">#{ getAvailability room.id }</td>
     </tr>"
 
 # Activate the popover that shows previous room results

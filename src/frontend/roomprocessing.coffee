@@ -89,6 +89,9 @@ activateRooms = (tabNumber, rooms, next = ->) ->
             # Update TableSorter with new information
             myTab.find(ROOM_TABLE).trigger 'update'
 
+            # Look up room availability as well
+            lookUpAvailability()
+
             next()
 
 # Gets previous results for given room and calls cb with them as argument
