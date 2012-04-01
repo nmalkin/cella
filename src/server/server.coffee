@@ -16,6 +16,7 @@ server.use connect.router (app) ->
     app.get '/campus_areas', api.campus_areas
     app.get '/results', api.results
     app.get '/floorplan', api.floorplan
+    app.get '/availability', api.availability
 server.use connect.static __dirname + '/..' + '/public'
 
 server.listen(8888)
