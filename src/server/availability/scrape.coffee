@@ -1,5 +1,8 @@
 ## Scrapes Brendan's Online Lottery page for room status
 
+# How long should we wait before re-scraping?
+INTERVAL = 1000 * 60 * 60 * 2 # 2 hours
+
 http = require 'http'
 util = require 'util'
 jsdom = require 'jsdom'
@@ -99,5 +102,7 @@ events.once 'buildingsReady', () ->
     BUILDINGS = require('../buildings').names
 
     # Get availability
-    # TODO: should happen repeatedly
     getAvailability()
+
+    # Repeat every INTERVAL milliseconds
+    setInterval getAvailability, INTERVAL
