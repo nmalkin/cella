@@ -33,6 +33,9 @@ But don't trust us (too much). The prediction is based on results from previous 
 
 The actual calculation of the probability is performed by fitting a [logistic model](http://en.wikipedia.org/wiki/Logistic_regression) to a room's previous lottery numbers. We thank Neil Thakral for this suggestion.
 
+### How recent is the availability data?
+The availability data is updated based on the [online lottery projection](http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/) every two hours. Updates will happen more often during the lottery.
+
 ### Is that a mistake in your data?
 There may be mistakes in the data. We got the information directly from the Lottery website and haven't verified it manually. Also, sometimes rooms change between years, making the past results less meaningful for calculating probability.
 
