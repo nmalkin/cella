@@ -13,9 +13,12 @@ logit = (b0, b1, x) ->
 
 # Returns probability that given room is obtained under currently selected lottery number
 # 'room' is a room object
-# The probability returned is a value between 0 and 1.
+# The probability returned is a value between 0 and 1 or -1 if there is no data.
 getRoomProbability = (room, lotteryNumber) ->
-    logit room.b0, room.b1, lotteryNumber
+    if room.b0? and room.b1?
+        logit room.b0, room.b1, lotteryNumber
+    else
+        -1
 
 # Returns the color of the probability bar given the probability
 getProbabilityBarColors = (probability) ->
@@ -44,8 +47,11 @@ updateRoomProbability = (roomID, lotteryNumber) ->
         # Get probability
         probability = getRoomProbability _allRooms[roomID], lotteryNumber
 
+        if probability == -1
+            # Probability not available. Display empty bar.
+            probability = 0
+        else if probability < .05
         # Very low probability should still be seen; therefore "round" up to 5%.
-        if probability < .05
             probability = .05
 
         probabilityContainer = $(PROBABILITY roomID)
