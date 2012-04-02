@@ -7,7 +7,6 @@ jsdom = require 'jsdom'
 events = require('../server').events
 
 TABLES = ['.columnOne', '.columnTwo', '.columnThree']
-EXTRA_BUILDINGS = ["Buxton", "315 Thayer", "Littlefield Hall", "Hegeman"]
 
 # List of known buildings, will be populated when buildings module is ready
 BUILDINGS = null
@@ -98,7 +97,6 @@ getAvailability = () ->
 events.once 'buildingsReady', () ->
     # Get buildings
     BUILDINGS = require('../buildings').names
-    BUILDINGS = BUILDINGS.concat EXTRA_BUILDINGS
 
     # Get availability
     # TODO: should happen repeatedly
