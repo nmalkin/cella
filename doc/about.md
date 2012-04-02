@@ -56,7 +56,7 @@ Sure! The project code [is on GitHub](https://github.com/nmalkin/cella). Feel fr
 
 
 [issue tracker]: https://github.com/nmalkin/cella/issues
-[send us an email]: http://www.google.com/recaptcha/mailhide/d?k=01bp7JyIti_rLGDhgxUfjeeA==&c=PzG-9KnaNLiH8dWk79HaWw==
+[send us an email]: http://www.google.com/recaptcha/mailhide/d?k=01noLgFtdvs0oqc-0hPBmG6A==&c=EaV4xG1z-DJJLYIwDIvcH88tdxHqiFQxSf99NKuztvo=
 
 [Nathan Malkin]: http://cs.brown.edu/people/nmalkin/
 [Sumner Warren]: http://cs.brown.edu/people/jswarren/
