@@ -6,6 +6,10 @@ roomHTML = (room, filledStar=false) ->
     # Is this room starred?
     star = if filledStar then STAR_FILLED else STAR_EMPTY
 
+    # Is this room unavailable
+    unavailable = isUnavailable room.id
+    availableClass = if unavailable then NAME ROOM_NOT_AVAILABLE else ''
+
     label = (text, color = null) ->
         "<p class=\"label_container\"><span class=\"label #{ color }\">#{ text }</span></p>"
    
@@ -15,7 +19,7 @@ roomHTML = (room, filledStar=false) ->
     labels += if room.gender_neutral and
         room.occupancy > 1 then label GENDER_NEUTRAL_LABEL, GENDER_NEUTRAL_COLOR else ''
 
-    "<tr class=\"#{ NAME ROOM room.id }\">
+    "<tr class=\"#{ NAME ROOM room.id } #{ availableClass }\">
         <td class=\"star\">#{ star }</td>
         <td>#{ room.occupancy }</td>
         <td>#{ room.building}</td>
@@ -29,9 +33,7 @@ roomHTML = (room, filledStar=false) ->
                 </div
             </div>
         </td>
-        <td style=\"text-align: center\">
-            <span class=\"label\" rel=\"tooltip\" title=\"#{ NO_AVAILABILITY_DATA }\">?</span>
-        </td>
+        <td style=\"text-align: center\">#{ getAvailabilityLabel room.id }</td>
     </tr>"
 
 # Activate the popover that shows previous room results
@@ -84,14 +86,16 @@ resultTableHTML = (results) ->
 # Adds room with given room id to the table
 addRoom = (tabNumber, roomID) ->
     if roomID > 0
-        if roomID of _allRooms
+        # Is this a known room?
+        if roomID of _allRooms # Yes, we can display it now.
             isStarred = if _activeRooms[STAR_TAB]? then \
                 _activeRooms[STAR_TAB].indexOf(roomID) != -1 else false
             room = _allRooms[roomID]
             html = roomHTML room, isStarred
+
             $(TAB tabNumber).find(RESULTS_DIV).append html
             initResultPopover room, tabNumber
-        else
+        else # No, it needs to be looked up. (Display placeholder for now.)
             _roomsToLookUp.push roomID
             html = "<tr class=\"#{ NAME ROOM roomID }\"><td colspan=\"7\"></td></tr>"
             $(TAB tabNumber).find(RESULTS_DIV).append html

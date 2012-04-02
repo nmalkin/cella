@@ -20,6 +20,8 @@ Cella depends on the following node modules:
 - [mustache](https://github.com/janl/mustache.js)
 - [less](http://lesscss.org/) (for Bootstrap)
 - [uglify-js](https://github.com/mishoo/UglifyJS) (for Bootstrap)
+- [redis](https://github.com/mranney/node_redis)
+- [redis-url](https://github.com/ddollar/redis-url)
 
 Cella uses [npm](http://npmjs.org/) to manage these dependencies.  
 When you have npm installed, go to Cella's directory and run:
@@ -27,6 +29,8 @@ When you have npm installed, go to Cella's directory and run:
     npm install
 
 Afterwards, you can run `npm update` to make sure you have the latest dependencies installed.
+
+You will also need a running instance of the [Redis database server](http://redis.io/).
 
 Additional dependencies are included as submodules within the Git repository.
 To get them, once you have cloned the repository:
