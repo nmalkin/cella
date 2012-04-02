@@ -42,9 +42,10 @@ There may be mistakes in the data. We got the information directly from the Lott
 If you find an inaccuracy in the data, we would appreciate it if you reported it to us: just [send us an email][].
 
 ### Something's broken! What do I do?
-To start over, click on "clear data" at the bottom of the page, then refresh the page.
 
-If the problem appears consistently, please submit it to our [issue tracker][] or [send us an email][].
+1. Refresh the page. Does it work?
+2. Reset the application using the link at the bottom of the page. Now try again. How about now?
+3. Let us know about the problem you experienced: submit it to our [issue tracker][] or [send us an email][].
 
 ### I don't like the way ----- works. I think Cella should do -----.
 We are always looking for feature suggestions. You can add your suggestion to our [issue tracker][] or [send us an email][].
