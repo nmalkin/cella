@@ -57,6 +57,14 @@ sophomoreChanged = (event) ->
         findSelectedRooms tab
         tab++
 
+# Called when the availability preference checkbox is toggled
+availabilityPreferenceChanged = (event) ->
+    savePersistent 'excludeUnavailable', excludeUnavailable()
+
+    document.styleSheets[4].disabled = ! excludeUnavailable()
+    #visibility = ! excludeUnavailable()
+    #$(ROOM_NOT_AVAILABLE).parents('tr').toggle visibility
+
 # Extracts and saves the current sort order from the results table
 tableSorted = (event, table) ->
     # Get the sortList from the table

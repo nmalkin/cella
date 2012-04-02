@@ -4,6 +4,7 @@ MIN_LOTTERY_NUMBER = 1
 MAX_LOTTERY_NUMBER = 800
 
 SOPHOMORE_CHECKBOX = '#sophomore'
+AVAILABILITY_CHECKBOX = '#exclude-unavailable'
 LOTTERY_SLIDER = '#lottery'
 LOTTERY_NUMBER_DISPLAY = '#lottery_number'
 LOADING_MESSAGE = '#loading'
@@ -28,8 +29,10 @@ IMPORT_CONFLICT = '#import-conflict'
 IMPORT_NO_CONFLICT = '#import-no-conflict'
 
 NO_AVAILABILITY_DATA = 'availability not available'
+ROOM_NOT_AVAILABLE = '.roomUnavailable'
 
 STAR_TAB = 0
+STAR_TABLE = '#star-table'
 STAR_FILLED = '&#9733;'
 STAR_EMPTY = '&#9734;'
 STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">

@@ -1,21 +1,21 @@
 ## Functions for retrieving and updating the availability of rooms
 
-ROOM_NOT_AVAILABLE = '0'
-ROOM_AVAILABLE = '1'
-ROOM_TAKEN = '2'
+ROOM_STATUS_NOT_AVAILABLE = '0'
+ROOM_STATUS_AVAILABLE = '1'
+ROOM_STATUS_TAKEN = '2'
 
 AVAILABILITY_PLACEHOLDER = (roomID) ->
     "<span class=\"#{ NAME AVAILABILITY roomID } label\" rel=\"tooltip\" title=\"#{ NO_AVAILABILITY_DATA }\">?</span>"
 
 # Returns label for availability based on given status
 availabilityHTML = (roomID, status) ->
-    if status == ROOM_NOT_AVAILABLE
+    if status == ROOM_STATUS_NOT_AVAILABLE
         labelClass = 'label-important'
         labelText = 'Not Available'
-    else if status == ROOM_AVAILABLE
+    else if status == ROOM_STATUS_AVAILABLE
         labelClass = 'label-success'
         labelText = 'Available'
-    else if status == ROOM_TAKEN
+    else if status == ROOM_STATUS_TAKEN
         labelClass = 'label-warning'
         labelText = 'Taken'
 
@@ -27,7 +27,7 @@ availabilityHTML = (roomID, status) ->
 
 # Returns the HTML representing availability of given room
 # (May be placeholder, until availability is looked up.)
-getAvailability = (roomID) ->
+getAvailabilityLabel = (roomID) ->
     if roomID of _available # availability known
         # Return label
         availabilityHTML roomID, _available[roomID]
@@ -47,11 +47,24 @@ lookUpAvailability = () ->
                 _availabilityToLookUp = []
 
                 for room, status of resultAvailabilities
+                    # Clarify room status
                     if status == null # Room not in lottery
                         # Treat as 'not available'
-                        status = ROOM_NOT_AVAILABLE
+                        status = ROOM_STATUS_NOT_AVAILABLE
+
+                    # Store room status
                     _available[room] = status
+
+                    # Update room availability label in result table
                     $(AVAILABILITY room).replaceWith availabilityHTML room, status
+
+                    # Update availability class
+                    if status == ROOM_STATUS_NOT_AVAILABLE
+                        $(ROOM room).addClass NAME ROOM_NOT_AVAILABLE
 
                 # Update TableSorter in all tables
                 $(ROOM_TABLE).trigger 'update'
+
+# Returns true if the room is unavailable, false otherwise
+isUnavailable = (roomID) ->
+    if roomID of _available then _available[roomID] == ROOM_STATUS_NOT_AVAILABLE else false

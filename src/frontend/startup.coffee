@@ -13,6 +13,10 @@ loadStateFromStorage = (cb) ->
     if sophomore?
         setSophomoreStatus sophomore
 
+    availabilityPreference = getPersistent 'excludeUnavailable'
+    if availabilityPreference?
+        setExcludeUnavailable availabilityPreference
+
     lotteryNumber = getPersistent 'lotteryNumber'
     if lotteryNumber?
         $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
@@ -89,6 +93,9 @@ loadStateFromStorage = (cb) ->
             _activeRooms[STAR_TAB]= []
             showStarPlaceholderMessage()
 
+        # Hide unavailable rooms if necessary
+        availabilityPreferenceChanged()
+
         # Activate the last active tab
         _lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?
         if retrievedActiveTab? and _activeRooms[retrievedActiveTab]
@@ -110,6 +117,7 @@ $(document).ready ->
     }
 
     $(SOPHOMORE_CHECKBOX).change sophomoreChanged 
+    $(AVAILABILITY_CHECKBOX).change availabilityPreferenceChanged 
 
     $(NEW_TAB_BUTTON).click newTabClicked
 
