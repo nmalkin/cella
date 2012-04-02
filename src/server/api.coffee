@@ -3,6 +3,7 @@ url = require 'url'
 rooms = require './rooms.js'
 buildings = require './buildings'
 floorplans = require './floorplans'
+availability = require './availability/store'
 
 
 # Given a result, writes it stringified to the response
@@ -138,4 +139,24 @@ exports.floorplan = (req, res, next) ->
             res.writeHead 303, {'Location': floorplan_url} # HTTP 303: See Other
             res.end 'Redirecting to ' + floorplan_url + '\n'
 
+# Responds with an object with availability information for each room.
+# Specifically,
+# key: room ID
+# value: availability (see status codes in store.coffee)
+exports.availability = (req, res, next) ->
+    params = (url.parse req.url, true).query
+    
+    if not params.ids?
+        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.end 'Missing required parameter\n'
+    else
+        ids = params.ids.split ','
+        ids = (parseInt value for value in ids) # as ints
+        ids = ids.filter (val) -> ! isNaN val
 
+        results = {}
+        await
+            for id in ids
+                availability.getAvailability id, defer results[id]
+
+        resultToResponse results, res

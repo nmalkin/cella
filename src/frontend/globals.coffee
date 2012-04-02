@@ -46,3 +46,9 @@ _roomResults = {}
 
 # HTML for a new, blank tab
 _newTabHTML = null
+
+# Room availability, referenced by ID
+_available = {}
+
+# IDs of rooms whose availability needs to be looked up
+_availabilityToLookUp = []

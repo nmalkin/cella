@@ -73,6 +73,14 @@ isSophomore = () ->
 setSophomoreStatus = (sophomore) ->
     $(SOPHOMORE_CHECKBOX).prop 'checked', sophomore
 
+# Returns true if the user wants to hide unavailable rooms
+excludeUnavailable = () ->
+    $(AVAILABILITY_CHECKBOX).prop 'checked'
+
+# Checks the availability checkbox if argument is true
+setExcludeUnavailable = (exclude) ->
+    $(AVAILABILITY_CHECKBOX).prop 'checked', exclude
+
 # Called when a group item is selected in a Chosen select item, this function
 # selects all items in the group and adds them to the filter. This is needed
 # because Chosen does not provide for it out of the box.
