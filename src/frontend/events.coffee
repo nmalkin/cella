@@ -59,11 +59,18 @@ sophomoreChanged = (event) ->
 
 # Called when the availability preference checkbox is toggled
 availabilityPreferenceChanged = (event) ->
-    savePersistent 'excludeUnavailable', excludeUnavailable()
+    exclude = excludeUnavailable()
+    savePersistent 'excludeUnavailable', exclude
 
-    document.styleSheets[4].disabled = ! excludeUnavailable()
-    #visibility = ! excludeUnavailable()
-    #$(ROOM_NOT_AVAILABLE).parents('tr').toggle visibility
+    document.styleSheets[4].disabled = ! exclude
+
+    tab = STAR_TAB
+    while (tab < _nextTabNumber) and _activeRooms[tab]?
+        if exclude
+            showUnavailablePlaceholder tab
+        else
+            hideUnavailablePlaceholder tab
+        tab++
 
 # Extracts and saves the current sort order from the results table
 tableSorted = (event, table) ->

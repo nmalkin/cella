@@ -62,9 +62,31 @@ lookUpAvailability = () ->
                     if status == ROOM_STATUS_NOT_AVAILABLE
                         $(ROOM room).addClass NAME ROOM_NOT_AVAILABLE
 
+                # Display placeholder if necessary
+                showUnavailablePlaceholder tab for tab in [0..._nextTabNumber] when _activeRooms[tab]?
+
                 # Update TableSorter in all tables
                 $(ROOM_TABLE).trigger 'update'
 
 # Returns true if the room is unavailable, false otherwise
 isUnavailable = (roomID) ->
     if roomID of _available then _available[roomID] == ROOM_STATUS_NOT_AVAILABLE else false
+
+# Adds a placeholder about hidden unavailable rooms to the given tab
+showUnavailablePlaceholder = (tabNumber) ->
+    if excludeUnavailable()
+        tab = $(TAB tabNumber)
+        count = tab.find(ROOM_NOT_AVAILABLE).length # number of unavailable rooms
+
+        if count > 0
+            content = HIDDEN_ROOMS count
+
+            # Is the placeholder already in place?
+            if (placeholder = tab.find(ROOMS_HIDDEN_PLACEHOLDER)).length == 0
+                tab.find(ROOM_TABLE).append content # No. Set it.
+            else
+                placeholder.replaceWith content # Yes. Update it.
+
+# Removes the placeholder about hidden unavailable rooms from the given tab
+hideUnavailablePlaceholder = (tabNumber) ->
+    $(TAB tabNumber).find(ROOMS_HIDDEN_PLACEHOLDER).remove()

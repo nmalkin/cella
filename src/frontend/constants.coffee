@@ -30,6 +30,7 @@ IMPORT_NO_CONFLICT = '#import-no-conflict'
 
 NO_AVAILABILITY_DATA = 'availability not available'
 ROOM_NOT_AVAILABLE = '.roomUnavailable'
+ROOMS_HIDDEN_PLACEHOLDER = '.roomsHidden'
 
 STAR_TAB = 0
 STAR_TABLE = '#star-table'
@@ -110,3 +111,23 @@ ROOM = (roomID) -> ".room#{ roomID }"
 PROBABILITY = (roomID) -> ".room#{ roomID }probability"
 
 AVAILABILITY = (roomID) -> ".availability#{ roomID }"
+
+HIDDEN_ROOMS = (count) ->
+    if count == 1
+        words = ['room is', 'it is', 'it']
+    else
+        words = ['rooms are', 'they are', 'them']
+
+    "<tr class=\"#{ NAME ROOMS_HIDDEN_PLACEHOLDER }\">" +
+    '<td colspan="7" style="text-align: center"> ' + 
+    "#{ count } #{ words[0] } " +
+    "not shown because #{ words[1] } unavailable. " +
+    "<a onclick=\"$('#{ AVAILABILITY_CHECKBOX }').prop('checked',false).trigger('change')\">Show #{ words[2] } now</a>." +
+    '</td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+    <td class="no-width"></td>
+</tr>'
