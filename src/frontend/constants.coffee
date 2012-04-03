@@ -40,12 +40,13 @@ STAR_PLACEHOLDER_MESSAGE = '<tr><td colspan="7" style="text-align: center">
                             </td></tr>'
 
 # LABELS
-APARTMENT_RATE_LABEL = '<a href="http://brown.edu/lottery/rooms/rates.php" style="color:inherit">Apartment Rate</a>'
+APARTMENT_RATE_LABEL = '<a href="http://brown.edu/lottery/rooms/rates.php" style="color:inherit" target="_blank">Apartment Rate</a>'
 SOPHOMORE_LABEL = 'Sophomore-Only'
-GENDER_NEUTRAL_LABEL = '<a href="http://brown.edu/lottery/rooms/gender_neutral.php" style="color:inherit">Gender-Neutral</a>'
+GENDER_NEUTRAL_LABEL = '<a href="http://brown.edu/lottery/rooms/gender_neutral.php" target="_blank" style="color:inherit">Gender-Neutral</a>'
 FLOORPLAN_LABEL = (room) ->
     "<a href=\"/floorplan?building=#{ encodeURIComponent room.building }&room=#{ room.room }\"
     rel=\"tooltip\" title=\"Click to access floorplans\"
+    target=\"_blank\"
     style=\"color:inherit\">Floorplan</a>"
 
 

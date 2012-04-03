@@ -21,7 +21,7 @@ availabilityHTML = (roomID, status) ->
 
     "<span class=\"#{ NAME AVAILABILITY roomID } label #{ labelClass }\">
     <a href=\"http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/\"
-    style=\"color:inherit\">
+    style=\"color:inherit\" target=\"_blank\">
     #{ labelText }
     </a></span>"
 
