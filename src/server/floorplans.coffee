@@ -28,5 +28,7 @@ do ->
 exports.url = (building, room) ->
     if (not building_map?) or not (building of building_map)
         return null
+    else if building == 'Hegeman' # special case: Hegeman
+        PREFIX + building_map[building] + room[1] + SUFFIX
     else
         PREFIX + building_map[building] + room[0] + SUFFIX
