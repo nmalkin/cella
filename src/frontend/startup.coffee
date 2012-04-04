@@ -182,6 +182,19 @@ $(document).ready ->
 
     $(SHARE_LINK).focus -> $(this).select()
 
+    # Show a random hint in the MOTD box
+    hint = getRandomInt 0, HINTS.length - 1
+    showHint hint
+
+    # Rotate hints every 15 seconds
+    setInterval (->
+        showHint ++hint % HINTS.length
+    ), 1000*15
+
+    # ...or when the user advances them manually
+    $(PREVIOUS_HINT).click -> showHint ((--hint % HINTS.length) + HINTS.length) % HINTS.length
+    $(NEXT_HINT).click -> showHint ++hint % HINTS.length
+
 
 importRooms = () ->
     # Try to get starred rooms from search string
@@ -283,3 +296,11 @@ importRooms = () ->
     else
         showImportWindow()
 
+# Shows the hint defined by the given index in the MOTD box
+showHint = (hint) ->
+    $(MOTD).html HINTS[hint]
+
+# Generates a random integer between min and max (inclusive)
+# Code from: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Math/random
+getRandomInt = (min, max) ->
+    Math.floor(Math.random() * (max - min + 1)) + min

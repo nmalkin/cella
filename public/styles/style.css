@@ -106,7 +106,12 @@ td.star, th.star {
 
 #motd {
     margin: 10px auto;
+    padding: 5px;
     text-align: center;
+}
+
+#previous-hint, #next-hint {
+    cursor: pointer;
 }
 
 footer {

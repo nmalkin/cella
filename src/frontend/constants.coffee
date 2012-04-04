@@ -131,3 +131,17 @@ HIDDEN_ROOMS = (count) ->
     <td class="no-width"></td>
     <td class="no-width"></td>
 </tr>'
+
+MOTD = '#motd-text'
+PREVIOUS_HINT = '#previous-hint'
+NEXT_HINT = '#next-hint'
+HINTS = [
+    'Hint: click the + icon to open a new search tab',
+    'Hint: sort results by clicking on the column headers',
+    'Hint: sort results by <i>multiple columns</i> by pressing down the <i>Shift</i> key when clicking on the header',
+    'Hint: click on the stars next to the results to add them to the "star tab"',
+    'Hint: rearrange results in the star tab by dragging and dropping',
+    'Hint: adjust your lottery number to get a probability estimate'
+    'Hint: hover over the probability bar to see past results',
+    'The availability data is updated based on the <a href="http://www.facebook.com/events/361482780557097/" target="_blank">online lottery projection</a> every two hours.'
+]
