@@ -24,6 +24,7 @@ That's it!
 * hover over the probability bar to see past results
 * click on the stars next to the results to add them to the "star tab"
 * rearrange results in the star tab by dragging and dropping
+* navigate away from the page -- all your results will be there when you come back
 
 ### What does the probability bar mean?
 The probability bar represents how likely we think it is that you will get this room. This prediction is based on the room's performance in previous years and the lottery number you entered.

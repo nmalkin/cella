@@ -144,4 +144,5 @@ HINTS = [
     'Hint: adjust your lottery number to get a probability estimate'
     'Hint: hover over the probability bar to see past results',
     'The availability data is updated based on the <a href="http://www.facebook.com/events/361482780557097/" target="_blank">online lottery projection</a> every two hours.'
+    'Hint: if you navigate away from the page, your results will be here when you come back'
 ]
