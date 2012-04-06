@@ -29,7 +29,7 @@ getRoomKey = (building, room) ->
 getID = (building, room, cb) ->
     key = getRoomKey building, room
     redis.get key, (err, id) ->
-        if err then log error; return cb() else cb id
+        if err then log err; return cb() else cb id
 
 # Sets the availability for given room:
 # true=available, false=not available
@@ -39,7 +39,7 @@ exports.setAvailability = (building, room, available, cb = ->) ->
             # Find out the current status
             key = getIDKey id
             redis.get key, (err, currentStatus) ->
-                if err then log error; return cb()
+                if err then log err; return cb()
 
                 # Do we need to change the status?
                 status = false
@@ -63,7 +63,7 @@ exports.setAvailability = (building, room, available, cb = ->) ->
 exports.getAvailability = (id, cb = ->) ->
     key = getIDKey id
     redis.get key, (err, availability) ->
-        if err then log error
+        if err then log err
         cb availability
 
 # Stores the ID for each room in the databse
