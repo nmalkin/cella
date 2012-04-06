@@ -17,6 +17,9 @@ loadStateFromStorage = (cb) ->
     if availabilityPreference?
         setExcludeUnavailable availabilityPreference
 
+    # Update availability settings based on checkbox
+    availabilityPreferenceChanged()
+
     lotteryNumber = getPersistent 'lotteryNumber'
     if lotteryNumber?
         $(LOTTERY_NUMBER_DISPLAY).text lotteryNumber
@@ -95,9 +98,6 @@ loadStateFromStorage = (cb) ->
 
         # There may be rooms that we need to look up.
         lookUpAvailability()
-
-        # Hide unavailable rooms if necessary
-        availabilityPreferenceChanged()
 
         # Activate the last active tab
         _lastActiveTab = retrievedLastActiveTab if retrievedLastActiveTab?

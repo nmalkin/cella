@@ -60,6 +60,7 @@ sophomoreChanged = (event) ->
 # Called when the availability preference checkbox is toggled
 availabilityPreferenceChanged = (event) ->
     exclude = excludeUnavailable()
+    log exclude
     savePersistent 'excludeUnavailable', exclude
 
     document.styleSheets[4].disabled = ! exclude
