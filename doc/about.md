@@ -9,8 +9,7 @@ Questions and Answers
 ---------------------
 
 ### What do I do?
-Choose your lottery number (or an estimate for it) in the box at the top. Select the checkbox if you are a sophomore.  
-(This includes sophomore-only housing in your search.)
+Choose your lottery number (or an estimate for it) in the box at the top. Select the checkbox if you are a sophomore. (This includes sophomore-only housing in your search.)
 
 Then, choose the occupancy of the rooms you want to search for and the buildings to include, or exclude, in the search.
 
