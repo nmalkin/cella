@@ -190,13 +190,21 @@ $(document).ready ->
     showHint hint
 
     # Rotate hints every 15 seconds
+    timeoutReset = false
     setInterval (->
-        showHint ++hint % HINTS.length
+        if timeoutReset # There was a manual advance.
+            timeoutReset = false # Wait an extra cycle.
+        else # Show next hint
+            showHint ++hint % HINTS.length
     ), 1000*15
 
     # ...or when the user advances them manually
-    $(PREVIOUS_HINT).click -> showHint ((--hint % HINTS.length) + HINTS.length) % HINTS.length
-    $(NEXT_HINT).click -> showHint ++hint % HINTS.length
+    $(PREVIOUS_HINT).click ->
+        timeoutReset = true
+        showHint ((--hint % HINTS.length) + HINTS.length) % HINTS.length
+    $(NEXT_HINT).click ->
+        timeoutReset = true
+        showHint ++hint % HINTS.length
 
 
 importRooms = () ->
