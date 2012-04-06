@@ -93,6 +93,9 @@ loadStateFromStorage = (cb) ->
             _activeRooms[STAR_TAB]= []
             showStarPlaceholderMessage()
 
+        # There may be rooms that we need to look up.
+        lookUpAvailability()
+
         # Hide unavailable rooms if necessary
         availabilityPreferenceChanged()
 
