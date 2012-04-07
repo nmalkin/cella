@@ -1,6 +1,7 @@
 ## Stores and retrieves availability information using Redis
 
 PREFIX = 'cella:'
+CHANNEL_TAKEN = 'taken'
 
 # Status codes
 exports.NOT_AVAILABLE = '0'
@@ -50,6 +51,9 @@ exports.setAvailability = (building, room, available, cb = ->) ->
                 else if (not available) and currentStatus == exports.AVAILABLE
                     # Room was available, now isn't. Consider the room taken.
                     status = exports.TAKEN
+
+                    # Broadcast the fact that this room was taken
+                    redis.publish exports.CHANNEL_TAKEN, id
                 
                 # Set status (if necessary)
                 if status then redis.set key, status, cb

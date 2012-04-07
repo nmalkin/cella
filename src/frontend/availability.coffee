@@ -90,3 +90,10 @@ showUnavailablePlaceholder = (tabNumber) ->
 # Removes the placeholder about hidden unavailable rooms from the given tab
 hideUnavailablePlaceholder = (tabNumber) ->
     $(TAB tabNumber).find(ROOMS_HIDDEN_PLACEHOLDER).remove()
+
+
+# Connect to server and listen for updates on rooms that have been taken
+socket = io.connect '/'
+socket.on 'taken', (room) ->
+    _available[room] = ROOM_STATUS_TAKEN
+    $(AVAILABILITY room).replaceWith availabilityHTML room, ROOM_STATUS_TAKEN
