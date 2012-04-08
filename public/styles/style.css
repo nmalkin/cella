@@ -96,8 +96,9 @@ body {
     color: #FFFFFF;
 }
 
-td.star, th.star {
+td.star, th.star, table#star-table td.star {
     text-align: center;
+    cursor: pointer;
 }
 
 .header.star:after {
@@ -168,8 +169,7 @@ table#star-table tr:hover {
 }
 
 table#star-table .probability,
-table#star-table .label,
-table#star-table td.star {
+table#star-table .label {
     cursor: auto;
 }
 
