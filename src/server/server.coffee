@@ -42,7 +42,7 @@ if process.env.REDISTOGO_URL # for production (on Heroku)
 else # Redis running on localhost
     redis = require('redis').createClient()
 redis.on 'error', (err) ->
-    log err
+    console.log err
 
 # Use Redis to listen for availability-change events
 CHANNEL_TAKEN = 'taken'
