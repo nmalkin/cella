@@ -143,6 +143,7 @@ HINTS = [
     'Hint: rearrange results in the star tab by dragging and dropping',
     'Hint: adjust your lottery number to get a probability estimate'
     'Hint: hover over the probability bar to see past results',
-    'The availability data is updated based on the <a href="http://www.facebook.com/events/361482780557097/" target="_blank">online lottery projection</a> every two hours.'
+    'The availability data is updated based on the <a href="http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/" target="_blank">online lottery projection</a> every two hours.'
+    'During the lottery, availability changes show up automatically -- no need to refresh the page!'
     'Hint: if you navigate away from the page, your results will be here when you come back'
 ]

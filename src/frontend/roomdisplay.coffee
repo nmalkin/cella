@@ -37,11 +37,8 @@ roomHTML = (room, filledStar=false) ->
     </tr>"
 
 # Activate the popover that shows previous room results
-initResultPopover = (room, tabNumber = null) ->
-    if tabNumber?
-        target = $(TAB tabNumber).find(PROBABILITY room.id).parent '.probability'
-    else
-        target = $(PROBABILITY room.id).parent '.probability'
+initResultPopover = (room, tabNumber) ->
+    target = $(TAB tabNumber).find(PROBABILITY room.id).parent '.probability'
     hover = false
     target.hover (-> # on mouse in
         hover = true
@@ -63,7 +60,10 @@ initResultPopover = (room, tabNumber = null) ->
             target.popover 'show'
     ), (-> # on mouse out
         hover = false
-        target.popover 'hide'
+
+        # Assuming the popover exists, hide it
+        if target.data('popover_init')? 
+            target.popover 'hide'
     )
 
 # Returns a string of HTML with a table displaying given results
