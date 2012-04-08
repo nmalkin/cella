@@ -60,7 +60,10 @@ initResultPopover = (room, tabNumber) ->
             target.popover 'show'
     ), (-> # on mouse out
         hover = false
-        target.popover 'hide'
+
+        # Assuming the popover exists, hide it
+        if target.data('popover_init')? 
+            target.popover 'hide'
     )
 
 # Returns a string of HTML with a table displaying given results
