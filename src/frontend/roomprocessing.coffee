@@ -82,7 +82,7 @@ activateRooms = (tabNumber, rooms, next = ->) ->
             # Display the looked up rooms
             for room in lookedUpRooms
                 $(ROOM room.id).replaceWith roomHTML room
-                initResultPopover room
+                initResultPopover room, tabNumber
 
             updateProbabilities null, true
 
