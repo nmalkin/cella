@@ -37,7 +37,7 @@ The actual calculation of the probability is performed by fitting a [logistic mo
 ### How recent is the availability data?
 Before the lottery, the availability data is updated based on the [online lottery projection](http://www.brown.edu/Student_Services/Residential_Council/lottery/broadcast/) every two hours.
 
-During the lottery, data will be updated every 30 seconds, and any changes to availability will be reflected in your result lists right away -- no need to refresh the page!
+During the lottery, data will be updated every 30 seconds, and any changes to availability will be reflected in your result lists right away - no need to refresh the page!
 
 ### Is that a mistake in your data?
 There may be mistakes in the data. We got the information directly from the Lottery website and haven't verified it manually. Also, sometimes rooms change between years, making the past results less meaningful for calculating probability.
