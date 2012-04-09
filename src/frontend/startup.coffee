@@ -3,8 +3,12 @@
 # Loads application state from storage
 # This includes rooms, open tabs, etc.
 loadStateFromStorage = (cb) ->
-    t = getPersistent '_allRooms'
-    _allRooms = t if t?
+    # Is the data we have saved the most current data?
+    epoch = getPersistent 'epoch' ? 0
+    if DATA_EPOCH == epoch # Yes. Load and use it.
+        t = getPersistent '_allRooms'
+        _allRooms = t if t?
+    # else: No. Will be re-downloaded.
 
     t = getPersistent '_roomResults'
     _roomResults = t if t?
@@ -206,6 +210,8 @@ $(document).ready ->
         timeoutReset = true
         showHint ++hint % HINTS.length
 
+    # Store the "epoch" - the data version number
+    savePersistent 'epoch', DATA_EPOCH
 
 importRooms = () ->
     # Try to get starred rooms from search string
