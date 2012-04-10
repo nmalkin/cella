@@ -43,9 +43,6 @@ During the lottery, data will be updated every 30 seconds, and any changes to av
 Maybe. We got the information directly from the Lottery website and haven't verified it manually. Also, sometimes rooms change between years, making the past results less meaningful for calculating probability.
 
 However, thanks to [Neal Poole](http://nealpoole.com/), the 2012-2013 data has been corrected and verified as matching [ResLife's list of available rooms](http://brown.edu/Student_Services/Residential_Council/Available_rooms_2012.xlsx).
-The following is the only known outstanding inaccuracy:
-
-- *Diman House 400A* and *Harkness House 400B* are reported as sophomore-only though, in fact, they are not.
 
 If you find an inaccuracy in the data, we would appreciate it if you reported it to us: just [send us an email][].
 
