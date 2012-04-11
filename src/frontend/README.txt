@@ -4,6 +4,9 @@ The resultant file is index.js (located in public/scripts).
 
 *** Be sure that any additions or removals here are reflected in the build file! ***
 
+==> availability.coffee <==
+## Functions for retrieving and updating the availability of rooms
+
 ==> constants.coffee <==
 ## CONSTANTS
 
