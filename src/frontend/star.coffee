@@ -16,6 +16,7 @@ starRoom = (roomID) ->
 
     # Add this room to starred-result table
     addRoom STAR_TAB, roomID
+    updateRoomProbability roomID, getLotteryNumber()
 
 # Undoes the starring of the given room
 unstarRoom = (roomID) ->

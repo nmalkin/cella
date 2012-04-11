@@ -96,8 +96,9 @@ body {
     color: #FFFFFF;
 }
 
-td.star, th.star {
+td.star, th.star, table#star-table td.star {
     text-align: center;
+    cursor: pointer;
 }
 
 .header.star:after {
@@ -168,8 +169,7 @@ table#star-table tr:hover {
 }
 
 table#star-table .probability,
-table#star-table .label,
-table#star-table td.star {
+table#star-table .label {
     cursor: auto;
 }
 
@@ -209,10 +209,10 @@ td.no-width {
  * TableSorter styles
  * Taken from Bootstrap v1.4
  */
-table .tablesorter-header {
+table th.tablesorter-header {
   cursor: pointer;
 }
-table .tablesorter-header:after {
+table th.tablesorter-header:after {
   content: "";
   float: right;
   margin-top: -11px;
@@ -221,21 +221,21 @@ table .tablesorter-header:after {
   border-color: #000 transparent;
   visibility: hidden;
 }
-table .tablesorter-headerSortUp, table .tablesorter-headerSortDown {
+table th.tablesorter-headerSortUp, table th.tablesorter-headerSortDown {
   background-color: rgba(141, 192, 219, 0.25);
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 }
-table .tablesorter-header:hover:after {
+table th.tablesorter-header:hover:after {
   visibility: visible;
 }
-table .tablesorter-headerSortDown:after, table .tablesorter-headerSortDown:hover:after {
+table th.tablesorter-headerSortDown:after, table th.tablesorter-headerSortDown:hover:after {
   visibility: visible;
   filter: alpha(opacity=60);
   -khtml-opacity: 0.6;
   -moz-opacity: 0.6;
   opacity: 0.6;
 }
-table .tablesorter-headerSortUp:after {
+table th.tablesorter-headerSortUp:after {
   border-bottom: none;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;

@@ -9,6 +9,7 @@ jsdom = require 'jsdom'
 
 events = require('../server').events
 
+TABS = 5
 TABLES = ['.columnOne', '.columnTwo', '.columnThree']
 
 # List of known buildings, will be populated when buildings module is ready
@@ -94,7 +95,7 @@ processTab = (html, cb = ->) ->
 # Scrapes housing lottery website and stores availability
 getAvailability = () ->
     console.log 'Retrieving availability'
-    loadTab tab, processTab for tab in [1..6]
+    loadTab tab, processTab for tab in [1..TABS]
 
 # Initialize and launch scraping
 events.once 'buildingsReady', () ->
