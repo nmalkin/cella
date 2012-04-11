@@ -1,5 +1,5 @@
 db = require('./housing').db
-events = require('./server').events
+exports.events = new (require 'events').EventEmitter
 
 # An object with properties for each of the buildings
 exports.buildings = {}
@@ -52,4 +52,4 @@ do ->
                 for name, building of exports.buildings when building.sophomore
 
             # Setup done
-            events.emit 'buildingsReady'
+            exports.events.emit 'buildingsReady'

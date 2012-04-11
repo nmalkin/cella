@@ -1,8 +1,5 @@
 connect = require 'connect'
 
-# Support for server-wide events
-exports.events = new (require 'events').EventEmitter
-
 # Set up API and server
 api = require './api'
 

@@ -7,7 +7,7 @@ http = require 'http'
 util = require 'util'
 jsdom = require 'jsdom'
 
-events = require('../server').events
+events = require('../buildings').events
 
 TABS = 5
 TABLES = ['.columnOne', '.columnTwo', '.columnThree']
