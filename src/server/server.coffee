@@ -54,5 +54,3 @@ redis.on 'message', (channel, message) ->
 
 redis.subscribe CHANNEL_TAKEN
 
-# Start collecting availability data
-require './availability/scrape.js'
