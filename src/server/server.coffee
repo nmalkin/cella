@@ -21,6 +21,7 @@ server.listen(8888)
 
 # Use socket.io to broadcast changes in availability information
 io = require('socket.io').listen server
+io.set 'log level', 1 # reduced logging level
 
 # Keep a list of clients while they are connected
 clients = []
