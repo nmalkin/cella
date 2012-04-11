@@ -95,5 +95,13 @@ hideUnavailablePlaceholder = (tabNumber) ->
 # Connect to server and listen for updates on rooms that have been taken
 socket = io.connect '/'
 socket.on 'taken', (room) ->
+    # Log taken room
+    if room of _allRooms
+        roomInfo = _allRooms[room]
+        name = roomInfo.building + ' ' + roomInfo.room
+    else
+        name = 'Room ' + room
+    console.log name + ' has been taken.'
+
     _available[room] = ROOM_STATUS_TAKEN
     $(AVAILABILITY room).replaceWith availabilityHTML room, ROOM_STATUS_TAKEN
