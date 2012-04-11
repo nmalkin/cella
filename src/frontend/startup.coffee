@@ -189,8 +189,7 @@ $(document).ready ->
 
     $(SHARE_LINK).focus -> $(this).select()
 
-    # Show a random hint in the MOTD box
-    hint = getRandomInt 0, HINTS.length - 1
+    hint = 8 # Show "live update" hint by default
     showHint hint
 
     # Rotate hints every 15 seconds
