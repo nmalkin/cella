@@ -1,7 +1,7 @@
 ## Scrapes Brendan's Online Lottery page for room status
 
 # How long should we wait before re-scraping?
-INTERVAL = 1000 * 60 * 60 * 2 # 2 hours
+INTERVAL = 1000 * 30 # 30 seconds
 
 http = require 'http'
 util = require 'util'
