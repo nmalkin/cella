@@ -53,7 +53,7 @@ exports.setAvailability = (building, room, available, cb = ->) ->
                     status = exports.TAKEN
 
                     # Broadcast the fact that this room was taken
-                    redis.publish exports.CHANNEL_TAKEN, id
+                    redis.publish CHANNEL_TAKEN, id
                 
                 # Set status (if necessary)
                 if status then redis.set key, status, cb
