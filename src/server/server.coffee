@@ -53,5 +53,6 @@ redis.on 'message', (channel, message) ->
         console.log "Telling client #{ client.id } that #{ room } is taken"
         client.emit 'taken', room
 
-redis.subscribe CHANNEL_TAKEN
+
+redis.on 'connect', -> redis.subscribe CHANNEL_TAKEN
 
