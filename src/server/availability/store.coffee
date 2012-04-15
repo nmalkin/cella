@@ -78,5 +78,7 @@ storeRoomIDs = () ->
             redis.set key, room.id
 
 
-# On load, populate database with room IDs
-storeRoomIDs()
+# XXX: assumes the database is already populated with room IDs.
+# If it isn't, storeRoomIDs must be called. It is not called now to prevent an
+# issue where the Redis subscription from the server module is initiated first,
+# creating a conflict (can't set commands in sub mode).
