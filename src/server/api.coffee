@@ -26,7 +26,7 @@ exports.get_rooms = (req, res, next) ->
     requiredParamsPresent = true 
     requiredParamsPresent &= params[req]? for req in requiredParams
     if not requiredParamsPresent 
-        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.writeHead 200, {'Content-Type': 'text/html'}
         # TODO: I'd like this to be a 400 code, but browsers seem to interpret that as a 404
         res.end 'Missing required parameters\n'
     else
@@ -86,7 +86,7 @@ exports.room_info = (req, res, next) ->
     params = (url.parse req.url, true).query
     
     if not params.ids?
-        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.writeHead 200, {'Content-Type': 'text/html'}
         res.end 'Missing required parameters\n'
     else
         ids = params.ids.split ','
@@ -110,12 +110,12 @@ exports.results = (req, res, next) ->
     params = (url.parse req.url, true).query
     
     if not params.id?
-        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.writeHead 200, {'Content-Type': 'text/html'}
         res.end 'Missing required parameter\n'
     else
         id = parseInt params.id
         if isNaN id
-            res.writeHead 200, {'Content-Type': 'text/plan'}
+            res.writeHead 200, {'Content-Type': 'text/html'}
             res.end 'Invalid parameter\n'
             return
 
@@ -128,12 +128,12 @@ exports.floorplan = (req, res, next) ->
     params = (url.parse req.url, true).query
 
     if not (params.building? and params.room?)
-        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.writeHead 200, {'Content-Type': 'text/html'}
         res.end 'Missing required parameters\n'
     else
         floorplan_url = floorplans.url(params.building, params.room)
         if not floorplan_url?
-            res.writeHead 200, {'Content-Type': 'text/plan'}
+            res.writeHead 200, {'Content-Type': 'text/html'}
             res.end 'Unrecognized input\n'
         else # redirect to URL
             res.writeHead 303, {'Location': floorplan_url} # HTTP 303: See Other
@@ -147,7 +147,7 @@ exports.availability = (req, res, next) ->
     params = (url.parse req.url, true).query
     
     if not params.ids?
-        res.writeHead 200, {'Content-Type': 'text/plan'}
+        res.writeHead 200, {'Content-Type': 'text/html'}
         res.end 'Missing required parameter\n'
     else
         ids = params.ids.split ','
