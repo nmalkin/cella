@@ -22,6 +22,7 @@ Cella depends on the following node modules:
 - [uglify-js](https://github.com/mishoo/UglifyJS) (for Bootstrap)
 - [redis](https://github.com/mranney/node_redis)
 - [redis-url](https://github.com/ddollar/redis-url)
+- [socket.io](http://socket.io/)
 
 Cella uses [npm](http://npmjs.org/) to manage these dependencies.  
 When you have npm installed, go to Cella's directory and run:
