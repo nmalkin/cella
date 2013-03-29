@@ -9,7 +9,9 @@ AVAILABILITY_PLACEHOLDER = (roomID) ->
 
 # Returns label for availability based on given status
 availabilityHTML = (roomID, status) ->
-    if status == ROOM_STATUS_NOT_AVAILABLE
+    if status == null
+        return AVAILABILITY_PLACEHOLDER roomID
+    else if status == ROOM_STATUS_NOT_AVAILABLE
         labelClass = 'label-important'
         labelText = 'Not Available'
     else if status == ROOM_STATUS_AVAILABLE
@@ -49,8 +51,12 @@ lookUpAvailability = () ->
                 for room, status of resultAvailabilities
                     # Clarify room status
                     if status == null # Room not in lottery
-                        # Treat as 'not available'
-                        status = ROOM_STATUS_NOT_AVAILABLE
+                        # NORMAL BEHAVIOR:
+                        ## Treat as 'not available'
+                        #status = ROOM_STATUS_NOT_AVAILABLE
+                        # CURRENT BEHAVIOR:
+                        # ignore, because we just don't know the status
+                        do ->
 
                     # Store room status
                     _available[room] = status
