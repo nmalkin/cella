@@ -30,5 +30,7 @@ exports.url = (building, room) ->
         return null
     else if building == 'Hegeman' # special case: Hegeman
         PREFIX + building_map[building] + room[1] + SUFFIX
+    else if building == '315 Thayer' # special case: 315 Thayer
+        PREFIX + building_map[building] + SUFFIX
     else
         PREFIX + building_map[building] + room[0] + SUFFIX
