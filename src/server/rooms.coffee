@@ -1,7 +1,7 @@
 db = require('./housing.js').db
 buildings = require('./buildings').buildings
 
-YEARS = [2006, 2007, 2008, 2009, 2010, 2011]
+YEARS = [2006, 2007, 2008, 2009, 2010, 2011, 2012]
 
 # Returns true if the given variable is an array.
 # The check is done using the method recommended here:
