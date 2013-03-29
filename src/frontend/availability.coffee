@@ -5,7 +5,7 @@ ROOM_STATUS_AVAILABLE = '1'
 ROOM_STATUS_TAKEN = '2'
 
 AVAILABILITY_PLACEHOLDER = (roomID) ->
-    "<span class=\"#{ NAME AVAILABILITY roomID } label\" rel=\"tooltip\" title=\"#{ NO_AVAILABILITY_DATA }\">?</span>"
+    "<span class=\"#{ NAME AVAILABILITY roomID } label\" rel=\"tooltip\" title=\"#{ NO_AVAILABILITY_DATA }\">Unknown</span>"
 
 # Returns label for availability based on given status
 availabilityHTML = (roomID, status) ->

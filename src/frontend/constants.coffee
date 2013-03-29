@@ -30,7 +30,7 @@ IMPORT_REPLACE = '.import-replace'
 IMPORT_CONFLICT = '#import-conflict'
 IMPORT_NO_CONFLICT = '#import-no-conflict'
 
-NO_AVAILABILITY_DATA = 'availability not available'
+NO_AVAILABILITY_DATA = 'Availability Unknown'
 ROOM_NOT_AVAILABLE = '.roomUnavailable'
 ROOMS_HIDDEN_PLACEHOLDER = '.roomsHidden'
 
